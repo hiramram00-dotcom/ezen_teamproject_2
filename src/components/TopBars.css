@@ -1,0 +1,103 @@
+/* ── Status bar ─────────────────────────────────────────── */
+.statusbar {
+  height: 52px;
+  padding: 0 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-primary);
+}
+
+.statusbar__time {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.statusbar__right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statusbar__battery {
+  width: 24px;
+  height: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
+  padding: 1.5px;
+  position: relative;
+}
+.statusbar__battery::after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  top: 3.5px;
+  width: 2px;
+  height: 4px;
+  border-radius: 0 2px 2px 0;
+  background: rgba(255, 255, 255, 0.5);
+}
+.statusbar__battery-fill {
+  width: 100%;
+  height: 100%;
+  border-radius: 1px;
+  background: var(--text-primary);
+}
+
+/* ── App header ─────────────────────────────────────────── */
+.appheader {
+  position: sticky;
+  top: 12px;
+  z-index: 90;
+  height: 52px;
+  padding: 0 var(--gutter);
+  margin-top: 12px;
+  margin-bottom: 12px;
+  background: var(--bg-app);
+  box-shadow:
+    0 -12px 0 var(--bg-app),
+    0 12px 0 var(--bg-app);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.appheader__logo {
+  display: flex;
+  align-items: center;
+  gap: 4.6px;
+  height: 21.6px;
+}
+.appheader__logo-w {
+  width: 17.1px;
+  height: 21.44px;
+}
+.appheader__logo-run {
+  width: 34.23px;
+  height: 21.64px;
+}
+/* The lime ":" rendered as three stacked dots, per the Figma logo */
+.appheader__logo-dots {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 21px;
+  padding: 0.3px 0;
+}
+.appheader__logo-dots i {
+  display: block;
+  width: 4.42px;
+  height: 3.64px;
+  background: var(--primary-lime);
+}
+
+.appheader__actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.appheader__icon {
+  width: 24px;
+  height: 24px;
+}

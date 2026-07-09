@@ -1,0 +1,56 @@
+.runners {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.runners__row {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 0 var(--gutter);
+}
+
+.runner {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 76px;
+}
+
+.runner__ring {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  /* Figma "Ellipse 3832": 2.5px orange stroke */
+  border: 2.5px solid var(--primary-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.runner__avatar {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid rgba(242, 242, 242, 0.95);
+  background: #fff;
+}
+/* Each image is absolutely positioned/zoomed per its Figma crop (set inline). */
+.runner__avatar img {
+  position: absolute;
+  max-width: none;
+}
+
+.runner__name {
+  font-size: 14px;
+  letter-spacing: -0.42px;
+  color: var(--text-primary);
+  text-align: center;
+  white-space: nowrap;
+}

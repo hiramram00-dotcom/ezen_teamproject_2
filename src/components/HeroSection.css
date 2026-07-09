@@ -1,0 +1,100 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero__card {
+  position: relative;
+  height: 426px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #111;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Even dark tint over the whole photo (matches Figma "Instagram 2" overlay) */
+.hero__tint {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+/* Bottom gradient so text stays legible */
+.hero__scrim {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 200px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+}
+
+.hero__route {
+  position: absolute;
+  left: 16px;
+  top: 125px;
+  width: 88px;
+  height: 72px;
+}
+
+.hero__head {
+  position: absolute;
+  left: 24px;
+  top: 22px;
+  color: var(--text-primary);
+}
+.hero__title {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.48px;
+}
+.hero__meta {
+  margin-top: 4px;
+  font-size: 14px;
+  letter-spacing: -0.42px;
+}
+
+.hero__stats {
+  position: absolute;
+  left: 32px;
+  top: 213px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.hero__stat {
+  display: flex;
+  flex-direction: column;
+}
+.hero__stat-label {
+  font-size: 14px;
+  letter-spacing: -0.42px;
+  color: var(--text-primary);
+}
+.hero__stat-value {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: -0.52px;
+  color: var(--text-strong);
+}
+
+.hero__cta {
+  height: 48px;
+  border-radius: 30px;
+  background: var(--primary-lime);
+  color: var(--text-on-lime);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.48px;
+}
+.hero__cta:active {
+  transform: scale(0.99);
+}
