@@ -11,13 +11,18 @@ import MagazineSection from "./components/MagazineSection";
 import MyPage from "./pages/MyPage";
 import SettingsPage from "./pages/SettingsPage";
 import BottomNav from "./components/BottomNav";
+import RunnerExplorePage from "./pages/RunnerExplorePage";
 import "./App.css";
 
 export default function App() {
-  const [page, setPage] = useState<"home" | "my" | "settings">("home");
+  const [page, setPage] = useState<"home" | "my" | "settings" | "runners">("home");
 
   // Make every horizontal carousel draggable with the mouse (finger-swipe feel).
   useEffect(() => initDragScroll(), []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [page]);
 
   if (page === "settings") {
     return (
@@ -25,6 +30,10 @@ export default function App() {
         <SettingsPage onBack={() => setPage("my")} />
       </div>
     );
+  }
+
+  if (page === "runners") {
+    return <RunnerExplorePage onBack={() => setPage("home")} />;
   }
 
   return (
@@ -40,7 +49,7 @@ export default function App() {
         <main className="home">
           <HeroSection />
           <CourseSection />
-          <RunnerSection />
+          <RunnerSection onViewAll={() => setPage("runners")} />
           <ScheduleSection />
           <RaceSection />
           <ChallengeSection />

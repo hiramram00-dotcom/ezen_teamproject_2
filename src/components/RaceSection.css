@@ -44,7 +44,7 @@
 
 .race__row {
   display: flex;
-  gap: 18px;
+  gap: 12px;
   overflow-x: auto;
   margin: 0 calc(-1 * var(--gutter));
   padding: 0 var(--gutter);
