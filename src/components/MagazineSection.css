@@ -6,7 +6,7 @@
 
 .magazine__row {
   display: flex;
-  gap: 18px;
+  gap: 12px;
   overflow-x: auto;
   margin: 0 calc(-1 * var(--gutter));
   padding: 0 var(--gutter);
@@ -63,6 +63,7 @@
 .article-card__preview {
   display: flex;
   flex-direction: column;
+  color: #bcc3c5;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.42px;
