@@ -1,0 +1,70 @@
+.challenge {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.challenge__title {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.48px;
+  color: var(--text-strong);
+}
+
+.challenge__list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.challenge-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  height: 80px;
+  border-radius: 20px;
+  background: var(--bg-elevated);
+  overflow: hidden;
+}
+
+.challenge-item__img {
+  position: relative;
+  flex: 0 0 auto;
+  width: 100px;
+  height: 80px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+/* Each photo is absolutely placed/zoomed per its Figma crop (set inline). */
+.challenge-item__img img {
+  position: absolute;
+  max-width: none;
+  object-fit: cover;
+}
+
+.challenge-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.challenge-item__name {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.6px;
+  color: var(--text-primary);
+}
+.challenge-item__meta {
+  font-size: 14px;
+  letter-spacing: -0.42px;
+  color: var(--text-muted);
+}
+
+.challenge__more {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  letter-spacing: -0.42px;
+  color: var(--text-strong);
+}

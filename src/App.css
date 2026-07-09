@@ -1,0 +1,18 @@
+.phone {
+  width: 100%;
+  max-width: var(--frame-width);
+  min-height: 100vh;
+  background: var(--bg-app);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.home {
+  flex: 1;
+  /* extra bottom padding leaves room for the floating nav dock */
+  padding: 12px var(--gutter) 130px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}

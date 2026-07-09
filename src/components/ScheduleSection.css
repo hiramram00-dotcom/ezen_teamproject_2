@@ -1,0 +1,50 @@
+.schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.schedule__card {
+  position: relative;
+  height: 250px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #111;
+}
+
+.schedule__bg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Match the Figma design exactly: the photo fills the 394×250 frame
+     (Figma uses `size-full` with no object-cover, i.e. object-fit: fill). */
+  object-fit: fill;
+}
+
+.schedule__scrim {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 88px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+}
+
+.schedule__body {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  color: var(--text-primary);
+}
+.schedule__title {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.6px;
+}
+.schedule__meta {
+  margin-top: 3px;
+  display: flex;
+  gap: 5px;
+  font-size: 16px;
+  letter-spacing: -0.48px;
+}

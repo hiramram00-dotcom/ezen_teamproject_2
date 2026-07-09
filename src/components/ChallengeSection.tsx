@@ -1,0 +1,37 @@
+import { challenges } from "../data";
+import { ChevronDown } from "./Icons";
+import "./ChallengeSection.css";
+
+export default function ChallengeSection() {
+  return (
+    <section className="challenge">
+      <h2 className="challenge__title">챌린지</h2>
+      <ul className="challenge__list">
+        {challenges.map((c) => (
+          <li key={c.name} className="challenge-item">
+            <div className="challenge-item__img">
+              <img
+                src={c.image}
+                alt={c.name}
+                style={{
+                  width: c.crop.width,
+                  height: c.crop.height,
+                  left: c.crop.left,
+                  top: c.crop.top,
+                }}
+              />
+            </div>
+            <div className="challenge-item__info">
+              <p className="challenge-item__name">{c.name}</p>
+              <p className="challenge-item__meta">👥 {c.participants}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <button className="challenge__more" type="button">
+        더보기
+        <ChevronDown size={16} />
+      </button>
+    </section>
+  );
+}
