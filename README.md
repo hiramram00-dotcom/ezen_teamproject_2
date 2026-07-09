@@ -1,6 +1,6 @@
 # We Run
 
-React + Vite 기반의 팀 프로젝트 시작 화면입니다.
+React + Vite 기반의 팀 프로젝트 시작용 빈 템플릿입니다.
 
 ## 실행 방법
 
@@ -16,8 +16,8 @@ npm.cmd run dev
 ## 현재 구성
 
 - `index.html`: React 앱 진입점
-- `src/main.jsx`: 홈 화면 컴포넌트
-- `src/styles.css`: 홈 화면 스타일
+- `src/main.jsx`: 빈 앱 컴포넌트
+- `src/styles.css`: 공통 초기 스타일
 
 ## 첫 커밋
 
