@@ -106,7 +106,7 @@ export default function RecordPage({ onGuideOpen }: { onGuideOpen?: () => void }
           <img className="h-[21.44px] w-[17.1px]" src={logoW} alt="" />
           {/* The lime ":" rendered as three stacked dots, per the Figma logo */}
           <span
-            className="flex h-[21px] flex-col justify-between py-[0.3px]"
+            className="flex h-5.25 flex-col justify-between py-[0.3px]"
             aria-hidden
           >
             <i className="block h-[3.64px] w-[4.42px] bg-primary-lime" />
@@ -137,7 +137,7 @@ export default function RecordPage({ onGuideOpen }: { onGuideOpen?: () => void }
           {recommendedCourses.map((c, i) => (
             <article
               key={c.id}
-              className={`relative flex h-35 w-82.5 flex-none snap-center items-end gap-3.5 rounded-[20px] bg-elevated pt-5.5 pr-4.5 pb-5.75 pl-4.25 transition-[filter,scale] duration-250 ease-[ease] ${
+              className={`relative flex h-35 w-82.5 flex-none snap-center items-end gap-3.5 rounded-card bg-elevated pt-5.5 pr-4.5 pb-5.75 pl-4.25 transition-[filter,scale] duration-250 ease-[ease] ${
                 i === activeIdx ? "" : "scale-93 blur-[2px]"
               }`}
             >
@@ -231,6 +231,10 @@ export default function RecordPage({ onGuideOpen }: { onGuideOpen?: () => void }
                   className={`flex w-12.75 flex-col items-center gap-1.25 text-center text-[12px] tracking-[-0.24px] whitespace-nowrap ${
                     t.active ? "font-semibold text-primary-lime" : "font-medium text-white"
                   }`}
+                  onClick={() => {
+                    // 홈 탭은 메인 페이지(index.html)로 이동한다.
+                    if (t.key === "home") window.location.href = import.meta.env.BASE_URL;
+                  }}
                 >
                   <img className="h-7 w-7.5" src={t.icon} alt="" />
                   <span>{t.label}</span>

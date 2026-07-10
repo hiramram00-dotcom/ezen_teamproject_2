@@ -68,7 +68,7 @@ export default function RunningGuidePage({ onBack }: { onBack?: () => void }) {
                     {g.desc}
                   </p>
                 </div>
-                <span className="flex-none rounded-[20px] border border-primary-lime px-2 py-0.75 text-[12px] font-light leading-[1.3] tracking-[-0.36px] text-primary-lime">
+                <span className="flex-none rounded-full border border-primary-lime px-2 py-0.75 text-[12px] font-light leading-[1.3] tracking-[-0.36px] text-primary-lime">
                   {g.level}
                 </span>
               </li>

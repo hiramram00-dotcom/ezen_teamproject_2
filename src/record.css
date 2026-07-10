@@ -11,6 +11,7 @@
   --color-elevated: #1c1c1f;
   --color-surface: #1b1b22; /* bg/surface */
   --color-surface-2: #26262e; /* bg/surface-2 */
+  --radius-card: 20px; /* 홈 index.css의 --radius-card와 동일 값 */
 
   /* ── Type ─────────────────────────────────────────────── */
   --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont,
