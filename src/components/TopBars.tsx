@@ -2,6 +2,7 @@ import logoW from "../assets/icons/logo-w.svg";
 import logoRun from "../assets/icons/logo-run.svg";
 import iconChatbot from "../assets/icons/header-chatbot.svg";
 import iconBell from "../assets/icons/header-bell.svg";
+import iconSettings from "../assets/icons/header-settings.svg";
 import "./TopBars.css";
 
 export function StatusBar() {
@@ -29,7 +30,12 @@ export function StatusBar() {
   );
 }
 
-export function AppHeader() {
+type AppHeaderProps = {
+  variant?: "default" | "settings" | "feed";
+  onSettingsClick?: () => void;
+};
+
+export function AppHeader({ variant = "default", onSettingsClick }: AppHeaderProps) {
   return (
     <header className="appheader">
       <div className="appheader__logo" aria-label="W:RUN">
@@ -41,14 +47,38 @@ export function AppHeader() {
         </span>
         <img className="appheader__logo-run" src={logoRun} alt="" />
       </div>
-      <div className="appheader__actions">
-        <button type="button" aria-label="챗봇">
-          <img className="appheader__icon" src={iconChatbot} alt="" />
+      {variant === "settings" ? (
+        <button type="button" aria-label="설정" onClick={onSettingsClick}>
+          <img className="appheader__icon" src={iconSettings} alt="" />
         </button>
-        <button type="button" aria-label="알림">
-          <img className="appheader__icon" src={iconBell} alt="" />
-        </button>
-      </div>
+      ) : variant === "feed" ? (
+        <div className="appheader__actions">
+          <button type="button" aria-label="게시물 올리기">
+            <svg className="appheader__icon" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M12 5v14M5 12h14" stroke="#f5f5f7" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+          <button type="button" aria-label="응원 알림">
+            <svg className="appheader__icon" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path
+                d="M12 20.5C12 20.5 4.5 15.4 4.5 10 4.5 7.5 6.5 5.6 8.7 5.6c1.5 0 2.7.8 3.3 1.9.6-1.1 1.8-1.9 3.3-1.9 2.2 0 4.2 1.9 4.2 4.4 0 5.4-7.5 10.5-7.5 10.5z"
+                stroke="#f5f5f7"
+                strokeWidth="1.8"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      ) : (
+        <div className="appheader__actions">
+          <button type="button" aria-label="챗봇">
+            <img className="appheader__icon" src={iconChatbot} alt="" />
+          </button>
+          <button type="button" aria-label="알림">
+            <img className="appheader__icon" src={iconBell} alt="" />
+          </button>
+        </div>
+      )}
     </header>
   );
 }
