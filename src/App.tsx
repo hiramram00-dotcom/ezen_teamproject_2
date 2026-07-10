@@ -86,6 +86,8 @@ export default function App() {
         active={page === "my" ? "my" : "home"}
         onNavigate={(key) => {
           if (key === "home" || key === "my") setPage(key);
+          // 기록 탭은 별도 페이지(record.html)로 이동한다.
+          if (key === "record") window.location.href = `${import.meta.env.BASE_URL}record.html`;
         }}
       />
     </div>
