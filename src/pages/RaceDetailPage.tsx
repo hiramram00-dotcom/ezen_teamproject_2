@@ -1,6 +1,5 @@
 import { StatusBar } from "../components/TopBars";
 import raceHero from "../assets/img/race1.png";
-import "./RaceDetailPage.css";
 
 type Props = {
   onBack: () => void;
@@ -19,6 +18,11 @@ const timeline = [
   { time: "18:20", title: "5K 출발", desc: "초보 러너와 동반 참가자 추천 코스" },
   { time: "20:30", title: "기록 확인", desc: "완주 메달과 굿즈 수령 후 포토존 이용" },
 ];
+
+const glassCardClass =
+  "relative min-h-[94px] overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(29,29,29,0.2)] p-[13px_16px] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(0,0,0,0.28)] backdrop-blur-[14px] backdrop-saturate-[145%] before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.02)_46%,rgba(255,255,255,0))] [&>*]:relative";
+const sectionTitleClass = "text-[24px] font-semibold leading-[1.3] tracking-[-0.48px] text-[#f6f6ed]";
+const bodyTextClass = "text-[14px] font-normal leading-[1.3] tracking-[-0.42px] text-white/70";
 
 function BackIcon() {
   return (
@@ -41,7 +45,7 @@ function ShareIcon() {
 
 function RouteMiniMap() {
   return (
-    <svg className="race-detail-route__map" width="72" height="72" viewBox="0 0 80 80" fill="none" aria-hidden>
+    <svg className="h-[72px] w-[72px] shrink-0 basis-[72px]" width="72" height="72" viewBox="0 0 80 80" fill="none" aria-hidden>
       <rect width="80" height="80" rx="18" fill="#1D1D1D" />
       <path
         d="M17 51C26 42 30 57 39 46C46 37 49 28 62 23"
@@ -58,68 +62,87 @@ function RouteMiniMap() {
 
 export default function RaceDetailPage({ onBack }: Props) {
   return (
-    <div className="phone race-detail-page">
+    <div className="phone min-h-screen bg-black text-[#f6f6ed] [&_.statusbar]:h-[52px] [&_.statusbar]:bg-black [&_.statusbar]:px-[26px]">
       <StatusBar />
-      <header className="race-detail-header">
-        <button type="button" onClick={onBack} aria-label="뒤로가기">
+      <header className="relative flex h-[66px] items-center justify-between px-[var(--gutter)]">
+        <button className="grid h-6 w-6 place-items-center text-[#f6f6ed]" type="button" onClick={onBack} aria-label="뒤로가기">
           <BackIcon />
         </button>
-        <h1>대회 소식</h1>
-        <button type="button" aria-label="공유하기">
+        <h1 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[24px] font-semibold leading-[1.3] tracking-[-0.48px]">
+          대회 소식
+        </h1>
+        <button className="grid h-6 w-6 place-items-center text-[#f6f6ed]" type="button" aria-label="공유하기">
           <ShareIcon />
         </button>
       </header>
 
-      <main className="race-detail-content">
-        <section className="race-detail-hero">
-          <img src={raceHero} alt="" />
-          <div className="race-detail-hero__inner">
-            <span className="race-detail-region">서울</span>
-            <div className="race-detail-hero__copy">
-              <p className="race-detail-dday">D-3</p>
-              <h2>한강 마라톤</h2>
-              <p>2026-07-25(토) 18:00 · 여의도 한강공원</p>
-              <div className="race-detail-dots" aria-hidden>
-                <span />
-                <span />
-                <span />
+      <main className="flex flex-col gap-12 pb-12">
+        <section className="relative h-[581px] overflow-hidden after:absolute after:inset-0 after:bg-[linear-gradient(to_bottom,rgba(0,0,0,0.03),rgba(0,0,0,0.42))]">
+          <img className="absolute inset-0 h-full w-full object-cover object-[48%_center]" src={raceHero} alt="" />
+          <div className="relative z-[1] flex h-full flex-col justify-between px-[19px] py-4">
+            <span className="inline-flex min-h-[31px] w-[54px] items-center justify-center rounded-2xl bg-[var(--primary-lime)] text-[14px] font-medium leading-[1.3] tracking-[-0.42px] text-black">
+              서울
+            </span>
+            <div className="flex flex-col items-center gap-0 text-center">
+              <p className="mb-[17px] [font-family:var(--font-display)] text-[64px] leading-[0.95] text-[var(--primary-lime)]">D-3</p>
+              <h2 className="mb-[3px] text-[30px] font-semibold leading-[1.2] tracking-[-0.6px] text-white">한강 마라톤</h2>
+              <p className="text-[14px] font-normal leading-[1.3] tracking-[-0.42px] text-white">2026-07-25(토) 18:00 · 여의도 한강공원</p>
+              <div className="mt-[15px] flex gap-[5px]" aria-hidden>
+                <span className="h-[6px] w-[6px] rounded-full bg-[var(--primary-lime)]" />
+                <span className="h-[6px] w-[6px] rounded-full bg-[#f6f6ed]/45" />
+                <span className="h-[6px] w-[6px] rounded-full bg-[#f6f6ed]/45" />
               </div>
             </div>
           </div>
         </section>
 
-        <section className="race-detail-info-grid">
+        <section className="grid grid-cols-2 gap-x-[18px] gap-y-4 px-[var(--gutter)] max-[380px]:gap-3">
           {infoCards.map((card) => (
-            <article className="race-detail-info" key={card.label}>
-              <p>{card.label}</p>
-              <strong>{card.value}</strong>
-              <span>{card.note}</span>
+            <article className={glassCardClass} key={card.label}>
+              <p className="text-[14px] font-medium leading-[1.3] tracking-[-0.42px] text-white/70">{card.label}</p>
+              <strong className="mt-[5px] block text-[20px] font-medium leading-[1.3] tracking-[-0.6px] text-white max-[380px]:text-[18px]">
+                {card.value}
+              </strong>
+              <span className="mt-0.5 block text-[12px] font-light leading-[1.3] tracking-[-0.36px] text-white/70">{card.note}</span>
             </article>
           ))}
         </section>
 
-        <section className="race-detail-section">
-          <h2>일정과 코스</h2>
-          <p className="race-detail-section__desc">
+        <section className="px-[var(--gutter)]">
+          <h2 className={sectionTitleClass}>일정과 코스</h2>
+          <p className={`${bodyTextClass} mt-[7px] max-w-[348px]`}>
             한강을 따라 가볍게 출발하고, 야경이 켜지는 시간에 완주하는 저녁 러닝 코스예요.
           </p>
-          <div className="race-detail-timeline">
+          <div className="relative mt-5 flex flex-col gap-3 pl-6 before:absolute before:bottom-2 before:left-[5px] before:top-2 before:w-px before:bg-white/20">
             {timeline.map((item) => (
-              <div className="race-detail-timeline__row" key={item.time}>
-                <time className={item.active ? "race-detail-timeline__time--active" : ""}>{item.time}</time>
+              <div
+                className={`relative grid grid-cols-[60px_minmax(0,1fr)] items-start gap-2 before:absolute before:-left-[22px] before:top-[9px] before:h-[7px] before:w-[7px] before:rounded-full ${
+                  item.active ? "before:bg-[var(--primary-lime)]" : "before:bg-[rgba(255,255,255,0.28)]"
+                }`}
+                key={item.time}
+              >
+                <time
+                  className={`block pt-[3px] text-[14px] font-medium leading-[1.3] tracking-[-0.42px] ${
+                    item.active ? "text-[var(--primary-lime)]" : "text-white/70"
+                  }`}
+                >
+                  {item.time}
+                </time>
                 <div>
-                  <strong>{item.title}</strong>
-                  <p>{item.desc}</p>
+                  <strong className="text-[20px] font-medium leading-[1.3] tracking-[-0.6px] text-white max-[380px]:text-[18px]">
+                    {item.title}
+                  </strong>
+                  <p className={`${bodyTextClass} mt-[5px]`}>{item.desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="race-detail-route">
+        <section className="flex items-end justify-between gap-5 px-[var(--gutter)]">
           <div>
-            <h2>코스 안내</h2>
-            <p>
+            <h2 className={sectionTitleClass}>코스 안내</h2>
+            <p className={`${bodyTextClass} mt-[7px]`}>
               여의도 이벤트 광장에서 출발해 한강공원 산책로를 따라 반환하는 평지 중심 코스입니다.
               급격한 오르막이 적어서 첫 대회 참가자도 부담 없이 달릴 수 있어요.
             </p>
@@ -127,9 +150,12 @@ export default function RaceDetailPage({ onBack }: Props) {
           <RouteMiniMap />
         </section>
 
-        <p className="race-detail-note">기록칩 · 완주 메달 · 물품보관 · 현장 포토존 제공</p>
+        <p className={`${bodyTextClass} px-[var(--gutter)]`}>기록칩 · 완주 메달 · 물품보관 · 현장 포토존 제공</p>
 
-        <button className="race-detail-cta" type="button">
+        <button
+          className="mx-[var(--gutter)] h-12 w-[calc(100%-36px)] rounded-full bg-[var(--primary-lime)] text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-black"
+          type="button"
+        >
           참가하기
         </button>
       </main>

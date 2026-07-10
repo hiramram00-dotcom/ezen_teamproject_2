@@ -1,3 +1,6 @@
+@import "tailwindcss/theme.css";
+@import "tailwindcss/utilities.css";
+
 :root {
   /* ── Color tokens (from Figma) ────────────────────────── */
   --primary-lime: #d4ff3f; /* primary-2 */
