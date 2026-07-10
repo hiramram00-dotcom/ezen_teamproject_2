@@ -3,6 +3,8 @@ import { initDragScroll } from "./dragScroll";
 import { AppHeader } from "./components/TopBars";
 import HeroSection from "./components/HeroSection";
 import CourseSection from "./components/CourseSection";
+import CourseExplorePage from "./components/CourseExplorePage";
+import CourseDetailPage from "./components/CourseDetailPage";
 import RunnerSection from "./components/RunnerSection";
 import ScheduleSection from "./components/ScheduleSection";
 import RaceSection from "./components/RaceSection";
@@ -16,18 +18,31 @@ import RunnerExplorePage from "./pages/RunnerExplorePage";
 import ScheduleDetailPage from "./pages/ScheduleDetailPage";
 import ScheduleListPage from "./pages/ScheduleListPage";
 import RaceDetailPage from "./pages/RaceDetailPage";
+import type { CourseDetailKind, CourseExploreKind } from "./data";
 import "./App.css";
 
-type Page = "home" | "feed" | "my" | "settings" | "runners" | "schedule" | "scheduleList" | "race";
+type Page =
+  | "home"
+  | "feed"
+  | "my"
+  | "settings"
+  | "runners"
+  | "schedule"
+  | "scheduleList"
+  | "race"
+  | "courses"
+  | "courseDetail";
 
 export default function App() {
   const [page, setPage] = useState<Page>("home");
+  const [courseExploreKind, setCourseExploreKind] = useState<CourseExploreKind>("nearby");
+  const [courseDetailKind, setCourseDetailKind] = useState<CourseDetailKind>("yeouido");
 
   // Make every horizontal carousel draggable with the mouse (finger-swipe feel).
   useEffect(() => initDragScroll(), []);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0 });
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [page]);
 
   if (page === "settings") {
@@ -59,6 +74,29 @@ export default function App() {
     return <RaceDetailPage onBack={() => setPage("home")} />;
   }
 
+  if (page === "courses") {
+    return (
+      <div className="phone">
+        <CourseExplorePage
+          kind={courseExploreKind}
+          onBack={() => setPage("home")}
+          onOpenDetail={(detail) => {
+            setCourseDetailKind(detail);
+            setPage("courseDetail");
+          }}
+        />
+      </div>
+    );
+  }
+
+  if (page === "courseDetail") {
+    return (
+      <div className="phone">
+        <CourseDetailPage kind={courseDetailKind} onBack={() => setPage("courses")} />
+      </div>
+    );
+  }
+
   return (
     <div className="phone">
       <AppHeader
@@ -73,7 +111,20 @@ export default function App() {
       ) : (
         <main className="home">
           <HeroSection />
-          <CourseSection />
+          <CourseSection
+            onOpenNearby={() => {
+              setCourseExploreKind("nearby");
+              setPage("courses");
+            }}
+            onOpenPopular={() => {
+              setCourseExploreKind("popular");
+              setPage("courses");
+            }}
+            onOpenChallenge={() => {
+              setCourseExploreKind("challenge");
+              setPage("courses");
+            }}
+          />
           <RunnerSection onViewAll={() => setPage("runners")} />
           <ScheduleSection
             onMore={() => setPage("scheduleList")}
@@ -89,6 +140,8 @@ export default function App() {
         active={page === "my" || page === "feed" ? page : "home"}
         onNavigate={(key) => {
           if (key === "home" || key === "my" || key === "feed") setPage(key as Page);
+          // 기록 탭은 별도 페이지(record.html)로 이동한다.
+          if (key === "record") window.location.href = `${import.meta.env.BASE_URL}record.html`;
         }}
       />
     </div>
