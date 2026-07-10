@@ -6,7 +6,7 @@
 
 .courses__row {
   display: flex;
-  gap: 18px;
+  gap: 12px;
   overflow-x: auto;
   /* let cards bleed to the screen edge */
   margin: 0 calc(-1 * var(--gutter));
