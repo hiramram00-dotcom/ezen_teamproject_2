@@ -5,6 +5,29 @@ import iconBell from "../assets/icons/header-bell.svg";
 import iconSettings from "../assets/icons/header-settings.svg";
 import "./TopBars.css";
 
+/**
+ * 상태바 영역 — 화면 폭에 따라 다르게 동작하는 공통 컴포넌트.
+ * 앱의 각 셸(.phone / 온보딩 셸) 최상단에서 이것 하나만 렌더한다.
+ * - 모바일(<md, 768px): 실제 기기 상태바/노치 영역만 env(safe-area-inset-top)로
+ *   확보하고 가짜 바는 숨긴다. (실기기의 진짜 상태바와 이중으로 겹치지 않도록)
+ * - 테블릿+ (≥md): 폰 목업처럼 보이도록 가짜 상태바(시간·배터리)를 표시한다.
+ * ※ env()가 값을 가지려면 index.html viewport 메타에 viewport-fit=cover 필요.
+ */
+export function StatusBarArea() {
+  return (
+    <div className="sticky top-0 z-[95] bg-inherit">
+      <div
+        className="md:hidden"
+        style={{ height: "env(safe-area-inset-top, 0px)" }}
+        aria-hidden
+      />
+      <div className="hidden md:block">
+        <StatusBar />
+      </div>
+    </div>
+  );
+}
+
 export function StatusBar() {
   return (
     <div className="statusbar">

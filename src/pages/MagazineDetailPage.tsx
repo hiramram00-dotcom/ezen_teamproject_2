@@ -1,4 +1,4 @@
-import { StatusBar } from "../components/TopBars";
+import { StatusBarArea } from "../components/TopBars";
 import { ChevronLeft } from "../components/Icons";
 import SectionHeader from "../components/SectionHeader";
 import mag1 from "../assets/img/mag1.webp";
@@ -93,9 +93,9 @@ function ArrowUpRightIcon() {
 export default function MagazineDetailPage({ onBack }: Props) {
   return (
     <div className="phone min-h-screen bg-black text-[#f6f6ed]">
-      <StatusBar />
+      <StatusBarArea />
 
-      <header className="flex items-center justify-between px-[18px] py-[10px]">
+      <header className="subheader justify-between">
         <button className="grid h-6 w-6 shrink-0 place-items-center text-white" type="button" onClick={onBack} aria-label="뒤로가기">
           <ChevronLeft size={24} />
         </button>

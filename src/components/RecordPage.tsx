@@ -7,10 +7,7 @@ import iconChatbot from "../assets/icons/header-chatbot.svg";
 import iconBulb from "../assets/icons/bulb.svg";
 import iconMusic from "../assets/icons/music.svg";
 import iconSparkle from "../assets/icons/sparkle.svg";
-import navHome from "../assets/icons/nav-home-off.svg";
-import navFeed from "../assets/icons/nav-feed.svg";
-import navRecord from "../assets/icons/nav-record-on.svg";
-import navUser from "../assets/icons/nav-user.svg";
+import BottomNav from "./BottomNav";
 import recordCourseImg from "../assets/img/record-course.png";
 import recordMapImg from "../assets/img/record-map.png";
 
@@ -38,15 +35,6 @@ const recommendedCourses = [
   },
 ];
 
-// The record screen owns its header/bottom-nav markup so it never has to
-// modify the shared home-screen components (team boundary).
-const navTabs = [
-  { key: "home", label: "홈", icon: navHome, active: false },
-  { key: "feed", label: "피드", icon: navFeed, active: false },
-  { key: "record", label: "기록", icon: navRecord, active: true },
-  { key: "my", label: "마이페이지", icon: navUser, active: false },
-];
-
 // 플로팅 원형 버튼(챗봇/가이드/음악) 공통 스타일
 const fabClass =
   "grid size-13 place-items-center rounded-full bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.35)]";
@@ -54,9 +42,11 @@ const fabClass =
 export default function RecordPage({
   onGuideOpen,
   onStart,
+  onTabNavigate,
 }: {
   onGuideOpen?: () => void;
   onStart?: () => void;
+  onTabNavigate?: (key: string) => void;
 }) {
   const rowRef = useRef<HTMLDivElement>(null);
   const [activeIdx, setActiveIdx] = useState(0);
@@ -102,7 +92,7 @@ export default function RecordPage({
     <div className="relative flex flex-1 flex-col overflow-hidden">
       {/* Map backdrop: fades in from black at the top, dark vignette at the edges */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-52.5 bottom-0 z-0 bg-cover bg-center bg-no-repeat before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_60%_50%_at_center,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.85)_60%,rgba(0,0,0,0.95)_100%)] after:absolute after:inset-x-0 after:top-0 after:h-35 after:bg-linear-to-b after:from-black after:from-19% after:to-black/0"
+        className="pointer-events-none absolute inset-x-0 top-52.5 bottom-0 z-0 bg-cover bg-center bg-no-repeat before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_60%_50%_at_center,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.7)_60%,rgba(0,0,0,0.85)_100%)] after:absolute after:inset-x-0 after:top-0 after:h-35 after:bg-linear-to-b after:from-black after:from-19% after:to-black/0"
         style={{ backgroundImage: `url(${recordMapImg})` }}
         aria-hidden
       />
@@ -143,7 +133,7 @@ export default function RecordPage({
           {recommendedCourses.map((c, i) => (
             <article
               key={c.id}
-              className={`relative flex h-35 w-82.5 flex-none snap-center items-end gap-3.5 rounded-card bg-elevated pt-5.5 pr-4.5 pb-5.75 pl-4.25 transition-[filter,scale] duration-250 ease-[ease] ${
+              className={`relative flex h-35 w-82.5 flex-none snap-center items-end gap-3.5 overflow-hidden rounded-card border border-white/15 bg-elevated/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md backdrop-saturate-140 transition-[filter,scale] duration-250 ease-[ease] before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:bg-linear-to-br before:from-white/10 before:via-white/2 before:to-transparent pt-5.5 pr-4.5 pb-5.75 pl-4.25 ${
                 i === activeIdx ? "" : "scale-93 blur-[2px]"
               }`}
             >
@@ -227,30 +217,8 @@ export default function RecordPage({
         </div>
       </div>
 
-      {/* ── 하단 네비게이션 (이 화면 전용 사본, 기록 탭 활성) ────── */}
-      <div className="pointer-events-none fixed bottom-0 left-1/2 z-100 flex w-107.5 max-w-full -translate-x-1/2 justify-center px-4 pb-4.5">
-        <nav className="pointer-events-auto w-99.5 max-w-full rounded-[100px] border border-white/8 bg-black/30 p-4 backdrop-blur-sm backdrop-saturate-140">
-          <ul className="flex h-13.25 items-center justify-between">
-            {navTabs.map((t) => (
-              <li key={t.key}>
-                <button
-                  type="button"
-                  className={`flex w-12.75 flex-col items-center gap-1.25 text-center text-[12px] tracking-[-0.24px] whitespace-nowrap ${
-                    t.active ? "font-semibold text-primary-lime" : "font-medium text-white"
-                  }`}
-                  onClick={() => {
-                    // 홈 탭은 메인 페이지(index.html)로 이동한다.
-                    if (t.key === "home") window.location.href = import.meta.env.BASE_URL;
-                  }}
-                >
-                  <img className="h-7 w-7.5" src={t.icon} alt="" />
-                  <span>{t.label}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
+      {/* ── 하단 네비게이션 (홈/피드/마이와 공통 컴포넌트 사용) ────── */}
+      <BottomNav active="record" onNavigate={onTabNavigate} />
     </div>
   );
 }
