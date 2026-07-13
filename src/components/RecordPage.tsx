@@ -102,7 +102,7 @@ export default function RecordPage({
     <div className="relative flex flex-1 flex-col overflow-hidden">
       {/* Map backdrop: fades in from black at the top, dark vignette at the edges */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-52.5 bottom-0 z-0 bg-cover bg-center bg-no-repeat before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_60%_50%_at_center,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.85)_60%,rgba(0,0,0,0.95)_100%)] after:absolute after:inset-x-0 after:top-0 after:h-35 after:bg-linear-to-b after:from-black after:from-19% after:to-black/0"
+        className="pointer-events-none absolute inset-x-0 top-52.5 bottom-0 z-0 bg-cover bg-center bg-no-repeat before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_60%_50%_at_center,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.7)_60%,rgba(0,0,0,0.85)_100%)] after:absolute after:inset-x-0 after:top-0 after:h-35 after:bg-linear-to-b after:from-black after:from-19% after:to-black/0"
         style={{ backgroundImage: `url(${recordMapImg})` }}
         aria-hidden
       />
@@ -143,7 +143,7 @@ export default function RecordPage({
           {recommendedCourses.map((c, i) => (
             <article
               key={c.id}
-              className={`relative flex h-35 w-82.5 flex-none snap-center items-end gap-3.5 rounded-card bg-elevated pt-5.5 pr-4.5 pb-5.75 pl-4.25 transition-[filter,scale] duration-250 ease-[ease] ${
+              className={`relative flex h-35 w-82.5 flex-none snap-center items-end gap-3.5 overflow-hidden rounded-card border border-white/15 bg-elevated/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md backdrop-saturate-140 transition-[filter,scale] duration-250 ease-[ease] before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:bg-linear-to-br before:from-white/10 before:via-white/2 before:to-transparent pt-5.5 pr-4.5 pb-5.75 pl-4.25 ${
                 i === activeIdx ? "" : "scale-93 blur-[2px]"
               }`}
             >
@@ -229,7 +229,7 @@ export default function RecordPage({
 
       {/* ── 하단 네비게이션 (이 화면 전용 사본, 기록 탭 활성) ────── */}
       <div className="pointer-events-none fixed bottom-0 left-1/2 z-100 flex w-107.5 max-w-full -translate-x-1/2 justify-center px-4 pb-4.5">
-        <nav className="pointer-events-auto w-99.5 max-w-full rounded-[100px] border border-white/8 bg-black/30 p-4 backdrop-blur-sm backdrop-saturate-140">
+        <nav className="pointer-events-auto w-99.5 max-w-full rounded-[100px] border border-white/10 bg-black/30 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl backdrop-saturate-150">
           <ul className="flex h-13.25 items-center justify-between">
             {navTabs.map((t) => (
               <li key={t.key}>

@@ -2,7 +2,7 @@ import { heroData } from "../data";
 import route from "../assets/icons/route.svg";
 import "./HeroSection.css";
 
-export default function HeroSection() {
+export default function HeroSection({ onStartRecord }: { onStartRecord?: () => void }) {
   return (
     <section className="hero">
       <div className="hero__card">
@@ -26,7 +26,7 @@ export default function HeroSection() {
         </ul>
       </div>
 
-      <button className="hero__cta" type="button">
+      <button className="hero__cta" type="button" onClick={onStartRecord}>
         오늘 기록 시작하기
       </button>
     </section>

@@ -32,6 +32,17 @@
       opacity: 1;
     }
   }
+
+  /* 음악 플레이어 곡명 마퀴: 왼쪽으로 흘러가며 무한 반복.
+     텍스트를 두 벌 이어붙인 트랙을 -50%(한 벌 길이)만큼 밀면
+     끊김 없이 이어져 보인다. 재생 중이 아닐 땐 play-state로 멈춘다. */
+  --animate-music-marquee: music-marquee 9s linear infinite;
+
+  @keyframes music-marquee {
+    to {
+      translate: -50% 0;
+    }
+  }
 }
 
 @layer base {
