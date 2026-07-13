@@ -1,5 +1,7 @@
 import iconChatbot from "../assets/icons/header-chatbot.svg";
+import iconSparkle from "../assets/icons/sparkle.svg";
 import runMapImg from "../assets/img/run-map.png";
+import MusicPlayerBar from "./MusicPlayerBar";
 
 const formatTime = (total: number) =>
   `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
@@ -21,13 +23,22 @@ type Props = {
   paused: boolean;
   onTogglePause: () => void;
   onBack: () => void;
+  onMusicConnect?: () => void;
+  musicConnected?: boolean;
 };
 
 // ── 기록 — 지도(음악x) (Figma 411:5420) ─────────────────────
 // 러닝 화면에서 코스 칩을 누르면 나오는 지도 뷰. 타이머 상태는
 // RunningPage가 소유하므로 지도를 보는 동안에도 초가 계속 오른다.
 // 위치 값은 시안 좌표에서 상태바(47px)를 뺀 기준.
-export default function RunningMapPage({ seconds, paused, onTogglePause, onBack }: Props) {
+export default function RunningMapPage({
+  seconds,
+  paused,
+  onTogglePause,
+  onBack,
+  onMusicConnect,
+  musicConnected,
+}: Props) {
   return (
     <div className="relative flex-1 overflow-hidden">
       {/* 지도 배경 + 상하 스크림 */}
@@ -76,8 +87,13 @@ export default function RunningMapPage({ seconds, paused, onTogglePause, onBack 
         <Stat value="156" label="BPM" />
       </div>
 
-      {/* 현재 위치 마커 */}
-      <span className="absolute top-[42%] left-[43%] size-6 rounded-full bg-primary-orange" />
+      {/* 현재 위치 마커 — 피그마와 같은 링 달린 마커 */}
+      <img
+        className="absolute top-[42%] left-[40%] size-6"
+        src={iconSparkle}
+        alt=""
+        aria-hidden
+      />
 
       {/* 챗봇 · 일시정지 */}
       <div className="absolute bottom-43 left-1/2 flex -translate-x-1/2 flex-col items-center gap-5">
@@ -90,7 +106,7 @@ export default function RunningMapPage({ seconds, paused, onTogglePause, onBack 
         </button>
         <button
           type="button"
-          className="grid size-30 place-items-center rounded-full border-2 border-white bg-black active:scale-[0.97]"
+          className="grid size-30 place-items-center rounded-full border-2 border-primary-lime bg-black active:scale-[0.97]"
           aria-label={paused ? "재개" : "일시정지"}
           onClick={onTogglePause}
         >
@@ -107,12 +123,17 @@ export default function RunningMapPage({ seconds, paused, onTogglePause, onBack 
         </button>
       </div>
 
-      <button
-        type="button"
-        className="absolute bottom-16.25 left-1/2 h-16.75 w-87.5 max-w-[calc(100%-36px)] -translate-x-1/2 rounded-lg bg-black text-[18px] leading-[1.3] tracking-[-0.54px] text-white"
-      >
-        음악 연결하기
-      </button>
+      {musicConnected ? (
+        <MusicPlayerBar onMap className="absolute bottom-17 left-1/2 -translate-x-1/2" />
+      ) : (
+        <button
+          type="button"
+          className="absolute bottom-16.25 left-1/2 h-16.75 w-87.5 max-w-[calc(100%-36px)] -translate-x-1/2 rounded-lg bg-black text-[18px] leading-[1.3] tracking-[-0.54px] text-white"
+          onClick={onMusicConnect}
+        >
+          음악 연결하기
+        </button>
+      )}
     </div>
   );
 }

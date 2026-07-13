@@ -124,7 +124,12 @@ export default function App() {
         <FeedPage />
       ) : (
         <main className="home">
-          <HeroSection />
+          {/* 오늘 기록 시작하기 → 기록 페이지로 넘어가 바로 카운트다운 시작 */}
+          <HeroSection
+            onStartRecord={() => {
+              window.location.href = `${import.meta.env.BASE_URL}record.html?start=1`;
+            }}
+          />
           <CourseSection
             onOpenNearby={() => {
               setCourseExploreKind("nearby");
