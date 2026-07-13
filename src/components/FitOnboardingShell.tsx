@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { StatusBar } from "./TopBars";
+import { StatusBarArea } from "./TopBars";
 
 export default function FitOnboardingShell({
   step,
@@ -24,7 +24,7 @@ export default function FitOnboardingShell({
 }) {
   return (
     <div className="self-start w-full max-w-[var(--frame-width)] min-h-dvh mx-auto bg-[var(--bg-app)] flex flex-col">
-      <StatusBar />
+      <StatusBarArea />
 
       <div className="flex-1 flex flex-col px-[var(--gutter)]">
         <div className="flex items-center justify-between h-10 mt-2 [@media(max-height:700px)]:mt-1">

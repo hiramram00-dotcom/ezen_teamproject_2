@@ -1,4 +1,4 @@
-import { StatusBar } from "./TopBars";
+import { StatusBarArea } from "./TopBars";
 import BrandLogo from "./BrandLogo";
 import type { OnboardingSlideData } from "../onboardingData";
 
@@ -16,7 +16,7 @@ export default function OnboardingSlide({ image, imageAlt, eyebrow, titleLines, 
       <div className="absolute inset-x-0 top-0 h-[22%] bg-gradient-to-b from-black/60 to-transparent pointer-events-none" />
 
       <div className="absolute inset-x-0 top-0 z-[2]">
-        <StatusBar />
+        <StatusBarArea />
       </div>
 
       <BrandLogo className="absolute top-[58px] left-[var(--gutter)] z-[2]" />

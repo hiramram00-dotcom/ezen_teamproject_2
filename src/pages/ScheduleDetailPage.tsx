@@ -1,4 +1,4 @@
-import { StatusBar } from "../components/TopBars";
+import { StatusBarArea } from "../components/TopBars";
 import { ChevronRight } from "../components/Icons";
 import scheduleImage from "../assets/img/schedule-hero.webp";
 import runner1 from "../assets/img/runner1.webp";
@@ -74,7 +74,7 @@ function CheckIcon() {
 export default function ScheduleDetailPage({ onBack }: Props) {
   return (
     <div className="phone min-h-screen bg-[#0a0a0a] text-white [&_.statusbar]:h-[52px] [&_.statusbar]:bg-[#0a0a0a] [&_.statusbar]:px-[26px]">
-      <StatusBar />
+      <StatusBarArea />
       <header className="flex h-[58px] items-center justify-between px-[var(--gutter)]">
         <button className="grid h-[26px] w-[26px] place-items-center text-white" type="button" onClick={onBack} aria-label="뒤로가기">
           <BackIcon />
