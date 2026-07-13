@@ -21,7 +21,9 @@ function SwipeButton({ label, onComplete, hidden }: { label: string; onComplete?
     icon.style.transition = animate ? 'transform 0.3s ease' : 'none';
     labelEl.style.transition = animate ? 'opacity 0.3s ease' : 'none';
     
-    icon.style.transform = `translate(${x}px, -50%)`;
+    // 세로 중앙 정렬은 -translate-y-1/2(Tailwind translate 속성)가 처리하므로
+    // 인라인 transform 은 가로 이동만 담당한다. (세로 -50% 를 중복 적용하면 노브가 위로 튀어오름)
+    icon.style.transform = `translateX(${x}px)`;
     labelEl.style.opacity = `${1 - (x / max)}`;
   };
 
