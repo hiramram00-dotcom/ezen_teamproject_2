@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { initDragScroll } from "./dragScroll";
-import { AppHeader } from "./components/TopBars";
+import { AppHeader, StatusBarArea } from "./components/TopBars";
 import HeroSection from "./components/HeroSection";
 import CourseSection from "./components/CourseSection";
 import CourseExplorePage from "./components/CourseExplorePage";
@@ -134,6 +134,7 @@ export default function App() {
 
   return (
     <div className="phone">
+      <StatusBarArea />
       <AppHeader
         variant={page === "my" ? "settings" : page === "feed" ? "feed" : "default"}
         onSettingsClick={() => setPage("settings")}

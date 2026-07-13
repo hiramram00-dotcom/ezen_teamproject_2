@@ -1,4 +1,4 @@
-import { StatusBar } from "../components/TopBars";
+import { StatusBarArea } from "../components/TopBars";
 import raceHero from "../assets/img/race1.webp";
 
 type Props = {
@@ -63,7 +63,7 @@ function RouteMiniMap() {
 export default function RaceDetailPage({ onBack }: Props) {
   return (
     <div className="phone min-h-screen bg-black text-[#f6f6ed] [&_.statusbar]:h-[52px] [&_.statusbar]:bg-black [&_.statusbar]:px-[26px]">
-      <StatusBar />
+      <StatusBarArea />
       <header className="relative flex h-[66px] items-center justify-between px-[var(--gutter)]">
         <button className="grid h-6 w-6 place-items-center text-[#f6f6ed]" type="button" onClick={onBack} aria-label="뒤로가기">
           <BackIcon />
