@@ -46,9 +46,11 @@ const relatedArticles = [
 ];
 
 const products = [
-  { image: shoeNike, brand: "NIKE", name: "에어 줌 페가수스 41", price: "149,000원" },
-  { image: shoeAdidas, brand: "ADIDAS", name: "아디제로 SL 2", price: "129,000원" },
-  { image: shoeHoka, brand: "HOKA", name: "클리프턴 9", price: "179,000원" },
+  // objectPositionY: 각 상품 사진에서 신발이 실제로 위치한 세로 중심(측정값 기반)에
+  // 맞춰서, 잘리지 않으면서도 카드를 꽉 채우도록 개별 보정한 값.
+  { image: shoeNike, brand: "NIKE", name: "에어 줌 페가수스 41", price: "149,000원", objectPositionY: "55%" },
+  { image: shoeAdidas, brand: "ADIDAS", name: "아디제로 SL 2", price: "129,000원", objectPositionY: "100%" },
+  { image: shoeHoka, brand: "HOKA", name: "클리프턴 9", price: "179,000원", objectPositionY: "85%" },
 ];
 
 const sectionTitleClass = "text-[24px] font-semibold leading-[1.3] tracking-[-0.48px] text-white";
@@ -224,7 +226,8 @@ export default function MagazineDetailPage({ onBack }: Props) {
               >
                 <div className="relative h-[110px] w-full overflow-hidden bg-[#f5f4f2]">
                   <img
-                    className="absolute left-1/2 top-1/2 h-[220%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-cover"
+                    className="h-full w-full object-cover"
+                    style={{ objectPosition: `center ${p.objectPositionY}` }}
                     src={p.image}
                     alt={`${p.brand} ${p.name}`}
                   />
