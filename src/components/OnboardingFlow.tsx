@@ -21,7 +21,9 @@ function SwipeButton({ label, onComplete, hidden }: { label: string; onComplete?
     icon.style.transition = animate ? 'transform 0.3s ease' : 'none';
     labelEl.style.transition = animate ? 'opacity 0.3s ease' : 'none';
     
-    icon.style.transform = `translate(${x}px, -50%)`;
+    // 세로 중앙 정렬은 -translate-y-1/2(Tailwind translate 속성)가 처리하므로
+    // 인라인 transform 은 가로 이동만 담당한다. (세로 -50% 를 중복 적용하면 노브가 위로 튀어오름)
+    icon.style.transform = `translateX(${x}px)`;
     labelEl.style.opacity = `${1 - (x / max)}`;
   };
 
@@ -95,8 +97,11 @@ export default function OnboardingFlow({ onComplete }: { onComplete?: () => void
   const [active, setActive] = useState(0);
 
   // 온보딩 슬라이더 전용 제스처 (공용 dragScroll 미사용):
-  // - 드래그: 이동량과 무관하게 한 제스처당 최대 한 장만 넘어감 (60px 문턱)
-  // - 탭: 오른쪽 절반 = 다음 장, 왼쪽 절반 = 이전 장 (8px 이상 움직이면 드래그로 판정, 탭 무시)
+  // - 마우스 드래그: 드래그 중에는 화면을 움직이지 않고, 놓는 순간 ±1장만 이동.
+  //   (드래그 중 scrollLeft를 직접 조작하면 놓는 순간 브라우저의 스냅 복원
+  //   애니메이션과 scrollTo가 서로 싸워서 뚝 끊김 — 애니메이션 소스를 하나로 유지)
+  // - 터치: 네이티브 스크롤 + 슬라이드의 snap-always가 한 장씩 멈춤을 보장
+  // - 탭: 오른쪽 절반 = 다음 장, 왼쪽 절반 = 이전 장 (8px 이상 움직이면 드래그로 판정)
   useEffect(() => {
     const el = viewportRef.current;
     if (!el) return;
@@ -104,7 +109,6 @@ export default function OnboardingFlow({ onComplete }: { onComplete?: () => void
     let isDown = false;
     let didDrag = false;
     let startX = 0;
-    let startLeft = 0;
     let startIndex = 0;
     let suppressTap = false;
     let suppressTimer: number | undefined;
@@ -120,20 +124,15 @@ export default function OnboardingFlow({ onComplete }: { onComplete?: () => void
       isDown = true;
       didDrag = false;
       startX = e.pageX;
-      startLeft = el.scrollLeft;
-      startIndex = Math.round(startLeft / slideW());
+      startIndex = Math.round(el.scrollLeft / slideW());
     };
 
     const onMove = (e: MouseEvent) => {
       if (!isDown) return;
-      const dx = e.pageX - startX;
-      if (Math.abs(dx) > 8) {
+      if (Math.abs(e.pageX - startX) > 8) {
         didDrag = true;
-        el.classList.add("dragging");
+        el.classList.add("dragging"); // grabbing 커서 피드백만 (화면은 안 움직임)
       }
-      // 손가락을 따라가되 이웃 장 범위(±1장)까지만
-      const clamped = Math.max(-slideW(), Math.min(slideW(), dx));
-      el.scrollLeft = startLeft - clamped;
     };
 
     const onUp = (e: MouseEvent) => {
@@ -143,7 +142,7 @@ export default function OnboardingFlow({ onComplete }: { onComplete?: () => void
       if (!didDrag) return;
       const dx = e.pageX - startX;
       const step = dx <= -60 ? 1 : dx >= 60 ? -1 : 0;
-      goTo(startIndex + step);
+      if (step !== 0) goTo(startIndex + step);
       // 드래그 직후 발생하는 잔여 click이 탭으로 오인되지 않게 잠시 억제
       suppressTap = true;
       window.clearTimeout(suppressTimer);
