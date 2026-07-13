@@ -4,7 +4,8 @@ import type { OnboardingSlideData } from "../onboardingData";
 
 export default function OnboardingSlide({ image, imageAlt, eyebrow, titleLines, descLines }: OnboardingSlideData) {
   return (
-    <div className="relative shrink-0 grow-0 basis-full w-full h-full overflow-hidden bg-black snap-start">
+    // snap-always: 터치 플링이 아무리 세도 다음 슬라이드에서 반드시 멈춤 (건너뛰기 방지)
+    <div className="relative shrink-0 grow-0 basis-full w-full h-full overflow-hidden bg-black snap-start snap-always">
       <img
         className="absolute inset-0 w-full h-full object-cover object-[90%_center] [-webkit-user-drag:none] select-none"
         src={image}
