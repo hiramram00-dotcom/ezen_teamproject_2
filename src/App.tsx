@@ -102,6 +102,7 @@ export default function App() {
         <RecordFlow
           autoStart={recordAutoStart}
           onBack={() => setPage("home")}
+          onChatbot={() => setPage("chatbot")}
           onTabNavigate={(key) => {
             if (key === "record") return;
             setRecordAutoStart(false);

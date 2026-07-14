@@ -11,18 +11,47 @@ export type ChipItem = { label: string; prompt: string };
 // ── 블록 종류 (필요하면 여기에 추가) ──────────────────────────
 export type TextBlock = { type: "text"; text: string };
 export type ChipsBlock = { type: "chips"; items: ChipItem[] };
-export type LoadingBlock = { type: "loading" }; // "러니가 …하고 있어요"
-/** 대회/코스 등 리치 카드 — 뼈대: 최소 필드만. 추후 실제 데이터 스키마로 확장. */
-export type CardBlock = {
-  type: "card";
-  variant?: "race" | "course";
+export type LoadingBlock = { type: "loading"; label?: string }; // "러니가 …하고 있어요"
+
+/** 대회/코스 카드 (가로 스크롤 카드 로우) — 목업 03(대회)/09(크루) */
+export type RaceCard = {
+  badge?: string; // 예: "D-3", "모집중"
   title: string;
-  meta?: string;
-  badge?: string; // 예: "D-3"
+  meta?: string; // 예: "07-25(토) · 10km · 접수중"
   image?: string;
 };
+export type CardsBlock = { type: "cards"; variant: "race" | "crew"; items: RaceCard[] };
 
-export type MessageBlock = TextBlock | ChipsBlock | LoadingBlock | CardBlock;
+/** 지도 코스 카드 — 목업 06 (GPS 아트) */
+export type MapCardBlock = {
+  type: "mapCard";
+  title: string;
+  meta?: string; // 예: "4.6km · 쉬움 · 예상 32분"
+  image?: string; // 지도 썸네일
+};
+
+/** 진행 배너 — 목업 04 (회고 인터뷰 3/5) */
+export type ProgressBlock = { type: "progress"; title: string; step: number; total: number };
+
+/** 케어/경고 카드 — 목업 07 (무리 말리기) */
+export type CareCardBlock = {
+  type: "careCard";
+  text: string;
+  stats?: { label: string; value: string; warn?: boolean }[];
+};
+
+/** 에러 + 재시도 — 목업 08 */
+export type ErrorBlock = { type: "error"; text: string };
+
+export type MessageBlock =
+  | TextBlock
+  | ChipsBlock
+  | LoadingBlock
+  | CardsBlock
+  | MapCardBlock
+  | ProgressBlock
+  | CareCardBlock
+  | ErrorBlock;
 
 export type ChatMessage = {
   role: "user" | "assistant";
