@@ -34,12 +34,13 @@ export default function RunningPage({ onEnd, onBack }: { onEnd?: () => void; onB
   const [view, setView] = useState<"stats" | "map">("stats");
   const [musicOpen, setMusicOpen] = useState(false);
   const [musicConnected, setMusicConnected] = useState(false);
+  const [confirmExit, setConfirmExit] = useState(false);
 
   useEffect(() => {
-    if (paused) return;
+    if (paused || confirmExit) return;
     const timer = setInterval(() => setSeconds((s) => s + 1), 1000);
     return () => clearInterval(timer);
-  }, [paused]);
+  }, [paused, confirmExit]);
 
   // 지도/일시정지/음악 뷰로 바꿔도 이 컴포넌트가 유지되므로 타이머 상태가 이어진다.
   // 음악 화면을 닫으면 열기 직전 뷰(스탯/지도/일시정지)로 그대로 돌아간다.
@@ -85,11 +86,42 @@ export default function RunningPage({ onEnd, onBack }: { onEnd?: () => void; onB
       <button
         type="button"
         aria-label="뒤로가기"
-        onClick={onBack}
+        onClick={() => setConfirmExit(true)}
         className="absolute top-[18px] left-[18px] z-10 grid h-6 w-6 shrink-0 place-items-center text-white"
       >
         <ChevronLeft size={24} />
       </button>
+
+      {/* 뒤로가기 → 러닝 중단 확인 (카운트다운 화면과 동일 패턴) */}
+      {confirmExit && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/70">
+          <div className="w-85 rounded-3xl border border-pill-border bg-elevated px-6 pt-[67.5px] pb-8.5">
+            <p className="text-center text-[20px] font-bold leading-[1.3] text-[var(--text-strong)]">
+              벌써 그만 두시게요?
+            </p>
+            <p className="mt-4 text-center text-[14px] leading-[1.4] text-white/65">
+              신발끈까지 다 묶었는데!
+              <br />
+              오늘 목표까지 딱 한 걸음이에요
+            </p>
+            <button
+              type="button"
+              onClick={() => setConfirmExit(false)}
+              className="mt-6.5 h-13 w-full rounded-full bg-primary-lime text-[16px] font-semibold text-[#0f120c]"
+            >
+              계속 달릴래요
+            </button>
+            <button
+              type="button"
+              onClick={onBack}
+              className="mt-2.5 h-11 w-full text-[14px] text-white/50"
+            >
+              그만할래요
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* 진행 중인 코스 칩 */}
       <button
         type="button"
