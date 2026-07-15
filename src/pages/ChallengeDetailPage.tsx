@@ -1,4 +1,4 @@
-import { ChevronLeft } from "../components/Icons";
+import { BackButton } from "../components/Icons";
 import challengeHero from "../assets/img/challenge1.webp";
 
 type Props = {
@@ -70,14 +70,7 @@ export default function ChallengeDetailPage({ onBack }: Props) {
   return (
     <div className="phone bg-[#040405] text-[#f6f6ed]">
       <header className="subheader justify-between">
-        <button
-          className="grid h-6 w-6 shrink-0 place-items-center text-[#f6f6ed]"
-          type="button"
-          onClick={onBack}
-          aria-label="뒤로가기"
-        >
-          <ChevronLeft size={24} />
-        </button>
+        <BackButton onClick={onBack} />
         <h1 className="text-center text-[20px] font-medium leading-[1.3] tracking-[-0.6px] text-[#f6f6ed]">
           챌린지
         </h1>

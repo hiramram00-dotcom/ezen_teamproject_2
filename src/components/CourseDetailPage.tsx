@@ -1,5 +1,5 @@
 import { courseDetailPages, type CourseDetailKind } from "../data";
-import { ChevronLeft } from "./Icons";
+import { BackButton } from "./Icons";
 import "./CourseDetailPage.css";
 
 type Props = {
@@ -18,9 +18,7 @@ export default function CourseDetailPage({ onBack, kind }: Props) {
 
       <div className="course-detail__header-gradient" aria-hidden />
       <header className="course-detail__header">
-        <button className="course-detail__back" type="button" aria-label="추천 코스로 돌아가기" onClick={onBack}>
-          <ChevronLeft size={26} />
-        </button>
+        <BackButton onClick={onBack} label="추천 코스로 돌아가기" />
       </header>
 
       <main className="course-detail__content">

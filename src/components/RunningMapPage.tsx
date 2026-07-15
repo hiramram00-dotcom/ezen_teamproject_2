@@ -2,6 +2,7 @@ import iconChatbot from "../assets/icons/header-chatbot.svg";
 import iconSparkle from "../assets/icons/sparkle.svg";
 import runMapImg from "../assets/img/run-map.png";
 import MusicPlayerBar from "./MusicPlayerBar";
+import { BackButton } from "./Icons";
 
 const formatTime = (total: number) =>
   `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
@@ -59,22 +60,10 @@ export default function RunningMapPage({
       />
 
       {/* 뒤로가기 (러닝 화면으로) */}
-      <button
-        type="button"
-        className="absolute top-[calc(var(--statusbar-h)+46px)] left-3.5 grid size-7.5 place-items-center text-white"
-        aria-label="뒤로가기"
+      <BackButton
         onClick={onBack}
-      >
-        <svg width={12} height={22} viewBox="0 0 12 22" fill="none" aria-hidden>
-          <path
-            d="M11 1L1 11l10 10"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
+        className="absolute top-[calc(var(--statusbar-h)+46px)] left-3.5 z-10"
+      />
 
       {/* 진행 거리 / 목표 거리 */}
       <p className="absolute top-[calc(var(--statusbar-h)+37px)] left-17.25 flex items-baseline gap-1.5 leading-[0.95] whitespace-nowrap">

@@ -4,7 +4,7 @@ import RunningMapPage from "./RunningMapPage";
 import MusicConnectPage from "./MusicConnectPage";
 import MusicPlayerBar from "./MusicPlayerBar";
 import PausedRunPage from "./PausedRunPage";
-import { ChevronLeft } from "./Icons";
+import { BackButton } from "./Icons";
 
 const START_SECONDS = 16 * 60 + 47; // 디자인 시안의 16:47부터 시작
 
@@ -94,14 +94,10 @@ export default function RunningPage({
   return (
     // 상단 콘텐츠(코스칩~스탯)를 상태바 높이만큼 내림 (모바일 0 / 웹 52px)
     <div className="relative flex flex-1 flex-col items-center bg-[#1b1b1b] pt-[var(--statusbar-h)] pb-17.25">
-      <button
-        type="button"
-        aria-label="뒤로가기"
+      <BackButton
         onClick={() => setConfirmExit(true)}
-        className="absolute top-[calc(var(--statusbar-h)+18px)] left-[18px] z-10 grid h-6 w-6 shrink-0 place-items-center text-white"
-      >
-        <ChevronLeft size={24} />
-      </button>
+        className="absolute top-[calc(var(--statusbar-h)+18px)] left-[18px] z-10"
+      />
 
       {/* 뒤로가기 → 러닝 중단 확인 (카운트다운 화면과 동일 패턴) */}
       {confirmExit && (
