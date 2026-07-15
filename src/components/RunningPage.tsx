@@ -92,12 +92,13 @@ export default function RunningPage({
   }
 
   return (
-    <div className="relative flex flex-1 flex-col items-center bg-[#1b1b1b] pb-17.25">
+    // 상단 콘텐츠(코스칩~스탯)를 상태바 높이만큼 내림 (모바일 0 / 웹 52px)
+    <div className="relative flex flex-1 flex-col items-center bg-[#1b1b1b] pt-[var(--statusbar-h)] pb-17.25">
       <button
         type="button"
         aria-label="뒤로가기"
         onClick={() => setConfirmExit(true)}
-        className="absolute top-[18px] left-[18px] z-10 grid h-6 w-6 shrink-0 place-items-center text-white"
+        className="absolute top-[calc(var(--statusbar-h)+18px)] left-[18px] z-10 grid h-6 w-6 shrink-0 place-items-center text-white"
       >
         <ChevronLeft size={24} />
       </button>

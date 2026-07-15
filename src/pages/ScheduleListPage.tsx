@@ -1,5 +1,3 @@
-import { StatusBarArea } from "../components/TopBars";
-
 type Props = {
   onBack: () => void;
   onOpenSchedule: () => void;
@@ -145,7 +143,6 @@ export default function ScheduleListPage({ onBack, onOpenSchedule }: Props) {
 
   return (
     <div className="phone bg-[#0a0a0a] text-white">
-      <StatusBarArea />
       <header className="subheader">
         <button className="grid h-[26px] w-[26px] place-items-center text-white" type="button" onClick={onBack} aria-label="뒤로가기">
           <BackIcon />

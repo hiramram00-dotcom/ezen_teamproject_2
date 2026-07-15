@@ -1,6 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
-import { StatusBarArea } from "../components/TopBars";
-import runner1 from "../assets/img/runner1.webp";
+import type { CSSProperties, ReactNode } from "react";import runner1 from "../assets/img/runner1.webp";
 import runner2 from "../assets/img/runner2.webp";
 import runner3 from "../assets/img/runner3.webp";
 import runner4 from "../assets/img/runner4.webp";
@@ -171,7 +169,6 @@ function ProfileRow({ item }: { item: ProfileItem }) {
 export default function RunnerExplorePage({ onBack }: Props) {
   return (
     <div className="phone bg-black text-[var(--text-primary)]">
-      <StatusBarArea />
       <header className="subheader justify-center">
         <button
           className="absolute left-[18px] top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center text-white"
