@@ -9,7 +9,7 @@ import iconMusic from "../assets/icons/music.svg";
 import iconSparkle from "../assets/icons/sparkle.svg";
 import recordCourseImg from "../assets/img/record-course.png";
 import recordMapImg from "../assets/img/record-map.png";
-import { ChevronLeft } from "./Icons";
+import { BackButton } from "./Icons";
 
 const recommendedCourses = [
   {
@@ -102,14 +102,7 @@ export default function RecordPage({
       {/* 상단 여백 = 상태바 높이 + 기존 12px (배경 맵은 그대로 풀블리드, UI만 상태바 아래로) */}
       <header className="relative z-1 mb-3 mt-[calc(var(--statusbar-h)+12px)] flex h-13 items-center justify-between px-4.5">
         <div className="flex items-center">
-          <button
-            type="button"
-            aria-label="홈으로 가기"
-            onClick={onBack}
-            className="mr-3 flex items-center text-white"
-          >
-            <ChevronLeft size={26} />
-          </button>
+          <BackButton onClick={onBack} label="홈으로 가기" className="mr-3" />
           <div className="flex h-[21.6px] items-center gap-[4.6px]" aria-label="W:RUN">
             <img className="h-[21.44px] w-[17.1px]" src={logoW} alt="" />
             {/* The lime ":" rendered as three stacked dots, per the Figma logo */}

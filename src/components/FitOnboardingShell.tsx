@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";export default function FitOnboardingShell({
+import type { ReactNode } from "react";import { BackButton } from "./Icons";
+export default function FitOnboardingShell({
   step,
   title,
   subtitle,
@@ -27,16 +28,7 @@ import type { ReactNode } from "react";export default function FitOnboardingShe
           flex-1 스페이서가 차이를 흡수해 제자리에 유지된다. (모바일 0 / 웹 52px) */}
       <div className="flex-1 flex flex-col px-[var(--gutter)] pt-[var(--statusbar-h)]">
         <div className="flex items-center justify-between h-10 mt-2 [@media(max-height:700px)]:mt-1">
-          <button
-            className="w-8 h-8 flex items-center justify-center -ml-[6px] text-white"
-            type="button"
-            onClick={onBack}
-            aria-label="뒤로가기"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
+          <BackButton onClick={onBack} className="-ml-[6px]" />
 
           <div className="flex items-center gap-[6px] text-[13px] font-bold tracking-[0.5px]" aria-hidden>
             <span className={step === 1 ? "text-primary-lime" : "text-[var(--text-muted)]"}>01</span>

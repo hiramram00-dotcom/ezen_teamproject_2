@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";import { settingsGroups, defaultSettingsToggles } from "../data";
-import chevronLeft from "../assets/icons/settings-chevron-left.svg";
+import { BackButton } from "../components/Icons";
 import chevronRight from "../assets/icons/settings-chevron-right.svg";
 
 type Props = {
@@ -12,14 +12,7 @@ export default function SettingsPage({ onBack }: Props) {
   return (
     <div className="flex flex-col bg-[var(--bg-app)]">
       <header className="subheader gap-3">
-        <button
-          type="button"
-          className="flex-none w-[26px] h-[26px]"
-          onClick={onBack}
-          aria-label="뒤로가기"
-        >
-          <img className="w-full h-full" src={chevronLeft} alt="" />
-        </button>
+        <BackButton onClick={onBack} />
         <h1 className="absolute left-1/2 -translate-x-1/2 text-2xl font-semibold tracking-[-0.48px] text-white">
           설정
         </h1>
