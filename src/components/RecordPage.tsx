@@ -99,7 +99,8 @@ export default function RecordPage({
         aria-hidden
       />
 
-      <header className="relative z-1 my-3 flex h-13 items-center justify-between px-4.5">
+      {/* 상단 여백 = 상태바 높이 + 기존 12px (배경 맵은 그대로 풀블리드, UI만 상태바 아래로) */}
+      <header className="relative z-1 mb-3 mt-[calc(var(--statusbar-h)+12px)] flex h-13 items-center justify-between px-4.5">
         <div className="flex items-center">
           <button
             type="button"

@@ -1,4 +1,3 @@
-import { StatusBarArea } from "../components/TopBars";
 import { ChevronRight } from "../components/Icons";
 import scheduleImage from "../assets/img/schedule-hero.webp";
 import runner1 from "../assets/img/runner1.webp";
@@ -74,7 +73,6 @@ function CheckIcon() {
 export default function ScheduleDetailPage({ onBack }: Props) {
   return (
     <div className="phone bg-[#0a0a0a] text-white">
-      <StatusBarArea />
       <header className="subheader justify-between">
         <button className="grid h-[26px] w-[26px] place-items-center text-white" type="button" onClick={onBack} aria-label="뒤로가기">
           <BackIcon />

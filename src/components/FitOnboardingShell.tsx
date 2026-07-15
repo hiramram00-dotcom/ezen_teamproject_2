@@ -1,7 +1,4 @@
-import type { ReactNode } from "react";
-import { StatusBarArea } from "./TopBars";
-
-export default function FitOnboardingShell({
+import type { ReactNode } from "react";export default function FitOnboardingShell({
   step,
   title,
   subtitle,
@@ -26,9 +23,9 @@ export default function FitOnboardingShell({
     // min-h-full = 폰 프레임 높이 기준 (min-h-dvh 는 브라우저 창 기준이라 프레임을 넘쳐 스크롤을 만들었음).
     // 콘텐츠가 프레임보다 길어지는 예외 상황에만 그만큼 스크롤이 생긴다.
     <div className="self-start w-full max-w-[var(--frame-width)] min-h-full mx-auto bg-[var(--bg-app)] flex flex-col">
-      <StatusBarArea />
-
-      <div className="flex-1 flex flex-col px-[var(--gutter)]">
+      {/* 상단(뒤로가기·진행표시~선택지)만 상태바 높이만큼 내림. 하단 버튼은 그 아래
+          flex-1 스페이서가 차이를 흡수해 제자리에 유지된다. (모바일 0 / 웹 52px) */}
+      <div className="flex-1 flex flex-col px-[var(--gutter)] pt-[var(--statusbar-h)]">
         <div className="flex items-center justify-between h-10 mt-2 [@media(max-height:700px)]:mt-1">
           <button
             className="w-8 h-8 flex items-center justify-center -ml-[6px] text-white"

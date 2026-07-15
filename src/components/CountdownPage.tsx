@@ -25,7 +25,7 @@ export default function CountdownPage({ onDone, onBack }: { onDone: () => void; 
         type="button"
         aria-label="뒤로가기"
         onClick={() => setConfirmExit(true)}
-        className="absolute top-[18px] left-[18px] z-10 grid h-6 w-6 shrink-0 place-items-center text-[#131408]"
+        className="absolute top-[calc(var(--statusbar-h)+18px)] left-[18px] z-10 grid h-6 w-6 shrink-0 place-items-center text-[#131408]"
       >
         <ChevronLeft size={24} />
       </button>

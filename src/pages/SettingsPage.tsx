@@ -1,6 +1,4 @@
-import { Fragment, useState } from "react";
-import { StatusBarArea } from "../components/TopBars";
-import { settingsGroups, defaultSettingsToggles } from "../data";
+import { Fragment, useState } from "react";import { settingsGroups, defaultSettingsToggles } from "../data";
 import chevronLeft from "../assets/icons/settings-chevron-left.svg";
 import chevronRight from "../assets/icons/settings-chevron-right.svg";
 
@@ -13,7 +11,6 @@ export default function SettingsPage({ onBack }: Props) {
 
   return (
     <div className="flex flex-col bg-[var(--bg-app)]">
-      <StatusBarArea />
       <header className="subheader gap-3">
         <button
           type="button"

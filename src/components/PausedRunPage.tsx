@@ -66,7 +66,7 @@ export default function PausedRunPage({
         type="button"
         aria-label="뒤로가기"
         onClick={onBack}
-        className="absolute top-[18px] left-[18px] z-10 grid h-6 w-6 shrink-0 place-items-center text-white"
+        className="absolute top-[calc(var(--statusbar-h)+18px)] left-[18px] z-10 grid h-6 w-6 shrink-0 place-items-center text-white"
       >
         <ChevronLeft size={24} />
       </button>

@@ -1,4 +1,3 @@
-import { StatusBarArea } from "../components/TopBars";
 import { ChevronLeft } from "../components/Icons";
 import challengeHero from "../assets/img/challenge1.webp";
 
@@ -70,8 +69,6 @@ function ShareIcon() {
 export default function ChallengeDetailPage({ onBack }: Props) {
   return (
     <div className="phone bg-[#040405] text-[#f6f6ed]">
-      <StatusBarArea />
-
       <header className="subheader justify-between">
         <button
           className="grid h-6 w-6 shrink-0 place-items-center text-[#f6f6ed]"

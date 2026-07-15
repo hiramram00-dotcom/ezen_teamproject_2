@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { initDragScroll } from "./dragScroll";
-import { AppHeader, StatusBarArea } from "./components/TopBars";
+import { AppHeader } from "./components/TopBars";
 import HeroSection from "./components/HeroSection";
 import CourseSection from "./components/CourseSection";
 import CourseExplorePage from "./components/CourseExplorePage";
@@ -110,7 +110,6 @@ export default function App() {
     // — 데스크톱: 가짜 상태바 / 실기기: 노치 안전영역 확보.
     return (
       <div className="relative flex h-full w-full max-w-107.5 flex-col overflow-hidden bg-black mx-auto">
-        <StatusBarArea />
         <RecordFlow
           autoStart={recordAutoStart}
           onBack={() => setPage("home")}
@@ -150,7 +149,6 @@ export default function App() {
 
   return (
     <div className="phone">
-      <StatusBarArea />
       <AppHeader
         variant={page === "my" ? "settings" : page === "feed" ? "feed" : "default"}
         onSettingsClick={() => setPage("settings")}
@@ -211,7 +209,8 @@ export default function App() {
   })();
 
   return (
-    <PhoneFrame>
+    // 기록하기는 몰입 화면(배경 풀블리드) → 상태바 투명. 그 외는 불투명.
+    <PhoneFrame statusBar={page === "record" ? "clear" : "solid"}>
       {rendered}
       {/* 챗봇(러니) 오버레이 — 페이지 위로 아래에서 스르륵 올라오는 창(App.css .chatbot-overlay).
           닫아도 언마운트하지 않고 프레임 아래로 밀어두기만 해서 대화·스크롤이 유지되고,

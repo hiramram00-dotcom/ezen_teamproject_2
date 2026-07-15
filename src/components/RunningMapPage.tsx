@@ -61,7 +61,7 @@ export default function RunningMapPage({
       {/* 뒤로가기 (러닝 화면으로) */}
       <button
         type="button"
-        className="absolute top-11.5 left-3.5 grid size-7.5 place-items-center text-white"
+        className="absolute top-[calc(var(--statusbar-h)+46px)] left-3.5 grid size-7.5 place-items-center text-white"
         aria-label="뒤로가기"
         onClick={onBack}
       >
@@ -77,13 +77,13 @@ export default function RunningMapPage({
       </button>
 
       {/* 진행 거리 / 목표 거리 */}
-      <p className="absolute top-9.25 left-17.25 flex items-baseline gap-1.5 leading-[0.95] whitespace-nowrap">
+      <p className="absolute top-[calc(var(--statusbar-h)+37px)] left-17.25 flex items-baseline gap-1.5 leading-[0.95] whitespace-nowrap">
         <span className="font-display text-[48px] text-primary-lime">3.42</span>
         <span className="text-[32px] text-[#b1b1b1]">/8km</span>
       </p>
 
       {/* 시간 · 평균 페이스 · BPM — 러닝 화면과 같은 숫자가 이어진다 */}
-      <div className="absolute top-27.75 left-1/2 flex -translate-x-1/2 items-start gap-11">
+      <div className="absolute top-[calc(var(--statusbar-h)+111px)] left-1/2 flex -translate-x-1/2 items-start gap-11">
         <Stat value={formatTime(seconds)} label="시간" />
         <Stat value={`5'30"`} label="평균 페이스" />
         <Stat value="156" label="BPM" />
