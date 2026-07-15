@@ -45,21 +45,21 @@ export default function MyPage() {
 
       <section className="pt-3.5 px-[18px] pb-1.5">
         <div className="flex flex-col gap-4 py-[18px] px-5 rounded-card bg-elevated">
-          <div className="flex items-start justify-between">
+          <div className="flex items-start justify-between px-3">
             <div className="flex flex-col items-center gap-1">
-              <p className="font-display text-[26px] leading-none text-white">
+              <p className="font-display text-[26px] leading-8 text-white">
                 {profileStats.records}
               </p>
               <p className="text-sm tracking-[-0.42px] text-white/55">기록</p>
             </div>
             <div className="flex flex-col items-center gap-1">
-              <p className="font-display text-[26px] leading-none text-white">
-                {profileStats.totalDistanceKm} <span className="text-2xl">km</span>
+              <p className="font-display text-[26px] leading-8 text-white">
+                {profileStats.totalDistanceKm} <span className="text-2xl leading-none">km</span>
               </p>
               <p className="text-sm tracking-[-0.42px] text-white/55">누적 거리</p>
             </div>
             <div className="flex flex-col items-center gap-1">
-              <p className="font-display text-[26px] leading-none text-white">
+              <p className="font-display text-[26px] leading-8 text-white">
                 {profileStats.followers}
               </p>
               <p className="text-sm tracking-[-0.42px] text-white/55">팔로워</p>
