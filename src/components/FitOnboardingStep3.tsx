@@ -61,7 +61,7 @@ const features: Feature[] = [
   },
 ];
 
-export default function FitOnboardingStep3({ onBack, onFinish }: { onBack?: () => void; onFinish?: () => void }) {
+export default function FitOnboardingStep3({ onBack, onNext, onSkip }: { onBack?: () => void; onNext?: () => void; onSkip?: () => void }) {
   const [selected, setSelected] = useState<Set<number>>(new Set([0, 3]));
 
   const toggle = (i: number) => {
@@ -85,9 +85,8 @@ export default function FitOnboardingStep3({ onBack, onFinish }: { onBack?: () =
       }
       subtitle="선택에 맞춰 홈 화면을 구성해 드려요"
       onBack={onBack}
-      onNext={onFinish}
-      nextLabel="위런 시작하기"
-      showSkip={false}
+      onNext={onNext}
+      onSkip={onSkip}
     >
       <div className="mt-7 [@media(max-height:700px)]:mt-[14px] grid grid-cols-2 gap-[14px] [@media(max-height:700px)]:gap-2">
         {features.map((f, i) => {

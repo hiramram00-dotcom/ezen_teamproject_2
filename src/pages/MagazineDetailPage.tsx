@@ -47,9 +47,30 @@ const relatedArticles = [
 const products = [
   // objectPositionY: 각 상품 사진에서 신발이 실제로 위치한 세로 중심(측정값 기반)에
   // 맞춰서, 잘리지 않으면서도 카드를 꽉 채우도록 개별 보정한 값.
-  { image: shoeNike, brand: "NIKE", name: "에어 줌 페가수스 41", price: "149,000원", objectPositionY: "55%" },
-  { image: shoeAdidas, brand: "ADIDAS", name: "아디제로 SL 2", price: "129,000원", objectPositionY: "100%" },
-  { image: shoeHoka, brand: "HOKA", name: "클리프턴 9", price: "179,000원", objectPositionY: "85%" },
+  {
+    image: shoeNike,
+    brand: "NIKE",
+    name: "에어 줌 페가수스 41",
+    price: "149,000원",
+    objectPositionY: "55%",
+    link: "https://www.nike.com/kr/t/%ED%8E%98%EA%B0%80%EC%88%98%EC%8A%A4-42-%EC%97%AC%EC%84%B1-%EB%A1%9C%EB%93%9C-%EB%9F%AC%EB%8B%9D%ED%99%94%EC%99%80%EC%9D%B4%EB%93%9C-wsTF7yIV/IH1847-001",
+  },
+  {
+    image: shoeAdidas,
+    brand: "ADIDAS",
+    name: "아디제로 SL 2",
+    price: "129,000원",
+    objectPositionY: "100%",
+    link: "https://www.adidas.co.kr/%EC%95%84%EB%94%94%EC%A0%9C%EB%A1%9C-evo-sl-exo/KI4782.html",
+  },
+  {
+    image: shoeHoka,
+    brand: "HOKA",
+    name: "클리프턴 9",
+    price: "179,000원",
+    objectPositionY: "85%",
+    link: "https://worldwideworld.kr/product/detail.html?product_no=7368",
+  },
 ];
 
 const sectionTitleClass = "text-[24px] font-semibold leading-[1.3] tracking-[-0.48px] text-white";
@@ -233,13 +254,15 @@ export default function MagazineDetailPage({ onBack }: Props) {
                   <p className="text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-white">{p.price}</p>
                 </div>
                 <div className="px-[14px] pb-[14px]">
-                  <button
+                  <a
                     className="flex h-[34px] w-full items-center justify-center gap-1 rounded-full bg-[var(--primary-lime)] text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-black"
-                    type="button"
+                    href={p.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     바로 구매
                     <ArrowUpRightIcon />
-                  </button>
+                  </a>
                 </div>
               </article>
             ))}

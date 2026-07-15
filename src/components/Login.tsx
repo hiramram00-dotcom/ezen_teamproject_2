@@ -14,7 +14,7 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
 
       <BrandLogo className="absolute top-[58px] left-[var(--gutter)] z-[2]" />
 
-      <div className="absolute left-[var(--gutter)] right-[var(--gutter)] bottom-[34px] z-[2] flex flex-col gap-5">
+      <div className="absolute left-[var(--gutter)] right-[var(--gutter)] bottom-9.25 z-2 flex flex-col gap-5">
         <h1 className="flex flex-col font-display text-[82px] font-normal leading-[1.05]">
           <span className="text-white">WE RUN,</span>
           <span className="text-primary-lime">YOU IN?</span>
@@ -37,12 +37,12 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
           로그인
         </button>
 
-        <p className="text-center text-sm font-light text-[var(--text-muted)]">
+        <p className="-mt-1.5 text-center text-sm font-light text-(--text-muted)">
           아직 크루가 아니라면? <button className="text-primary-lime font-semibold" type="button">회원가입</button>
         </p>
       </div>
 
-      <div className="absolute left-1/2 bottom-[10px] -translate-x-1/2 z-[2] w-[134px] h-[5px] rounded-[3px] bg-white" />
+      <div className="absolute left-1/2 bottom-3.5 -translate-x-1/2 z-2 w-33.5 h-1.25 rounded-[3px] bg-white" />
     </div>
   );
 }

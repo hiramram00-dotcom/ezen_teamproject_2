@@ -36,6 +36,26 @@
       translate: -50% 0;
     }
   }
+
+  /* 스와이프 버튼 노브: 드래그 전 오른쪽으로 살짝 두 번 튕겨 "밀어보세요" 힌트를 준다.
+     transform(translateX)만 사용 — translate 속성은 세로 중앙 정렬(-translate-y-1/2)이 쓰는 중이라 충돌 방지.
+     화면 진입 즉시 시작 (delay 없음). */
+  --animate-swipe-hint: swipe-hint 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+
+  @keyframes swipe-hint {
+    0%, 55%, 100% {
+      transform: translateX(0);
+    }
+    15% {
+      transform: translateX(10px);
+    }
+    30% {
+      transform: translateX(0);
+    }
+    40% {
+      transform: translateX(6px);
+    }
+  }
 }
 
 :root {
