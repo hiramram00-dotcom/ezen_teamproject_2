@@ -10,6 +10,7 @@ import iconSparkle from "../assets/icons/sparkle.svg";
 import recordCourseImg from "../assets/img/record-course.png";
 import recordMapImg from "../assets/img/record-map.png";
 import { ChevronLeft } from "./Icons";
+import MusicConnectPage from "./MusicConnectPage";
 
 const recommendedCourses = [
   {
@@ -52,6 +53,7 @@ export default function RecordPage({
 }) {
   const rowRef = useRef<HTMLDivElement>(null);
   const [activeIdx, setActiveIdx] = useState(0);
+  const [musicOpen, setMusicOpen] = useState(false);
 
   useEffect(() => {
     const row = rowRef.current;
@@ -89,6 +91,15 @@ export default function RecordPage({
       detachDrag();
     };
   }, []);
+
+  if (musicOpen) {
+    return (
+      <MusicConnectPage
+        onClose={() => setMusicOpen(false)}
+        onConnect={() => setMusicOpen(false)}
+      />
+    );
+  }
 
   return (
     <div className="relative flex flex-1 flex-col overflow-hidden">
@@ -223,7 +234,12 @@ export default function RecordPage({
           >
             시작
           </button>
-          <button type="button" className={fabClass} aria-label="음악">
+          <button
+            type="button"
+            className={fabClass}
+            aria-label="음악"
+            onClick={() => setMusicOpen(true)}
+          >
             <img className="size-6" src={iconMusic} alt="" />
           </button>
         </div>
