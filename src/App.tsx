@@ -12,6 +12,8 @@ import ChallengeSection from "./components/ChallengeSection";
 import MagazineSection from "./components/MagazineSection";
 import MyPage from "./pages/MyPage";
 import FeedPage from "./pages/FeedPage";
+import CreatePostPage, { type CreatePostDraft } from "./pages/CreatePostPage";
+import CreateStoryPage, { type CreateStoryDraft } from "./pages/CreateStoryPage";
 import PhoneFrame from "./components/PhoneFrame";
 import SettingsPage from "./pages/SettingsPage";
 import BottomNav from "./components/BottomNav";
@@ -23,12 +25,21 @@ import ChallengeDetailPage from "./pages/ChallengeDetailPage";
 import MagazineDetailPage from "./pages/MagazineDetailPage";
 import RecordFlow from "./components/RecordFlow";
 import ChatbotPage from "./components/ChatbotPage";
-import type { CourseDetailKind, CourseExploreKind } from "./data";
+import {
+  feedStories,
+  profileData,
+  type CourseDetailKind,
+  type CourseExploreKind,
+  type FeedPost,
+  type FeedStory,
+} from "./data";
 import "./App.css";
 
 type Page =
   | "home"
   | "feed"
+  | "createPost"
+  | "createStory"
   | "my"
   | "settings"
   | "runners"
@@ -53,6 +64,8 @@ export default function App() {
   // 피드 스토리 뷰어 열림 여부 — 열려 있는 동안 상태바 오버레이를 투명으로 전환
   // (스토리 이미지가 상태바 뒤까지 꽉 차 보이게).
   const [feedStoryOpen, setFeedStoryOpen] = useState(false);
+  const [createdFeedPosts, setCreatedFeedPosts] = useState<FeedPost[]>([]);
+  const [createdStory, setCreatedStory] = useState<FeedStory | null>(null);
 
   // Make the horizontal rows on the current screen draggable with the mouse.
   useEffect(() => initDragScroll(), [page]);
@@ -66,6 +79,63 @@ export default function App() {
 
   // 화면별 콘텐츠를 계산한 뒤, 마지막에 PhoneFrame 하나로 감싼다(프레임 통일).
   const rendered = (() => {
+  if (page === "createStory") {
+    const publishStory = (draft: CreateStoryDraft) => {
+      setCreatedStory((current) => {
+        const previousSlides = current?.storySlides ?? (current?.storyImage ? [{
+          image: current.storyImage,
+          text: current.storyText,
+          textX: current.storyTextX,
+          textY: current.storyTextY,
+        }] : []);
+        const nextSlide = {
+          image: draft.image,
+          text: draft.text,
+          textX: draft.textX,
+          textY: draft.textY,
+        };
+
+        return {
+          name: "내 스토리",
+          image: feedStories[0].image,
+          state: "me",
+          storyImage: current?.storyImage ?? draft.image,
+          storyText: current?.storyText ?? draft.text,
+          storyTextX: current?.storyTextX ?? draft.textX,
+          storyTextY: current?.storyTextY ?? draft.textY,
+          storySlides: [...previousSlides, nextSlide],
+        };
+      });
+      setPage("feed");
+    };
+
+    return <CreateStoryPage onBack={() => setPage("feed")} onPublish={publishStory} />;
+  }
+
+  if (page === "createPost") {
+    const publishPost = (draft: CreatePostDraft) => {
+      const post: FeedPost = {
+        id: Date.now(),
+        author: profileData.name,
+        avatar: feedStories[0].image,
+        meta: draft.location ? `방금 전 · ${draft.location}` : "방금 전",
+        image: draft.images[0],
+        images: draft.images,
+        caption: draft.caption,
+        cheers: 0,
+        comments: 0,
+        reposts: 0,
+        likedBy: "아직 좋아요가 없습니다",
+        commentPreview: "첫 댓글을 남겨보세요",
+      };
+
+      setCreatedFeedPosts((posts) => [post, ...posts]);
+      setPage("feed");
+    };
+
+    return <CreatePostPage onBack={() => setPage("feed")} onPublish={publishPost} />;
+  }
+
   if (page === "settings") {
     return (
       <div className="phone">
@@ -150,12 +220,27 @@ export default function App() {
         variant={page === "my" ? "settings" : page === "feed" ? "feed" : "default"}
         onSettingsClick={() => setPage("settings")}
         onChatbotClick={() => setChatbotOpen(true)}
+        onCreatePostClick={() => setPage("createPost")}
+        onCreateStoryClick={() => setPage("createStory")}
       />
 
       {page === "my" ? (
         <MyPage />
       ) : page === "feed" ? (
-        <FeedPage onStoryOpenChange={setFeedStoryOpen} />
+        <FeedPage
+          onStoryOpenChange={setFeedStoryOpen}
+          onCreateStory={() => setPage("createStory")}
+          createdPosts={createdFeedPosts}
+          createdStory={createdStory}
+          onDeletePost={(postId) => {
+            setCreatedFeedPosts((posts) => posts.filter((post) => post.id !== postId));
+          }}
+          onUpdatePost={(postId, caption) => {
+            setCreatedFeedPosts((posts) =>
+              posts.map((post) => (post.id === postId ? { ...post, caption } : post)),
+            );
+          }}
+        />
       ) : (
         <main className="home">
           {/* 오늘 기록 시작하기 → 기록 화면으로 전환해 바로 카운트다운 시작 */}
@@ -179,7 +264,10 @@ export default function App() {
               setPage("courses");
             }}
           />
-          <RunnerSection onViewAll={() => setPage("runners")} />
+          <RunnerSection
+            onViewAll={() => setPage("runners")}
+            onStoryOpenChange={setFeedStoryOpen}
+          />
           <ScheduleSection
             onMore={() => setPage("scheduleList")}
             onOpen={() => setPage("schedule")}
@@ -208,7 +296,7 @@ export default function App() {
   return (
     // 기록하기·스토리 뷰어는 몰입 화면(배경 풀블리드) → 상태바 투명. 그 외는 불투명.
     <PhoneFrame
-      statusBar={page === "record" || (page === "feed" && feedStoryOpen) ? "clear" : "solid"}
+      statusBar={page === "record" || ((page === "feed" || page === "home") && feedStoryOpen) ? "clear" : "solid"}
     >
       {rendered}
       {/* 챗봇(러니) 오버레이 — 페이지 위로 아래에서 스르륵 올라오는 창(App.css .chatbot-overlay).
