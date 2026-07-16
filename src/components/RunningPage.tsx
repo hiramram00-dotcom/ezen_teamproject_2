@@ -98,6 +98,8 @@ export default function RunningPage({
   onChatbot,
   selectedCourseLabel,
   selectedCourseMap,
+  musicConnected = false,
+  onMusicConnected,
 }: {
   onEnd?: (summary: RunSummary) => void;
   onBack?: () => void;
@@ -105,6 +107,9 @@ export default function RunningPage({
   onChatbot?: () => void;
   selectedCourseLabel?: string | null;
   selectedCourseMap?: RunCourseMap | null;
+  /** 음악 연결 여부 — App 이 보관 (RecordFlow 경유, 새로고침 전까지 유지) */
+  musicConnected?: boolean;
+  onMusicConnected?: () => void;
 }) {
   // 실제 러닝을 시작한 것처럼 모든 수치가 0에서 시작해 매초 시뮬레이션으로 오른다.
   const [seconds, setSeconds] = useState(0);
@@ -113,7 +118,6 @@ export default function RunningPage({
   const [paused, setPaused] = useState(false);
   const [view, setView] = useState<"stats" | "map">("stats");
   const [musicOpen, setMusicOpen] = useState(false);
-  const [musicConnected, setMusicConnected] = useState(false);
   const [confirmExit, setConfirmExit] = useState(false);
   const [roadPath, setRoadPath] = useState<MapPoint[]>([]);
 
@@ -175,7 +179,7 @@ export default function RunningPage({
       <MusicConnectPage
         onClose={() => setMusicOpen(false)}
         onConnect={() => {
-          setMusicConnected(true);
+          onMusicConnected?.(); // 연결 저장(App) + 대표곡 첫 곡부터 재생 시작
           setMusicOpen(false);
         }}
       />

@@ -110,6 +110,8 @@ export default function App() {
   const [selectedRunCourseLabel, setSelectedRunCourseLabel] = useState<string | null>(null);
   const [selectedRunCourseMap, setSelectedRunCourseMap] = useState<RunCourseMap | null>(null);
   const [chatbotOpen, setChatbotOpen] = useState(false);
+  // 기록하기 음악 연결 여부 — 기록 탭을 나갔다 와도 유지, 새로고침 시에만 초기화.
+  const [recordMusicConnected, setRecordMusicConnected] = useState(false);
   const [feedStoryOpen, setFeedStoryOpen] = useState(false);
   const [createdFeedPosts, setCreatedFeedPosts] = useState<FeedPost[]>([]);
   const [createdStory, setCreatedStory] = useState<FeedStory | null>(null);
@@ -284,6 +286,8 @@ export default function App() {
             autoStart={recordAutoStart}
             selectedCourseLabel={selectedRunCourseLabel}
             selectedCourseMap={selectedRunCourseMap}
+            musicConnected={recordMusicConnected}
+            onMusicConnected={() => setRecordMusicConnected(true)}
             onBack={() => setPage("home")}
             onChatbot={() => setChatbotOpen(true)}
             onNavigate={navigateMain}
