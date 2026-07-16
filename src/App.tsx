@@ -16,6 +16,7 @@ import CreatePostPage, { type CreatePostDraft } from "./pages/CreatePostPage";
 import CreateStoryPage, { type CreateStoryDraft } from "./pages/CreateStoryPage";
 import PhoneFrame from "./components/PhoneFrame";
 import SettingsPage from "./pages/SettingsPage";
+import ProfileEditPage from "./pages/ProfileEditPage";
 import BottomNav from "./components/BottomNav";
 import RunnerExplorePage from "./pages/RunnerExplorePage";
 import ScheduleDetailPage from "./pages/ScheduleDetailPage";
@@ -42,6 +43,7 @@ type Page =
   | "createStory"
   | "my"
   | "settings"
+  | "profileEdit"
   | "runners"
   | "schedule"
   | "scheduleList"
@@ -139,7 +141,15 @@ export default function App() {
   if (page === "settings") {
     return (
       <div className="phone">
-        <SettingsPage onBack={() => setPage("my")} />
+        <SettingsPage onBack={() => setPage("my")} onOpenProfile={() => setPage("profileEdit")} />
+      </div>
+    );
+  }
+
+  if (page === "profileEdit") {
+    return (
+      <div className="phone">
+        <ProfileEditPage onBack={() => setPage("settings")} />
       </div>
     );
   }
