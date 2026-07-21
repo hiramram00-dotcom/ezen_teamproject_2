@@ -790,7 +790,11 @@ export const settingsGroups: SettingsGroup[] = [
   },
   {
     title: "연동",
-    rows: [{ kind: "nav", label: "웨어러블 및 건강 앱" }],
+    rows: [
+      { kind: "nav", label: "웨어러블 및 건강 앱" },
+      // 표시용 행 — 실제 연동 화면은 아직 미구현
+      { kind: "nav", label: "음악 서비스 연동" },
+    ],
   },
   {
     title: "소통",
