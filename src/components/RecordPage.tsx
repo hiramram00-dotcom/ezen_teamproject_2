@@ -40,7 +40,7 @@ const recommendedCourses = [
 ];
 
 const fabClass =
-  "grid size-13 place-items-center rounded-full bg-white/90 text-black shadow-[0_0_12px_rgba(0,0,0,0.15)]";
+  "grid size-13 place-items-center rounded-full bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.35)]";
 
 function MusicIcon({ className = "" }: { className?: string }) {
   return (
@@ -130,14 +130,14 @@ export default function RecordPage({
   }, []);
 
   return (
-    <div className="record-page relative flex flex-1 flex-col overflow-hidden bg-white text-black">
+    <div className="record-page relative flex flex-1 flex-col overflow-hidden">
       <div className="pointer-events-none absolute inset-x-0 top-52.5 bottom-0 z-0 overflow-hidden [transform:translateZ(0)] md:rounded-b-[42px]">
         <MapBackdrop />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_center,rgba(255,255,255,0)_0%,rgba(255,255,255,0.44)_60%,rgba(255,255,255,1)_100%)]" />
-        <div className="absolute inset-x-0 top-0 h-35 bg-linear-to-b from-white from-19% to-white/0" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_center,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.7)_60%,rgba(0,0,0,0.85)_100%)]" />
+        <div className="absolute inset-x-0 top-0 h-35 bg-linear-to-b from-black from-19% to-black/0" />
       </div>
 
-      <header className="relative z-10 mb-3 mt-[calc(var(--statusbar-h)+12px)] flex h-13 items-center justify-between bg-white px-4.5">
+      <header className="relative z-10 mb-3 mt-[calc(var(--statusbar-h)+12px)] flex h-13 items-center justify-between px-4.5">
         <div className="flex items-center">
           <button
             type="button"
@@ -154,7 +154,7 @@ export default function RecordPage({
             <img className="h-[21.64px] w-[34.23px]" src={logoRun} alt="" />
           </button>
         </div>
-        <RunNotifications iconClassName="size-6 brightness-0" unreadBorderClassName="border-white" />
+        <RunNotifications variant="dark" iconClassName="size-6" unreadBorderClassName="border-black" />
       </header>
 
       <section className="relative z-1 mt-4 flex flex-col gap-3.75">
@@ -188,7 +188,7 @@ export default function RecordPage({
                   openDetail();
                 }
               }}
-              className={`relative flex h-35 w-82.5 flex-none snap-center flex-col items-center justify-center rounded-card bg-white pt-[22px] pr-[18px] pb-[23px] pl-[17px] shadow-[0_0_66px_rgba(139,139,139,0.18)] transition-[filter] duration-250 ease-[ease] ${
+              className={`relative flex h-35 w-82.5 flex-none snap-center flex-col items-center justify-center rounded-card border border-white/15 bg-elevated/35 pt-[22px] pr-[18px] pb-[23px] pl-[17px] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md backdrop-saturate-140 transition-[filter] duration-250 ease-[ease] ${
                 i === activeIdx ? (c.detailKey ? "cursor-pointer" : "") : "blur-[2px]"
               }`}
             >
@@ -202,7 +202,7 @@ export default function RecordPage({
                       <button
                         type="button"
                         onClick={openDetail}
-                        className={`absolute left-[222.5px] top-1/2 flex -translate-y-1/2 items-center justify-center text-[14px] font-normal leading-[1.3] tracking-[-0.42px] whitespace-nowrap text-black/70 ${
+                        className={`absolute left-[222.5px] top-1/2 flex -translate-y-1/2 items-center justify-center text-[14px] font-normal leading-[1.3] tracking-[-0.42px] whitespace-nowrap text-white/70 ${
                           i === activeIdx ? "visible" : "invisible"
                         }`}
                       >
@@ -218,11 +218,11 @@ export default function RecordPage({
                         </svg>
                       </button>
                     </div>
-                    <p className="text-[14px] font-medium leading-[1.3] tracking-[-0.42px] whitespace-pre-line text-black/70">
+                    <p className="text-[14px] font-medium leading-[1.3] tracking-[-0.42px] whitespace-pre-line text-white/70">
                       {c.desc}
                     </p>
                   </div>
-                  <p className="text-[14px] font-medium leading-[1.3] tracking-[-0.42px] text-black/50">
+                  <p className="text-[14px] font-medium leading-[1.3] tracking-[-0.42px] text-white/50">
                     {c.duration}
                   </p>
                 </div>
@@ -243,13 +243,13 @@ export default function RecordPage({
       </section>
 
       <div className="absolute bottom-37.5 left-1/2 z-2 flex -translate-x-1/2 flex-col items-center">
-        <p className="relative mb-6.25 w-66.75 animate-bubble-float rounded-[15px] border border-[#eeeeee] bg-white/90 px-2.5 py-3.25 text-center text-[14px] font-medium tracking-[-0.42px] after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-8 after:border-b-0 after:border-transparent after:border-t-15 after:border-t-white/90">
+        <p className="relative mb-6.25 w-66.75 animate-bubble-float rounded-[15px] bg-elevated/70 px-2.5 py-3.25 text-center text-[14px] font-medium tracking-[-0.42px] after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-8 after:border-b-0 after:border-transparent after:border-t-15 after:border-t-elevated/70">
           러닝하기 딱 좋은 날이에요!
           <br />
           다른 코스를 원하시면 저에게 알려주세요.
         </p>
 
-        <button type="button" className={`${fabClass} mb-7.5 !bg-black`} aria-label="AI 챗봇" onClick={onChatbot}>
+        <button type="button" className={`${fabClass} mb-7.5`} aria-label="AI 챗봇" onClick={onChatbot}>
           <img className="size-6" src={iconChatbot} alt="" />
         </button>
 
@@ -257,7 +257,7 @@ export default function RecordPage({
 
         <div className="flex items-center gap-10">
           <button type="button" className={fabClass} aria-label="러닝 가이드" onClick={onGuideOpen}>
-            <img className="size-6 brightness-0" src={iconBulb} alt="" />
+            <img className="size-6" src={iconBulb} alt="" />
           </button>
           <button
             type="button"
@@ -273,7 +273,7 @@ export default function RecordPage({
             aria-pressed={musicConnected}
             onClick={onMusicOpen}
           >
-            <MusicIcon className={musicConnected ? "text-primary-orange" : "text-black"} />
+            <MusicIcon className={musicConnected ? "text-primary-lime" : "text-white"} />
           </button>
         </div>
       </div>
