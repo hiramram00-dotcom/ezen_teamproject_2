@@ -22,9 +22,25 @@ import addIcon from "../assets/icons/song-add.svg";
 //   누른 곡부터 시작해 30초가 끝나면 자동으로 다음 곡, 마지막 곡이 끝나면 정지.
 //   (같은 로직을 프로필(마이페이지) 뮤직 재생에도 재사용 예정)
 
-export default function RunningSongPage({ onBack }: { onBack?: () => void }) {
+export default function RunningSongPage({
+  onBack,
+  songs: songsProp,
+  onSongsChange,
+  enableHighlight = true,
+}: {
+  onBack?: () => void;
+  /** 외부에서 곡 목록을 관리할 때 전달 (미전달 시 프로필 대표곡 사용).
+   *  기록 흐름은 마이페이지(profile.songs)와 분리된 자체 목록을 넘긴다. */
+  songs?: Song[];
+  onSongsChange?: (songs: Song[]) => void;
+  /** 30초 하이라이트 구간 선택 UI 사용 여부 (기본 true=프로필, 기록 흐름은 false) */
+  enableHighlight?: boolean;
+}) {
   const { profile, updateProfile } = useUserProfile();
-  const songs = profile.songs;
+  const usingExternal = songsProp !== undefined;
+  const songs = usingExternal ? songsProp : profile.songs;
+  const setSongs = (next: Song[]) =>
+    usingExternal ? onSongsChange?.(next) : updateProfile({ songs: next });
 
   // 음악 찾기 시트 (곡 추가)
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -48,27 +64,25 @@ export default function RunningSongPage({ onBack }: { onBack?: () => void }) {
     return () => clearTimeout(t);
   }, [playingId, songs]);
 
-  // 시트에서 → 로 확정 — 목록에 추가하고 바로 구간 설정으로
+  // 시트에서 → 로 확정 — 목록에 추가. 하이라이트 사용 시에만 구간 설정 오버레이를 연다.
   const pickSong = (song: Song) => {
-    if (!songs.some((s) => s.id === song.id)) updateProfile({ songs: [...songs, song] });
+    if (!songs.some((s) => s.id === song.id)) setSongs([...songs, song]);
     setSheetOpen(false);
-    setHighlightSong(song);
+    if (enableHighlight) setHighlightSong(song);
   };
 
   // 하이라이트 설정 완료 — 선택한 시작 지점 저장
   const saveHighlight = (startSec: number) => {
     if (highlightSong) {
-      updateProfile({
-        songs: songs.map((s) =>
-          s.id === highlightSong.id ? { ...s, highlightStart: startSec } : s,
-        ),
-      });
+      setSongs(
+        songs.map((s) => (s.id === highlightSong.id ? { ...s, highlightStart: startSec } : s)),
+      );
     }
     setHighlightSong(null);
   };
 
   const removeSong = (id: string) => {
-    updateProfile({ songs: songs.filter((s) => s.id !== id) });
+    setSongs(songs.filter((s) => s.id !== id));
     if (playingId === id) setPlayingId(null);
   };
 
@@ -120,14 +134,16 @@ export default function RunningSongPage({ onBack }: { onBack?: () => void }) {
                   {song.title}
                 </span>
                 <div className="flex shrink-0 items-center gap-5">
-                  {/* ✏️ = 하이라이트 구간 재설정 (149:344 오버레이) */}
-                  <button
-                    type="button"
-                    aria-label="하이라이트 구간 설정"
-                    onClick={() => setHighlightSong(song)}
-                  >
-                    <img src={editIcon} alt="" className="h-[18px] w-4" />
-                  </button>
+                  {/* ✏️ = 하이라이트 구간 재설정 (149:344 오버레이) — 기록 흐름에선 숨김 */}
+                  {enableHighlight && (
+                    <button
+                      type="button"
+                      aria-label="하이라이트 구간 설정"
+                      onClick={() => setHighlightSong(song)}
+                    >
+                      <img src={editIcon} alt="" className="h-[18px] w-4" />
+                    </button>
+                  )}
                   <button type="button" aria-label="곡 삭제" onClick={() => removeSong(song.id)}>
                     <img src={deleteIcon} alt="" className="h-[18px] w-[18px]" />
                   </button>
@@ -155,8 +171,8 @@ export default function RunningSongPage({ onBack }: { onBack?: () => void }) {
       {/* 음악 찾기 바텀시트 (149:220) — 미리듣기 후 → 로 확정 */}
       <MusicSearchSheet open={sheetOpen} onClose={() => setSheetOpen(false)} onPick={pickSong} />
 
-      {/* 하이라이트 30초 설정 오버레이 (149:344) */}
-      {highlightSong && (
+      {/* 하이라이트 30초 설정 오버레이 (149:344) — 기록 흐름에선 렌더 안 함 */}
+      {enableHighlight && highlightSong && (
         <HighlightPicker
           song={highlightSong}
           onCancel={() => setHighlightSong(null)}

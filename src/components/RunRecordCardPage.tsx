@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ChangeEvent, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type PointerEvent as ReactPointerEvent } from "react";
 import routeIcon from "../assets/icons/record-card-route.svg";
 import iconChatbot from "../assets/icons/header-chatbot.svg";
 import cardPhoto from "../assets/img/300img.png";
@@ -53,11 +53,47 @@ const loadCanvasImage = (src: string) =>
     image.src = src;
   });
 
+type RoutePoint = { lat: number; lng: number };
+
+// 러닝 중 실제로 지나온 위경도 경로를 종횡비를 유지한 채 [0,1]×[0,1] 박스 안에
+// 맞춰 넣는다. 좁은 지역이라 경도에 cos(위도) 보정만 적용한 간이 등장방형 투영으로
+// 충분하다. y 는 위도가 클수록(북쪽) 화면 위로 가도록 뒤집는다.
+const normalizeRoute = (path: RoutePoint[], padding = 0.14): { x: number; y: number }[] => {
+  if (path.length < 2) return [];
+
+  const cosLat = Math.cos((path[0].lat * Math.PI) / 180);
+  const projected = path.map((point) => ({ x: point.lng * cosLat, y: -point.lat }));
+
+  const xs = projected.map((p) => p.x);
+  const ys = projected.map((p) => p.y);
+  const minX = Math.min(...xs);
+  const minY = Math.min(...ys);
+  const spanX = Math.max(...xs) - minX;
+  const spanY = Math.max(...ys) - minY;
+  const span = Math.max(spanX, spanY) || 1e-9; // 종횡비 유지: 큰 축 기준으로 스케일
+  const inner = 1 - padding * 2;
+  const offX = (span - spanX) / 2; // 짧은 축은 가운데로
+  const offY = (span - spanY) / 2;
+
+  return projected.map((p) => ({
+    x: padding + ((p.x - minX + offX) / span) * inner,
+    y: padding + ((p.y - minY + offY) / span) * inner,
+  }));
+};
+
 export default function RunRecordCardPage({ summary, onClose, onShare, onSave }: Props) {
   const now = new Date();
   const distance = summary?.distance ?? "8.43";
   const seconds = summary?.seconds ?? 51 * 60 + 17;
   const pace = summary?.pace ?? `6'05"`;
+
+  // 실제 달린 경로를 카드 좌표(0~1)로 정규화. 경로가 없으면(코스 미선택·API 실패 등)
+  // 빈 배열 → 기존 고정 GPS 아트 아이콘으로 폴백한다.
+  const routePoints = useMemo(() => normalizeRoute(summary?.mapPath ?? []), [summary?.mapPath]);
+  const hasRoutePath = routePoints.length > 1;
+  const routePolyline = routePoints
+    .map((point) => `${(point.x * 100).toFixed(2)},${(point.y * 100).toFixed(2)}`)
+    .join(" ");
   const cardRef = useRef<HTMLDivElement>(null);
   const customBgRef = useRef("");
   const dragRef = useRef<{ key: DragKey; offsetX: number; offsetY: number } | null>(null);
@@ -175,17 +211,36 @@ export default function RunRecordCardPage({ summary, onClose, onShare, onSave }:
     context.fillText(subtitle, size * positions.title.x / 100, size * positions.title.y / 100 + 48);
 
     if (showRoute) {
-      const route = await loadCanvasImage(routeIcon);
-      const routeWidth = 166;
-      const routeHeight = 142;
       context.shadowBlur = 0;
-      context.drawImage(
-        route,
-        size * positions.route.x / 100 - routeWidth / 2,
-        size * positions.route.y / 100 - routeHeight / 2,
-        routeWidth,
-        routeHeight,
-      );
+      if (hasRoutePath) {
+        // 실제 달린 경로를 카드 미리보기와 동일한 정규화 좌표로 스트로크한다.
+        const routeBox = 176;
+        const boxX = size * positions.route.x / 100 - routeBox / 2;
+        const boxY = size * positions.route.y / 100 - routeBox / 2;
+        context.strokeStyle = "#D6FF1E";
+        context.lineWidth = 9;
+        context.lineJoin = "round";
+        context.lineCap = "round";
+        context.beginPath();
+        routePoints.forEach((point, index) => {
+          const px = boxX + point.x * routeBox;
+          const py = boxY + point.y * routeBox;
+          if (index === 0) context.moveTo(px, py);
+          else context.lineTo(px, py);
+        });
+        context.stroke();
+      } else {
+        const route = await loadCanvasImage(routeIcon);
+        const routeWidth = 166;
+        const routeHeight = 142;
+        context.drawImage(
+          route,
+          size * positions.route.x / 100 - routeWidth / 2,
+          size * positions.route.y / 100 - routeHeight / 2,
+          routeWidth,
+          routeHeight,
+        );
+      }
     }
 
     if (showStats) {
@@ -264,7 +319,9 @@ export default function RunRecordCardPage({ summary, onClose, onShare, onSave }:
 
       <div
         ref={cardRef}
-        className="relative mx-6 mt-4 aspect-square shrink-0 overflow-hidden rounded-card border border-primary-lime bg-elevated"
+        // isolate: 카드가 자체 쌓임 맥락을 만들어 내부 드래그 요소(z-10)가 카드 밖으로
+        // 새어나가지 않게 한다. 없으면 스크롤 시 그 요소들이 상단 헤더(z-[1]) 위로 겹친다.
+        className="relative isolate mx-6 mt-4 aspect-square shrink-0 overflow-hidden rounded-card border border-primary-lime bg-elevated"
       >
         <img className="absolute inset-0 h-full w-full object-cover" src={backgroundImage} alt="" aria-hidden />
         <div className="absolute inset-x-0 bottom-0 h-30 bg-gradient-to-b from-black/0 to-black/55" />
@@ -294,7 +351,24 @@ export default function RunRecordCardPage({ summary, onClose, onShare, onSave }:
             onPointerUp={endDrag}
             onPointerCancel={endDrag}
           >
-            <img className="pointer-events-none h-12.5 w-14.75" src={routeIcon} alt="" aria-hidden draggable={false} />
+            {hasRoutePath ? (
+              <svg
+                className="pointer-events-none h-16 w-16 drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]"
+                viewBox="0 0 100 100"
+                fill="none"
+                aria-hidden
+              >
+                <polyline
+                  points={routePolyline}
+                  stroke="#D6FF1E"
+                  strokeWidth={5}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            ) : (
+              <img className="pointer-events-none h-12.5 w-14.75" src={routeIcon} alt="" aria-hidden draggable={false} />
+            )}
           </div>
         )}
 
