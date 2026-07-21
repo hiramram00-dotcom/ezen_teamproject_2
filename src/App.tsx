@@ -309,7 +309,19 @@ export default function App() {
       );
     }
     if (page === "race") return <RaceDetailPage onBack={() => setPage("home")} />;
-    if (page === "challengeDetail") return <ChallengeDetailPage onBack={() => setPage("home")} />;
+    if (page === "challengeDetail") {
+      return (
+        <ChallengeDetailPage
+          onBack={() => setPage("home")}
+          onStartChallenge={() => {
+            setSelectedRunCourseLabel(null);
+            setSelectedRunCourseMap(null);
+            setRecordAutoStart(true);
+            setPage("record");
+          }}
+        />
+      );
+    }
     if (page === "magazineDetail") return <MagazineDetailPage onBack={() => setPage("home")} />;
     if (page === "magazineList") {
       return (
