@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { BackButton } from "../components/Icons";
+import SharePopup from "../components/SharePopup";
 import challengeHero from "../assets/img/challenge1.webp";
 
 type Props = {
   onBack: () => void;
+  onStartChallenge: () => void;
 };
 
 const infoCards = [
@@ -66,7 +69,9 @@ function ShareIcon() {
   );
 }
 
-export default function ChallengeDetailPage({ onBack }: Props) {
+export default function ChallengeDetailPage({ onBack, onStartChallenge }: Props) {
+  const [shareOpen, setShareOpen] = useState(false);
+
   return (
     <div className="phone bg-[#040405] text-[#f6f6ed]">
       <header className="subheader justify-between">
@@ -74,7 +79,12 @@ export default function ChallengeDetailPage({ onBack }: Props) {
         <h1 className="text-center text-[20px] font-medium leading-[1.3] tracking-[-0.6px] text-[#f6f6ed]">
           챌린지
         </h1>
-        <button className="grid h-6 w-6 shrink-0 place-items-center text-[#f6f6ed]" type="button" aria-label="공유하기">
+        <button
+          className="grid h-6 w-6 shrink-0 place-items-center text-[#f6f6ed]"
+          type="button"
+          aria-label="공유하기"
+          onClick={() => setShareOpen(true)}
+        >
           <ShareIcon />
         </button>
       </header>
@@ -204,11 +214,14 @@ export default function ChallengeDetailPage({ onBack }: Props) {
           <button
             className="h-12 w-full rounded-full bg-[var(--primary-lime)] text-center text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-black"
             type="button"
+            onClick={onStartChallenge}
           >
             챌린지 참여하기
           </button>
         </section>
       </main>
+
+      <SharePopup open={shareOpen} onClose={() => setShareOpen(false)} />
     </div>
   );
 }

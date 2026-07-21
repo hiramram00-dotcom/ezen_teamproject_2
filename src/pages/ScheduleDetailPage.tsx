@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronRight, BackButton } from "../components/Icons";
+import SharePopup from "../components/SharePopup";
 import MapBackdrop from "../components/MapBackdrop";
 import scheduleImage from "../assets/img/schedule-hero.webp";
 import runner1 from "../assets/img/runner1.webp";
@@ -80,13 +81,19 @@ function AnimatedCheckIcon() {
 export default function ScheduleDetailPage({ onBack }: Props) {
   const [showAttendConfirm, setShowAttendConfirm] = useState(false);
   const [attending, setAttending] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
 
   return (
     <div className="phone bg-[#0a0a0a] text-white">
       <header className="subheader justify-between">
         <BackButton onClick={onBack} />
-        <button className="grid h-[26px] w-[26px] place-items-center text-white" type="button" aria-label="공유하기">
+        <button
+          className="grid h-[26px] w-[26px] place-items-center text-white"
+          type="button"
+          aria-label="공유하기"
+          onClick={() => setShareOpen(true)}
+        >
           <ShareIcon />
         </button>
       </header>
@@ -240,6 +247,8 @@ export default function ScheduleDetailPage({ onBack }: Props) {
           </div>
         </div>
       )}
+
+      <SharePopup open={shareOpen} onClose={() => setShareOpen(false)} />
     </div>
   );
 }
