@@ -10,7 +10,7 @@
 }
 
 .article-card {
-  @apply relative h-[263px] w-[207px] shrink-0 overflow-hidden rounded-[20px] bg-[var(--bg-elevated)];
+  @apply relative h-[263px] w-[207px] shrink-0 overflow-hidden rounded-[20px] bg-[#404040];
   /* dark placeholder so no light hairline shows at the rounded edges */
 }
 .article-card__bg {

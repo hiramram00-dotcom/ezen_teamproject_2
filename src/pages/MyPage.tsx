@@ -123,7 +123,7 @@ export default function MyPage({ createdRecords = [] }: { createdRecords?: MyRec
       </section>
 
       <section className="pt-3.5 px-[18px] pb-1.5">
-        <div className="flex flex-col gap-4 py-[18px] px-5 rounded-card bg-elevated">
+        <div className="flex flex-col gap-4 py-[18px] px-5 rounded-card bg-[#404040]">
           <div className="flex items-start justify-between px-3">
             <div className="flex flex-col items-center gap-1">
               <p className="font-display text-[26px] leading-8 text-white">
@@ -273,16 +273,16 @@ export default function MyPage({ createdRecords = [] }: { createdRecords?: MyRec
             {activeHighlight === "streak" ? (
               <div>
                 <div className="mb-4 grid grid-cols-2 gap-2">
-                  <div className="rounded-[6px] bg-elevated px-4 py-3">
+                  <div className="rounded-[6px] bg-[#404040] px-4 py-3">
                     <span className="text-[12px] font-normal text-white/45">현재 연속 기록</span>
                     <p className="mt-1 font-display text-[25px] font-normal text-primary-lime">12일</p>
                   </div>
-                  <div className="rounded-[6px] bg-elevated px-4 py-3">
+                  <div className="rounded-[6px] bg-[#404040] px-4 py-3">
                     <span className="text-[12px] font-normal text-white/45">최장 연속 기록</span>
                     <p className="mt-1 font-display text-[25px] font-normal text-white">18일</p>
                   </div>
                 </div>
-                <div className="rounded-[6px] bg-elevated px-4 pb-4 pt-3.5">
+                <div className="rounded-[6px] bg-[#404040] px-4 pb-4 pt-3.5">
                   <div className="mb-3 flex items-center justify-between">
                     <h3 className="text-[14px] font-medium text-white">2026년 7월</h3>
                     <span className="text-[11px] font-normal text-white/40">12회 러닝</span>
@@ -304,7 +304,7 @@ export default function MyPage({ createdRecords = [] }: { createdRecords?: MyRec
                 </div>
               </div>
             ) : (
-              <div className="overflow-hidden rounded-[6px] bg-elevated">
+              <div className="overflow-hidden rounded-[6px] bg-[#404040]">
                 {highlightDetails[activeHighlight].map((item, index) => (
                   <div key={item.title} className={`flex items-center justify-between px-4 py-4 ${index > 0 ? "border-t border-white/8" : ""}`}>
                     <div className="min-w-0 pr-3">

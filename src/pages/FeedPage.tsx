@@ -875,7 +875,7 @@ function SuggestedCrews() {
           return (
           <div
             key={crew.name}
-            className="flex flex-col items-center gap-2 rounded-xl bg-[var(--bg-elevated)] pb-5 pt-6"
+            className="flex flex-col items-center gap-2 rounded-xl bg-[#404040] pb-5 pt-6"
           >
             {crew.image ? (
               <img src={crew.image} alt="" className="h-[58px] w-[58px] rounded-full object-cover" />

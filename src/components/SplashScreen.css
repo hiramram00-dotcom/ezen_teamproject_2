@@ -2,7 +2,7 @@
 
 @layer components {
   .splash-screen {
-    @apply relative h-full min-h-full w-full overflow-hidden bg-black;
+    @apply relative h-full min-h-full w-full overflow-hidden bg-[#232323];
   }
 
   .splash-screen__content {

@@ -46,7 +46,7 @@ export default function CourseRecommendListPage({ onBack, onOpenDetail }: Props)
   };
 
   return (
-    <div className="phone bg-black text-[var(--text-primary)]">
+    <div className="phone bg-[#232323] text-[var(--text-primary)]">
       <header className="subheader justify-center">
         <BackButton onClick={onBack} className="absolute left-[18px] top-1/2 -translate-y-1/2" />
         <h1 className="text-[24px] font-semibold leading-[1.3] tracking-[-0.48px]">이번주 추천코스</h1>

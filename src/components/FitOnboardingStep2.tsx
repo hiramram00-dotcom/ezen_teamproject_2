@@ -51,7 +51,7 @@ export default function FitOnboardingStep2({ onBack, onNext, onSkip }: { onBack?
               key={s.label}
               type="button"
               className={`relative aspect-[16/10] rounded-2xl overflow-hidden bg-elevated border-[1px] ${
-                active ? "border-primary-lime shadow-[0_0_20px_rgba(212,255,63,0.25)]" : "border-transparent"
+                active ? "border-primary-lime" : "border-transparent"
               }`}
               onClick={() => toggle(i)}
             >

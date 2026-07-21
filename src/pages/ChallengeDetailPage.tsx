@@ -54,7 +54,7 @@ const glassCardClass =
   "relative min-h-[94px] flex-1 min-w-0 overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(29,29,29,0.2)] p-[13px_16px] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(0,0,0,0.28)] backdrop-blur-[14px] backdrop-saturate-[145%] before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.02)_46%,rgba(255,255,255,0))] [&>*]:relative";
 const sectionTitleClass = "text-[24px] font-semibold leading-[1.3] tracking-[-0.48px] text-white";
 const bodyTextClass = "text-[14px] font-normal leading-[1.3] tracking-[-0.42px] text-[#a1a1a8]";
-const cardClass = "flex flex-col rounded-xl bg-[#1c1c1f] px-5 py-[17px]";
+const cardClass = "flex flex-col rounded-xl bg-[#404040] px-5 py-[17px]";
 const cardTitleClass = "mb-[7px] text-[20px] font-medium leading-[1.3] tracking-[-0.6px] text-white";
 const cardBodyClass = "text-[14px] font-normal leading-[1.3] tracking-[-0.42px] text-[#a1a1a8]";
 
@@ -73,7 +73,7 @@ export default function ChallengeDetailPage({ onBack, onStartChallenge }: Props)
   const [shareOpen, setShareOpen] = useState(false);
 
   return (
-    <div className="phone bg-[#040405] text-[#f6f6ed]">
+    <div className="phone bg-[#232323] text-[#f6f6ed]">
       <header className="subheader justify-between">
         <BackButton onClick={onBack} />
         <h1 className="text-center text-[20px] font-medium leading-[1.3] tracking-[-0.6px] text-[#f6f6ed]">

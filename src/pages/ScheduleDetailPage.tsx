@@ -85,7 +85,7 @@ export default function ScheduleDetailPage({ onBack }: Props) {
   const [isMapOpen, setIsMapOpen] = useState(false);
 
   return (
-    <div className="phone bg-[#0a0a0a] text-white">
+    <div className="phone bg-[#232323] text-white">
       <header className="subheader justify-between">
         <BackButton onClick={onBack} />
         <button
@@ -144,7 +144,7 @@ export default function ScheduleDetailPage({ onBack }: Props) {
         </section>
 
         <section className="flex flex-col gap-3">
-          <div className="flex w-full flex-col gap-[10px] rounded-2xl bg-[#1d1d1d] p-4">
+          <div className="flex w-full flex-col gap-[10px] rounded-2xl bg-[#404040] p-4">
             <div className="grid min-h-[21px] grid-cols-[42px_minmax(0,1fr)_auto] items-center gap-x-[11px] max-[380px]:grid-cols-[38px_minmax(0,1fr)_auto] max-[380px]:gap-x-2">
               <span className="text-[14px] font-medium leading-[1.3] tracking-[-0.42px] text-[#8a8a8a]">장소</span>
               <strong className="truncate text-[16px] font-normal leading-[1.3] tracking-[-0.48px] text-white">뚝섬유원지 3번 출구</strong>
@@ -167,7 +167,7 @@ export default function ScheduleDetailPage({ onBack }: Props) {
             </div>
           </div>
 
-          <div className="flex w-full flex-col gap-3 rounded-2xl bg-[#1d1d1d] p-4">
+          <div className="flex w-full flex-col gap-3 rounded-2xl bg-[#404040] p-4">
             <div className="flex items-center justify-between text-[14px] leading-[1.3] tracking-[-0.42px] text-white">
               <strong className="font-medium">참석자</strong>
               <span className="font-normal text-[#9c9c9c]">참석 12 · 불참 3 · 미응답 5</span>
@@ -186,7 +186,7 @@ export default function ScheduleDetailPage({ onBack }: Props) {
             </div>
           </div>
 
-          <div className="w-full rounded-2xl bg-[#1d1d1d] p-4">
+          <div className="w-full rounded-2xl bg-[#404040] p-4">
             <strong className="mb-2 block text-[14px] font-medium leading-[1.3] tracking-[-0.42px]">크루 공지</strong>
             <p className="text-[14px] font-normal leading-[1.3] tracking-[-0.42px] text-[#9c9c9c]">우천 시 당일 17시에 취소 공지 드려요.</p>
             <p className="text-[14px] font-normal leading-[1.3] tracking-[-0.42px] text-[#9c9c9c]">짐 보관은 3번 출구 편의점 앞에서 가능합니다.</p>

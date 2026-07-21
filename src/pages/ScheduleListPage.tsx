@@ -93,7 +93,7 @@ function ScheduleCard({ item }: { item: ScheduleItem }) {
 
   return (
     <Component
-      className="flex w-full flex-col items-start gap-[10px] rounded-2xl bg-[#1d1d1d] p-4 text-left max-[360px]:p-[14px]"
+      className="flex w-full flex-col items-start gap-[10px] rounded-2xl bg-[#404040] p-4 text-left max-[360px]:p-[14px]"
       type={item.onClick ? "button" : undefined}
       onClick={item.onClick}
     >
@@ -130,7 +130,7 @@ export default function ScheduleListPage({ onBack, onOpenSchedule }: Props) {
   const joined = [{ ...joinedItems[0], onClick: onOpenSchedule }, ...joinedItems.slice(1)];
 
   return (
-    <div className="phone bg-[#0a0a0a] text-white">
+    <div className="phone bg-[#232323] text-white">
       <header className="subheader">
         <BackButton onClick={onBack} />
         <h1 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[24px] font-semibold leading-[1.3] tracking-[-0.48px]">

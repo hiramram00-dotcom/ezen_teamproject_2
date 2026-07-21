@@ -6,7 +6,7 @@
 }
 
 .hero__card {
-  @apply relative h-[426px] overflow-hidden rounded-2xl bg-[#111];
+  @apply relative h-[426px] overflow-hidden rounded-2xl bg-[#404040];
 }
 
 .hero__bg {

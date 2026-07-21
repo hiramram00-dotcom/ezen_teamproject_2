@@ -76,7 +76,7 @@ const products = [
 ];
 
 const sectionTitleClass = "text-[24px] font-semibold leading-[1.3] tracking-[-0.48px] text-white";
-const bodyTextClass = "text-[16px] font-normal leading-[1.3] tracking-[-0.48px] text-white/50";
+const bodyTextClass = "text-[14px] font-normal leading-[1.3] tracking-[-0.48px] text-white/50";
 
 function ShareIcon() {
   return (
@@ -118,7 +118,7 @@ export default function MagazineDetailPage({ onBack }: Props) {
   const [shareOpen, setShareOpen] = useState(false);
 
   return (
-    <div className="phone bg-black text-[#f6f6ed]">
+    <div className="phone bg-[#232323] text-[#f6f6ed]">
       <header className="subheader justify-between">
         <BackButton onClick={onBack} />
         <h1 className="text-center text-[24px] font-semibold leading-[1.3] tracking-[-0.48px] text-white">매거진</h1>
@@ -169,7 +169,7 @@ export default function MagazineDetailPage({ onBack }: Props) {
               </div>
               <p className={bodyTextClass}>{sections[0].body}</p>
             </div>
-            <div className="flex items-center gap-[14px] rounded-[20px] bg-[#1c1c1f] p-5">
+            <div className="flex items-center gap-[14px] rounded-[20px] bg-[#404040] p-5">
               <span className="shrink-0">
                 <LightbulbIcon />
               </span>
@@ -211,7 +211,7 @@ export default function MagazineDetailPage({ onBack }: Props) {
           <div className="flex gap-3 overflow-x-auto px-[18px] no-scrollbar">
             {relatedArticles.map((a) => (
               <article
-                className="relative h-[263px] w-[207px] shrink-0 overflow-hidden rounded-[20px] bg-[var(--bg-elevated)]"
+                className="relative h-[263px] w-[207px] shrink-0 overflow-hidden rounded-[20px] bg-[#404040]"
                 key={a.title.join("")}
               >
                 <img className="absolute inset-0 h-full w-full object-cover" src={a.image} alt="" />
@@ -240,13 +240,13 @@ export default function MagazineDetailPage({ onBack }: Props) {
           <div className="px-[18px]">
             <SectionHeader title="추천 러닝화" />
           </div>
-          <p className="px-[18px] text-[16px] font-normal leading-[1.3] tracking-[-0.48px] text-white/70">
+          <p className="px-[16px] text-[16px] font-normal leading-[1.3] tracking-[-0.48px] text-white/70">
             이 글에서 소개한 입문용 러닝화, 바로 만나보세요
           </p>
           <div className="flex gap-3 overflow-x-auto px-[18px] no-scrollbar">
             {products.map((p) => (
               <article
-                className="flex w-[180px] shrink-0 flex-col overflow-hidden rounded-[20px] bg-[#1c1c1f]"
+                className="flex w-[180px] shrink-0 flex-col overflow-hidden rounded-[20px] bg-[#404040]"
                 key={p.name}
               >
                 <div className="relative h-[110px] w-full overflow-hidden bg-[#f5f4f2]">

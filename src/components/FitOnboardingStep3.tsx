@@ -96,7 +96,7 @@ export default function FitOnboardingStep3({ onBack, onNext, onSkip }: { onBack?
               key={f.title}
               type="button"
               className={`flex flex-col items-start gap-3 min-h-[138px] p-4 rounded-card border-[1px] text-left ${
-                active ? "bg-pill border-primary-lime shadow-[0_0_20px_rgba(212,255,63,0.2)]" : "bg-elevated border-transparent"
+                active ? "bg-pill border-primary-lime" : "bg-[#404040] border-transparent"
               }`}
               onClick={() => toggle(i)}
             >

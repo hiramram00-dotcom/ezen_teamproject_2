@@ -12,7 +12,7 @@ export default function SettingsPage({ onBack, onOpenProfile }: Props) {
   const [toggles, setToggles] = useState(defaultSettingsToggles);
 
   return (
-    <div className="flex flex-col bg-[var(--bg-app)]">
+    <div className="flex flex-col bg-[#232323]">
       <header className="subheader gap-3">
         <BackButton onClick={onBack} />
         <h1 className="absolute left-1/2 -translate-x-1/2 text-2xl font-semibold tracking-[-0.48px] text-white">
@@ -26,7 +26,7 @@ export default function SettingsPage({ onBack, onOpenProfile }: Props) {
             <p className="text-xl font-medium tracking-[-0.42px] text-primary-lime">
               {group.title}
             </p>
-            <div className="bg-[#161616] rounded-2xl overflow-hidden">
+            <div className="bg-[#404040] rounded-2xl overflow-hidden">
               {group.rows.map((row, i) => (
                 <Fragment key={row.label}>
                   {i > 0 && <div className="h-px bg-[#262626]" />}

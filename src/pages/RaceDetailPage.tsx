@@ -77,7 +77,7 @@ export default function RaceDetailPage({ onBack }: Props) {
   const [shareOpen, setShareOpen] = useState(false);
 
   return (
-    <div className="phone bg-black text-[#f6f6ed]">
+    <div className="phone bg-[#232323] text-[#f6f6ed]">
       <header className="subheader justify-between">
         <BackButton onClick={onBack} />
         <h1 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[24px] font-semibold leading-[1.3] tracking-[-0.48px]">

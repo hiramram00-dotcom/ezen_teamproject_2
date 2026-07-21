@@ -27,7 +27,7 @@ export default function FitOnboardingShell({
     // h-full = 폰 프레임 높이에 고정 (min-h-full 이면 콘텐츠가 넘칠 때 이 컨테이너 자체가
     // 늘어나면서 헤더·CTA까지 함께 스크롤돼 버림 — h-full + 아래 리스트 영역만 overflow-y-auto
     // 로 분리해서 헤더/타이틀/CTA는 고정, 리스트만 안에서 스크롤되게 한다.)
-    <div className="self-start w-full max-w-[var(--frame-width)] h-full mx-auto bg-[var(--bg-app)] flex flex-col">
+    <div className="self-start w-full max-w-[var(--frame-width)] h-full mx-auto bg-[#232323] flex flex-col">
       <StatusBarArea />
 
       <div className="flex-1 min-h-0 flex flex-col px-[var(--gutter)]">
