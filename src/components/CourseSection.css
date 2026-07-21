@@ -11,7 +11,7 @@
 }
 
 .course-card {
-  @apply relative block h-40 w-[182px] shrink-0 appearance-none overflow-hidden rounded-[20px] bg-[var(--bg-elevated)] p-0 text-left;
+  @apply relative block h-40 w-[182px] shrink-0 appearance-none overflow-hidden rounded-[20px] bg-[#404040] p-0 text-left;
 }
 
 .course-card--static {
@@ -26,7 +26,7 @@
 }
 
 .course-card__body {
-  @apply absolute left-3.5 top-[113px] flex w-[106px] flex-col items-start gap-[5px] bg-[var(--bg-elevated)];
+  @apply absolute left-3.5 top-[113px] flex w-[106px] flex-col items-start gap-[5px] bg-[#404040];
 }
 .course-card__title {
   @apply w-full text-[14px] font-bold leading-[17px] text-[var(--text-strong)];

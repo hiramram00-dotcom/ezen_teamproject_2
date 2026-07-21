@@ -307,7 +307,7 @@ export default function RunnerExplorePage({ onBack }: Props) {
   };
 
   return (
-    <div className="phone bg-black text-[var(--text-primary)]">
+    <div className="phone bg-[#232323] text-[var(--text-primary)]">
       <header className="subheader justify-center">
         <BackButton onClick={onBack} className="absolute left-[18px] top-1/2 -translate-y-1/2" />
         <h1 className="text-[25px] font-semibold leading-none tracking-[0]">인기 러너</h1>

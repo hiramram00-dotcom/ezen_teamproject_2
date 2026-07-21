@@ -6,7 +6,7 @@
 }
 
 .schedule__card {
-  @apply relative block h-[250px] w-full overflow-hidden rounded-[20px] bg-[#111] text-left;
+  @apply relative block h-[250px] w-full overflow-hidden rounded-[20px] bg-[#404040] text-left;
 }
 
 .schedule__bg {

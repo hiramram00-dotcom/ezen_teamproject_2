@@ -8,7 +8,7 @@ type Props = {
 
 export default function MagazineListPage({ onBack, onOpenArticle }: Props) {
   return (
-    <div className="phone bg-black text-[var(--text-primary)]">
+    <div className="phone bg-[#232323] text-[var(--text-primary)]">
       <header className="subheader justify-center">
         <BackButton onClick={onBack} className="absolute left-[18px] top-1/2 -translate-y-1/2" />
         <h1 className="text-[24px] font-semibold leading-[1.3] tracking-[-0.48px]">매거진</h1>
@@ -20,7 +20,7 @@ export default function MagazineListPage({ onBack, onOpenArticle }: Props) {
             <button
               key={a.title.join("")}
               type="button"
-              className="relative h-[220px] overflow-hidden rounded-[20px] bg-[var(--bg-elevated)] text-left"
+              className="relative h-[220px] overflow-hidden rounded-[20px] bg-[#404040] text-left"
               onClick={onOpenArticle}
             >
               <img

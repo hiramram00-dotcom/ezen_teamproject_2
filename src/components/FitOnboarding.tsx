@@ -81,7 +81,7 @@ export default function FitOnboarding({ onBack, onNext, onSkip }: { onBack?: () 
               key={level.title}
               type="button"
               className={`relative flex items-center gap-3.5 py-4.5 px-4 rounded-card border-[1px] text-left ${
-                active ? "bg-pill border-primary-lime" : "bg-elevated border-transparent"
+                active ? "bg-pill border-primary-lime" : "bg-[#404040] border-transparent"
               }`}
               onClick={() => setSelected(i)}
             >

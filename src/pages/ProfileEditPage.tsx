@@ -91,7 +91,7 @@ export default function ProfileEditPage({
 
   return (
     // 배경·헤더를 설정 페이지와 통일 (bg-app + 공용 .subheader + BackButton + 중앙 타이틀)
-    <div className="flex flex-col bg-[var(--bg-app)] pb-10 text-white">
+    <div className="flex flex-col bg-[#232323] pb-10 text-white">
       <header className="subheader gap-3">
         <BackButton onClick={onBack} />
         <h1 className="absolute left-1/2 -translate-x-1/2 text-2xl font-semibold tracking-[-0.48px] text-white">

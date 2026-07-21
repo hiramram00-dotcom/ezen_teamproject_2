@@ -27,7 +27,7 @@ export default function LocationPickerPage({ onBack, onSelect }: Props) {
   }, [query]);
 
   return (
-    <div className="phone flex min-h-full flex-col bg-[var(--bg-app)] text-white">
+    <div className="phone flex min-h-full flex-col bg-[#232323] text-white">
       <header className="subheader">
         <BackButton onClick={onBack} />
         <h1 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[20px] font-semibold leading-none">위치 추가</h1>

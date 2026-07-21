@@ -4,11 +4,11 @@
 .course-explore {
   /* 최소높이 기준: 브라우저 창(min-h-screen) → 폰 프레임(min-h-full).
      카드가 적으면 프레임 높이까지만, 많아지면 내용만큼 자연스럽게 늘어난다. */
-  @apply mx-auto min-h-full w-full max-w-[var(--frame-width)] bg-black pb-10;
+  @apply mx-auto min-h-full w-full max-w-[var(--frame-width)] bg-[#232323] pb-10;
 }
 
 .course-explore__topbar {
-  @apply sticky top-0 z-[95] flex h-16 items-center justify-between bg-black px-[18px] py-4;
+  @apply sticky top-0 z-[95] flex h-16 items-center justify-between bg-[#232323] px-[18px] py-4;
 }
 
 .course-explore__page-title {
@@ -32,7 +32,7 @@
 }
 
 .nearby-course__card {
-  @apply w-full overflow-hidden rounded-[20px] bg-[var(--bg-elevated)] text-left;
+  @apply w-full overflow-hidden rounded-[20px] border border-[var(--border-pill)] bg-[var(--bg-pill)] text-left;
 }
 
 .nearby-course__image {
@@ -84,7 +84,7 @@
 }
 
 .course-list__card {
-  @apply flex min-h-[102px] w-full items-center gap-3.5 overflow-hidden rounded-2xl bg-[var(--bg-elevated)] py-3 pr-3.5 pl-3 text-left;
+  @apply flex min-h-[102px] w-full items-center gap-3.5 overflow-hidden rounded-2xl bg-[#404040] py-3 pr-3.5 pl-3 text-left;
 }
 
 .course-list__thumb {

@@ -409,7 +409,7 @@ export default function App() {
     }
 
     return (
-      <div className="phone">
+      <div className="phone bg-[#232323]">
         <AppHeader
           variant={page === "my" ? "settings" : page === "feed" ? "feed" : "default"}
           onLogoClick={() => {
