@@ -19,6 +19,18 @@ export type Song = {
 /** 하이라이트 구간 길이(초) — 인스타식 프로필 대표곡 미리듣기 */
 export const HIGHLIGHT_SEC = 30;
 
+// 데모용 러닝 플레이리스트 — 음악 연결 시 대표곡이 비어 있으면 이 곡들로 채운다.
+// videoId 는 모두 임베드 재생 가능한 공식 영상으로 검증됨(오임베드+IFrame API onReady).
+// 실 서비스 연동(/api/music) 붙이면 검색으로 추가한 곡이 videoId 를 갖게 되므로 이 목록은
+// "키 없이도 소리가 나오는" 데모 안전망이다.
+export const DEMO_RUN_SONGS: Song[] = [
+  { id: "demo-blinding-lights", title: "Blinding Lights", artist: "The Weeknd", duration: "3:20", videoId: "4NRXx6U8ABQ" },
+  { id: "demo-eye-of-the-tiger", title: "Eye of the Tiger", artist: "Survivor", duration: "4:05", videoId: "btPJPFnesV4" },
+  { id: "demo-believer", title: "Believer", artist: "Imagine Dragons", duration: "3:24", videoId: "7wtfhZwyrcc" },
+  { id: "demo-dont-stop-me-now", title: "Don't Stop Me Now", artist: "Queen", duration: "3:29", videoId: "HgzGwKwLmgM" },
+  { id: "demo-titanium", title: "Titanium", artist: "David Guetta ft. Sia", duration: "4:05", videoId: "JRfuAukYTKg" },
+];
+
 /** "3:52" → 232(초). 없거나 못 읽으면 210초(3:30) 가정 */
 export function durationToSec(d?: string): number {
   if (!d) return 210;

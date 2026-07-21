@@ -6,11 +6,14 @@ import RunningPage, { type RunCourseMap, type RunSummary } from "./RunningPage";
 import RunCompletePage from "./RunCompletePage";
 import RunRecordCardPage, { type SharedRunCard } from "./RunRecordCardPage";
 import MusicConnectPage from "./MusicConnectPage";
+import RunningSongPage from "../pages/RunningSongPage";
 import { RecordMusicContext, type RecordMusic } from "../lib/recordMusic";
-import { useUserProfile } from "../lib/userProfile";
-import { durationToSec } from "../lib/musicApi";
+import { durationToSec, DEMO_RUN_SONGS, type Song } from "../lib/musicApi";
 
-type Screen = "record" | "guide" | "countdown" | "running" | "finished" | "card" | "music";
+// 기록 흐름 전용 러닝곡 목록 저장 키 — 마이페이지(wrun-profile.songs)와 분리.
+const RECORD_SONGS_KEY = "wrun-record-songs";
+
+type Screen = "record" | "guide" | "countdown" | "running" | "finished" | "card" | "music" | "songs";
 
 // 기록 탭의 화면 전환 담당:
 // 기록하기 ↔ 러닝 가이드, 시작 → 카운트다운(3·2·1) → 러닝 측정
@@ -49,17 +52,35 @@ export default function RecordFlow({
   const [screen, setScreen] = useState<Screen>(() => (autoStart ? "countdown" : "record"));
   const [runSummary, setRunSummary] = useState<RunSummary | null>(null);
 
-  // ── 음악 재생 엔진 (대표 러닝곡 풀재생·순차·반복) ──────────────
-  const { profile } = useUserProfile();
-  const songs = profile.songs;
+  // ── 음악 재생 엔진 (기록 전용 러닝곡 풀재생·순차·반복) ──────────────
+  // 곡 목록은 마이페이지(profile.songs)와 별개인 기록 전용 목록(localStorage)에서 온다.
+  const [recordSongs, setRecordSongs] = useState<Song[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem(RECORD_SONGS_KEY) ?? "[]") as Song[];
+    } catch {
+      return [];
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem(RECORD_SONGS_KEY, JSON.stringify(recordSongs));
+    } catch {
+      // 저장 실패(용량 초과 등)해도 동작엔 지장 없음
+    }
+  }, [recordSongs]);
+  const songs = recordSongs;
   const [musicIndex, setMusicIndex] = useState(0);
   const [musicPlaying, setMusicPlaying] = useState(musicConnected); // 재진입 시 자동 이어 시작
   const [musicKey, setMusicKey] = useState(0); // 바뀌면 임베드 리로드(곡 처음부터)
 
   const song = songs.length ? songs[musicIndex % songs.length] : null;
-  // 소리는 "실제 러닝 중"(스탯/지도/일시정지 뷰 = running 화면)에만 낸다.
-  // 대기·가이드·완료 화면에선 연결만 유지되고 조용하다.
-  const musicActive = musicConnected && musicPlaying && screen === "running";
+  // 소리는 기록 흐름 안(기록 대기·카운트다운·러닝/지도/일시정지)에서만 낸다.
+  // 연결 직후 기록 화면에서 바로 소리가 나야 하므로 record·countdown 도 포함한다.
+  // (음악 선택·가이드·완료·카드 화면에선 조용 — 연결 상태만 유지)
+  const musicActive =
+    musicConnected &&
+    musicPlaying &&
+    (screen === "running" || screen === "record" || screen === "countdown");
 
   // 풀재생: 곡 길이만큼 지나면 다음 곡, 마지막 곡 다음은 처음(반복)
   useEffect(() => {
@@ -71,8 +92,10 @@ export default function RecordFlow({
     return () => clearTimeout(t);
   }, [musicActive, musicIndex, songs.length, song]);
 
-  // 연결(서비스 선택) 완료 → 연결 저장 + 첫 곡부터 바로 재생
+  // 연결(서비스 선택) 완료 → 연결 저장 + 첫 곡부터 바로 재생.
+  // 대표곡이 비어 있으면(실 음악 API 미연동 데모) 검증된 러닝곡으로 채워 실제 소리가 나게 한다.
   const connectMusic = () => {
+    if (!songs.length) setRecordSongs(DEMO_RUN_SONGS);
     onMusicConnected?.();
     setMusicIndex(0);
     setMusicPlaying(true);
@@ -98,14 +121,27 @@ export default function RecordFlow({
       return <RunningGuidePage onBack={() => setScreen("record")} />;
     }
     if (screen === "music") {
-      // 음악 서비스 선택 화면. 닫기/연결 후 기록 화면으로 돌아온다.
+      // 음악 서비스 선택 화면. 연결하면 마이페이지와 동일한 대표 러닝곡 목록으로 이동한다.
       return (
         <MusicConnectPage
           onClose={() => setScreen("record")}
           onConnect={() => {
             connectMusic();
-            setScreen("record");
+            setScreen("songs");
           }}
+        />
+      );
+    }
+    if (screen === "songs") {
+      // 연결 직후 뜨는 곡 목록 — 마이페이지와 같은 컴포넌트지만 기록 전용 목록을 쓰고
+      // 하이라이트(30초 구간) 선택 오버레이는 끈다. 곡을 미리듣거나 추가/삭제한 뒤
+      // 뒤로가기로 기록 화면에 돌아가 러닝을 시작한다.
+      return (
+        <RunningSongPage
+          onBack={() => setScreen("record")}
+          songs={recordSongs}
+          onSongsChange={setRecordSongs}
+          enableHighlight={false}
         />
       );
     }
