@@ -123,6 +123,9 @@ export default function App() {
   const [createdMyRecords, setCreatedMyRecords] = useState<MyRecord[]>([]);
   const [createdStory, setCreatedStory] = useState<FeedStory | null>(null);
   const [sharedHeroImage, setSharedHeroImage] = useState<string>();
+  // 홈 히어로에 현재 걸려 있는 공유 카드가 어느 피드 게시물에서 왔는지 추적.
+  // 그 게시물이 피드에서 삭제되면 히어로도 이전 기본 상태로 되돌린다.
+  const [sharedHeroPostId, setSharedHeroPostId] = useState<number>();
 
   useEffect(() => initDragScroll(), [page]);
 
@@ -212,12 +215,25 @@ export default function App() {
     setCreatedFeedPosts((posts) => [post, ...posts]);
     setCreatedMyRecords((records) => [myRecord, ...records]);
     setSharedHeroImage(card.image);
+    setSharedHeroPostId(createdAt);
     setPage("feed");
   };
 
   const saveRunCard = (card: SharedRunCard) => {
     setSharedHeroImage(card.image);
+    setSharedHeroPostId(undefined);
     setPage("home");
+  };
+
+  // 공유된 기록(피드 게시물 + 마이페이지 기록)을 어느 쪽에서 지우든 항상 같이 지운다.
+  // 그 기록이 홈 히어로에 걸려 있었다면 히어로도 기본 상태로 되돌린다.
+  const deleteSharedRecord = (recordId: number) => {
+    setCreatedFeedPosts((posts) => posts.filter((post) => post.id !== recordId));
+    setCreatedMyRecords((records) => records.filter((record) => record.id !== recordId));
+    if (sharedHeroPostId === recordId) {
+      setSharedHeroImage(undefined);
+      setSharedHeroPostId(undefined);
+    }
   };
 
   const rendered = (() => {
@@ -427,16 +443,14 @@ export default function App() {
         />
 
         {page === "my" ? (
-          <MyPage createdRecords={createdMyRecords} />
+          <MyPage createdRecords={createdMyRecords} onDeleteRecord={deleteSharedRecord} />
         ) : page === "feed" ? (
           <FeedPage
             onStoryOpenChange={setFeedStoryOpen}
             onCreateStory={() => setPage("createStory")}
             createdPosts={createdFeedPosts}
             createdStory={createdStory}
-            onDeletePost={(postId) => {
-              setCreatedFeedPosts((posts) => posts.filter((post) => post.id !== postId));
-            }}
+            onDeletePost={deleteSharedRecord}
             onUpdatePost={(postId, caption) => {
               setCreatedFeedPosts((posts) =>
                 posts.map((post) => (post.id === postId ? { ...post, caption } : post)),

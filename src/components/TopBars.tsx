@@ -211,7 +211,7 @@ export function AppHeader({
             </div>
           )}
           {feedPanel === "activity" && (
-            <section className="absolute right-0 top-[46px] z-[110] w-[360px] max-w-[calc(100vw-36px)] overflow-hidden rounded-[8px] border border-white/10 bg-[#111113] shadow-[0_14px_40px_rgba(0,0,0,0.55)]">
+            <section className="absolute right-0 top-[46px] z-[110] w-[360px] max-w-[calc(100vw-36px)] overflow-hidden rounded-[8px] border border-white/10 bg-[#232323] shadow-[0_14px_40px_rgba(0,0,0,0.55)]">
               <div className="border-b border-white/8 px-4 py-3.5">
                 <h2 className="text-[17px] font-semibold text-white">내 게시물 활동</h2>
               </div>
@@ -240,7 +240,7 @@ export function AppHeader({
           <button type="button" aria-label="챗봇" onClick={onChatbotClick}>
             <img className="appheader__icon" src={iconChatbot} alt="" />
           </button>
-          <RunNotifications iconClassName="appheader__icon" />
+          <RunNotifications iconClassName="appheader__icon" variant="dark" />
         </div>
       )}
     </header>

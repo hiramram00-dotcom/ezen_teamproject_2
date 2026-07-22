@@ -48,7 +48,13 @@ const highlightDetails: Record<Exclude<HighlightKey, "streak">, Array<{ title: s
 const julyDays = Array.from({ length: 31 }, (_, index) => index + 1);
 const streakRunDays = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
 
-export default function MyPage({ createdRecords = [] }: { createdRecords?: MyRecord[] }) {
+export default function MyPage({
+  createdRecords = [],
+  onDeleteRecord,
+}: {
+  createdRecords?: MyRecord[];
+  onDeleteRecord?: (recordId: number) => void;
+}) {
   // 프로필 편집(이름·소개·아바타)이 즉시 반영된다. 레벨·스트릭은 목데이터 유지.
   const { profile, avatarSrc } = useUserProfile();
   const [records, setRecords] = useState<MyRecord[]>(() => [...createdRecords, ...myRecords]);
@@ -91,6 +97,7 @@ export default function MyPage({ createdRecords = [] }: { createdRecords?: MyRec
   const deleteRecord = () => {
     if (!selectedRecord) return;
     setRecords((current) => current.filter((record) => record !== selectedRecord));
+    if (selectedRecord.id !== undefined) onDeleteRecord?.(selectedRecord.id);
     setSelectedRecord(null);
     setIsMoreOpen(false);
   };
@@ -331,7 +338,7 @@ export default function MyPage({ createdRecords = [] }: { createdRecords?: MyRec
           role="presentation"
         >
           <article
-            className="relative w-full max-w-[394px] bg-[#101012] shadow-[0_18px_55px_rgba(0,0,0,0.55)]"
+            className="relative w-full max-w-[394px] bg-[#232323] shadow-[0_18px_55px_rgba(0,0,0,0.55)]"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="absolute -top-10 right-0 z-20">
@@ -422,11 +429,11 @@ export default function MyPage({ createdRecords = [] }: { createdRecords?: MyRec
                 </div>
               )}
             </div>
-            <div className="bg-[#101012] px-4 py-3.5 text-[14px] font-normal leading-[1.5] text-white/85">
+            <div className="bg-[#232323] px-4 py-3.5 text-[14px] font-normal leading-[1.5] text-white/85">
               <span className="mr-2 font-medium text-white">{profile.name}</span>
               {selectedRecord.caption}
             </div>
-            <div className="flex items-center gap-5 border-t border-white/8 bg-[#101012] px-4 py-3 text-[13px] font-normal text-white/70">
+            <div className="flex items-center gap-5 border-t border-white/8 bg-[#232323] px-4 py-3 text-[13px] font-normal text-white/70">
               <span className="flex items-center gap-1.5">
                 <img src={iconHeart} alt="" className="h-[18px] w-[18px]" />
                 응원 {selectedRecord.cheers}
@@ -440,7 +447,7 @@ export default function MyPage({ createdRecords = [] }: { createdRecords?: MyRec
                 공유 {selectedRecord.reposts}
               </span>
             </div>
-            <div className="flex flex-col gap-2 border-t border-white/8 bg-[#101012] px-4 pb-4 pt-3 text-[13px] font-normal leading-[1.45] text-white/75">
+            <div className="flex flex-col gap-2 border-t border-white/8 bg-[#232323] px-4 pb-4 pt-3 text-[13px] font-normal leading-[1.45] text-white/75">
               {selectedRecord.comments.map((comment, index) => (
                 <p key={`${comment.author}-${index}`}>
                   <span className="mr-2 font-medium text-white">{comment.author}</span>

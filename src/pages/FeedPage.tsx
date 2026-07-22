@@ -599,7 +599,7 @@ function FeedCard({
       {mediaItems.length > 0 ? (
         <div className="relative">
           <div
-            className="no-scrollbar flex snap-x snap-proximity touch-pan-x overflow-x-auto scroll-smooth overscroll-x-contain"
+            className="no-scrollbar flex snap-x snap-proximity touch-pan-x touch-pan-y overflow-x-auto scroll-smooth overscroll-x-contain"
             onScroll={handleMediaScroll}
           >
             {mediaItems.map((image, index) => (
