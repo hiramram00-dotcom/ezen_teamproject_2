@@ -1,5 +1,76 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { StatusBar } from "./TopBars";
+
+type TrackPoint = { x: number; y: number };
+type TrackCubic = [TrackPoint, TrackPoint, TrackPoint, TrackPoint];
+
+const trackCubics: TrackCubic[] = [
+  [
+    { x: -190, y: 1140 },
+    { x: 270, y: 980 },
+    { x: 255, y: 765 },
+    { x: 480, y: 630 },
+  ],
+  [
+    { x: 480, y: 630 },
+    { x: 685, y: 505 },
+    { x: 815, y: 515 },
+    { x: 1000, y: 350 },
+  ],
+  [
+    { x: 1000, y: 350 },
+    { x: 1195, y: 176 },
+    { x: 1260, y: 76 },
+    { x: 1790, y: -145 },
+  ],
+];
+
+const trackCenterPath =
+  "M -190 1140 C 270 980 255 765 480 630 C 685 505 815 515 1000 350 C 1195 176 1260 76 1790 -145";
+
+function cubicPoint([start, control1, control2, end]: TrackCubic, t: number): TrackPoint {
+  const inverse = 1 - t;
+  const inverseSquared = inverse * inverse;
+  const tSquared = t * t;
+
+  return {
+    x:
+      inverseSquared * inverse * start.x +
+      3 * inverseSquared * t * control1.x +
+      3 * inverse * tSquared * control2.x +
+      tSquared * t * end.x,
+    y:
+      inverseSquared * inverse * start.y +
+      3 * inverseSquared * t * control1.y +
+      3 * inverse * tSquared * control2.y +
+      tSquared * t * end.y,
+  };
+}
+
+function buildParallelTrackPath(offset: number) {
+  const points = trackCubics.flatMap((curve, curveIndex) =>
+    Array.from({ length: 49 }, (_, index) => cubicPoint(curve, index / 48)).filter(
+      (_, index) => curveIndex === 0 || index > 0,
+    ),
+  );
+
+  return points
+    .map((point, index) => {
+      const previous = points[Math.max(0, index - 1)];
+      const next = points[Math.min(points.length - 1, index + 1)];
+      const tangentX = next.x - previous.x;
+      const tangentY = next.y - previous.y;
+      const tangentLength = Math.hypot(tangentX, tangentY) || 1;
+      const offsetX = (-tangentY / tangentLength) * offset;
+      const offsetY = (tangentX / tangentLength) * offset;
+      const command = index === 0 ? "M" : "L";
+
+      return `${command} ${(point.x + offsetX).toFixed(2)} ${(point.y + offsetY).toFixed(2)}`;
+    })
+    .join(" ");
+}
+
+const trackLanePaths = [-132, -66, 0, 66, 132].map(buildParallelTrackPath);
 
 /**
  * 폰 목업 프레임.
@@ -25,15 +96,109 @@ export default function PhoneFrame({
   statusBar?: "solid" | "clear";
   className?: string;
 }) {
+  const [guideEnabled, setGuideEnabled] = useState(false);
+
   return (
-    <div className={`phone-frame ${className}`}>
-      <div
-        className={`frame-statusbar${statusBar === "solid" ? " frame-statusbar--solid" : ""}`}
-        aria-hidden
-      >
-        <StatusBar />
+    <div className="desktop-stage">
+      <div className="desktop-track" aria-hidden="true">
+        <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="track-surface" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stopColor="#18191b" />
+              <stop offset="0.52" stopColor="#242629" />
+              <stop offset="1" stopColor="#191a1c" />
+            </linearGradient>
+            <linearGradient id="track-highlight" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stopColor="#d4ff3f" stopOpacity="0" />
+              <stop offset="0.48" stopColor="#d4ff3f" stopOpacity="0.5" />
+              <stop offset="1" stopColor="#d4ff3f" stopOpacity="0" />
+            </linearGradient>
+            <filter id="track-glow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="8" />
+            </filter>
+          </defs>
+
+          <path
+            className="desktop-track__surface"
+            d={trackCenterPath}
+            stroke="url(#track-surface)"
+            strokeWidth="390"
+          />
+          <path
+            className="desktop-track__edge"
+            d={trackCenterPath}
+            strokeWidth="392"
+          />
+          {trackLanePaths.map((lanePath, index) => (
+            <path
+              key={index}
+              className="desktop-track__lane"
+              d={lanePath}
+            />
+          ))}
+          <path
+            className="desktop-track__lime-glow"
+            d={trackCenterPath}
+            stroke="url(#track-highlight)"
+            filter="url(#track-glow)"
+          />
+          <path
+            className="desktop-track__lime"
+            d={trackCenterPath}
+            stroke="url(#track-highlight)"
+          />
+        </svg>
       </div>
-      <div className="phone-scroll">{children}</div>
+
+      <section className="desktop-brand" aria-label="W:RUN brand message">
+        <p className="desktop-brand__eyebrow">RUNNING COMMUNITY</p>
+        <p className="desktop-brand__title">WE RUN.</p>
+        <p className="desktop-brand__question">YOU IN?</p>
+        <div className="desktop-brand__marker" aria-hidden="true">
+          <span>START</span>
+        </div>
+        <div className="desktop-guide">
+          <div className="desktop-guide__copy">
+            <span>GUIDE</span>
+            <strong>{guideEnabled ? "ON" : "OFF"}</strong>
+          </div>
+          <button
+            type="button"
+            className="desktop-guide__switch"
+            role="switch"
+            aria-checked={guideEnabled}
+            aria-label="앱 사용 가이드 표시"
+            onClick={() => setGuideEnabled((enabled) => !enabled)}
+          >
+            <span className="desktop-guide__thumb" />
+          </button>
+        </div>
+      </section>
+
+      <aside className="desktop-crew" aria-label="W:RUN team members">
+        <p className="desktop-crew__eyebrow">W:RUN CREW</p>
+        <h2>PACEMAKERS</h2>
+        <div className="desktop-crew__rule" aria-hidden="true" />
+        <ol>
+          <li><span>01</span><strong>이가람</strong></li>
+          <li><span>02</span><strong>김종욱</strong></li>
+          <li><span>03</span><strong>박지현</strong></li>
+          <li><span>04</span><strong>권나현</strong></li>
+          <li><span>05</span><strong>김가영</strong></li>
+          <li><span>06</span><strong>유수민</strong></li>
+        </ol>
+        <p className="desktop-crew__closing">WE RUN TOGETHER.</p>
+      </aside>
+
+      <div className={`phone-frame ${className}`}>
+        <div
+          className={`frame-statusbar${statusBar === "solid" ? " frame-statusbar--solid" : ""}`}
+          aria-hidden
+        >
+          <StatusBar />
+        </div>
+        <div className="phone-scroll">{children}</div>
+      </div>
     </div>
   );
 }

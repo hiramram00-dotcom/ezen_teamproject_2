@@ -61,6 +61,21 @@
    - .phone-scroll: 실제 스크롤 영역. (transform·overflow 를 한 요소에
      같이 주면 fixed 가 콘텐츠 따라 밀려 올라가므로 반드시 분리)
    ────────────────────────────────────────────────────────────── */
+.desktop-stage {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.desktop-track,
+.desktop-brand,
+.desktop-crew {
+  display: none;
+}
+
 .phone-frame {
   /* 챗봇 등 오버레이(absolute inset-0)가 프레임 기준으로 앵커되도록 */
   position: relative;
@@ -91,6 +106,11 @@
 /* 모바일(실기기) — 프레임을 일반 흐름으로 둔다.
    (position:fixed 면 뷰포트에 갇혀 넘치는 영역이 화면 밖으로 밀려 접근 불가) */
 @media (max-width: 767px) {
+  .desktop-stage {
+    width: 100%;
+    min-height: 100dvh;
+  }
+
   .phone-frame {
     position: relative;
     width: 100%;
@@ -239,7 +259,287 @@
 }
 
 @media (min-width: 768px) {
+  .desktop-stage {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 50% 48%, rgba(66, 68, 62, 0.22), transparent 30%),
+      radial-gradient(circle at 18% 84%, rgba(212, 255, 63, 0.045), transparent 25%),
+      linear-gradient(135deg, #242426 0%, #2b2b2e 48%, #222224 100%);
+  }
+
+  .desktop-stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.18;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+    mix-blend-mode: soft-light;
+  }
+
+  .desktop-track {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  .desktop-track svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .desktop-track path {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .desktop-track__surface {
+    stroke-linecap: round;
+  }
+
+  .desktop-track__edge {
+    stroke: rgba(255, 255, 255, 0.06);
+    stroke-linecap: round;
+  }
+
+  .desktop-track__lane {
+    stroke: rgba(255, 255, 255, 0.14);
+    stroke-width: 1.2;
+    stroke-linecap: round;
+  }
+
+  .desktop-track__lime-glow {
+    stroke-width: 16;
+    opacity: 0.16;
+  }
+
+  .desktop-track__lime {
+    stroke-width: 2;
+    opacity: 0.76;
+  }
+
+  .desktop-brand,
+  .desktop-crew {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    pointer-events: none;
+  }
+
+  .desktop-brand {
+    top: 13%;
+    left: clamp(32px, 11.5vw, 236px);
+    width: clamp(190px, 20vw, 360px);
+  }
+
+  .desktop-brand__eyebrow,
+  .desktop-crew__eyebrow {
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: clamp(10px, 0.7vw, 13px);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+  }
+
+  .desktop-crew__eyebrow {
+    color: rgba(255, 255, 255, 0.32);
+  }
+
+  .desktop-brand__title {
+    color: transparent;
+    font-family: var(--font-display);
+    font-size: clamp(56px, 6.2vw, 112px);
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.32);
+  }
+
+  .desktop-brand__question {
+    margin-top: 10px;
+    color: var(--primary-lime);
+    font-family: var(--font-display);
+    font-size: clamp(32px, 3vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 28px rgba(212, 255, 63, 0.15);
+  }
+
+  .desktop-brand__marker {
+    position: relative;
+    width: 118px;
+    margin-top: 42px;
+    border-top: 1px solid rgba(212, 255, 63, 0.7);
+  }
+
+  .desktop-brand__marker::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--primary-lime);
+    box-shadow: 0 0 20px rgba(212, 255, 63, 0.58);
+  }
+
+  .desktop-brand__marker span {
+    display: block;
+    padding-top: 9px;
+    color: rgba(255, 255, 255, 0.45);
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+  }
+
+  .desktop-guide {
+    pointer-events: auto;
+    display: flex;
+    width: 148px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 28px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+  }
+
+  .desktop-guide__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .desktop-guide__copy span {
+    color: rgba(255, 255, 255, 0.42);
+    font-family: var(--font-display);
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.12em;
+  }
+
+  .desktop-guide__copy strong {
+    color: rgba(255, 255, 255, 0.3);
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.1em;
+  }
+
+  .desktop-guide:has(.desktop-guide__switch[aria-checked="true"]) .desktop-guide__copy strong {
+    color: rgba(212, 255, 63, 0.72);
+  }
+
+  .desktop-guide__switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    flex: 0 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    background: rgba(10, 10, 11, 0.32);
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .desktop-guide__switch:focus-visible {
+    outline: 2px solid rgba(212, 255, 63, 0.7);
+    outline-offset: 3px;
+  }
+
+  .desktop-guide__switch[aria-checked="true"] {
+    border-color: rgba(212, 255, 63, 0.45);
+    background: rgba(212, 255, 63, 0.2);
+  }
+
+  .desktop-guide__thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.58);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
+    transition:
+      translate 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .desktop-guide__switch[aria-checked="true"] .desktop-guide__thumb {
+    translate: 20px 0;
+    background: var(--primary-lime);
+    box-shadow: 0 0 12px rgba(212, 255, 63, 0.34);
+  }
+
+  .desktop-crew {
+    top: 68%;
+    right: clamp(32px, 11.2vw, 230px);
+    width: clamp(190px, 18vw, 286px);
+    translate: 0 -50%;
+  }
+
+  .desktop-crew h2 {
+    color: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-display);
+    font-size: clamp(30px, 2.5vw, 46px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+
+  .desktop-crew__rule {
+    width: 52px;
+    margin: 16px 0 22px;
+    border-top: 3px solid rgba(212, 255, 63, 0.5);
+    box-shadow: 0 0 18px rgba(212, 255, 63, 0.1);
+  }
+
+  .desktop-crew ol {
+    display: grid;
+    gap: clamp(12px, 1.25vh, 18px);
+    padding: 0;
+    list-style: none;
+  }
+
+  .desktop-crew li {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    align-items: center;
+    padding-bottom: 9px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  }
+
+  .desktop-crew li span {
+    color: rgba(212, 255, 63, 0.62);
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+  }
+
+  .desktop-crew li strong {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: clamp(14px, 1vw, 17px);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  .desktop-crew__closing {
+    margin-top: 22px;
+    color: rgba(255, 255, 255, 0.3);
+    font-family: var(--font-display);
+    font-size: clamp(13px, 1vw, 16px);
+    letter-spacing: 0.08em;
+  }
+
   .phone-frame {
+    z-index: 2;
     min-height: 0;
     height: 932px;
     max-height: 92vh;
@@ -251,6 +551,51 @@
     box-shadow:
       inset 0 0 0 1px #1a1a1c,
       0 30px 80px rgba(0, 0, 0, 0.55);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1180px) {
+  .desktop-brand {
+    left: 24px;
+    width: 150px;
+  }
+
+  .desktop-crew {
+    right: 24px;
+    width: 160px;
+  }
+
+  .desktop-brand__eyebrow,
+  .desktop-crew__eyebrow,
+  .desktop-brand__marker {
+    display: none;
+  }
+
+  .desktop-brand__title {
+    font-size: 48px;
+  }
+
+  .desktop-brand__question {
+    font-size: 30px;
+  }
+
+  .desktop-crew h2 {
+    font-size: 26px;
+  }
+
+  .desktop-crew li {
+    grid-template-columns: 30px 1fr;
+  }
+
+  .desktop-crew li strong {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 880px) {
+  .desktop-brand,
+  .desktop-crew {
+    display: none;
   }
 }
 
