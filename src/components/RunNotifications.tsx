@@ -1,19 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import iconBell from "../assets/icons/header-bell.svg";
 import runningShoeImg from "../assets/img/shoe-nike-pegasus41.webp";
+import GuideDot from "./GuideDot";
 
 export default function RunNotifications({
   iconClassName = "size-6",
-  unreadBorderClassName = "border-black",
   variant = "light",
 }: {
   iconClassName?: string;
-  unreadBorderClassName?: string;
   variant?: "light" | "dark";
 }) {
   const notificationRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
-  const [hasUnread, setHasUnread] = useState(true);
 
   useEffect(() => {
     if (!open) return;
@@ -33,15 +31,10 @@ export default function RunNotifications({
         className="relative"
         aria-label="알림"
         aria-expanded={open}
-        onClick={() => {
-          setOpen((current) => !current);
-          setHasUnread(false);
-        }}
+        onClick={() => setOpen((current) => !current)}
       >
         <img className={iconClassName} src={iconBell} alt="" />
-        {hasUnread && (
-          <span className={`absolute -right-0.5 -top-0.5 size-2 rounded-full border bg-[var(--primary-orange)] ${unreadBorderClassName}`} />
-        )}
+        <GuideDot style={{ top: "-2px", right: "-2px" }} />
       </button>
 
       {open && (
@@ -61,7 +54,6 @@ export default function RunNotifications({
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="text-[14px] font-semibold">오늘 러닝 날씨</h3>
-                  <span className="size-1.5 flex-none rounded-full bg-[var(--primary-orange)]" />
                 </div>
                 <p className={`mt-1 text-[13px] leading-[1.45] ${variant === "dark" ? "text-white/65" : "text-black/65"}`}>
                   19°C · 미세먼지 좋음<br />오후 8시부터 약한 비가 예상돼요.
@@ -76,7 +68,6 @@ export default function RunNotifications({
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="text-[14px] font-semibold">러닝화 교체 시기</h3>
-                  <span className="size-1.5 flex-none rounded-full bg-[var(--primary-orange)]" />
                 </div>
                 <p className={`mt-1 text-[13px] leading-[1.45] ${variant === "dark" ? "text-white/65" : "text-black/65"}`}>
                   페가수스 41의 누적 거리가 452km예요. 교체 시기를 확인해보세요.

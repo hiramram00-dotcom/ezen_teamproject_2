@@ -1,5 +1,6 @@
 import SectionHeader from "./SectionHeader";
 import { scheduleData } from "../data";
+import GuideDot from "./GuideDot";
 import "./ScheduleSection.css";
 
 type Props = {
@@ -21,6 +22,7 @@ export default function ScheduleSection({ onMore, onOpen }: Props) {
             <span>18:00</span>
           </div>
         </div>
+        <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />
       </button>
     </section>
   );

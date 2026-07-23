@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { onboardingSlides } from "../onboardingData";
 import OnboardingSlide from "./OnboardingSlide";
+import GuideDot from "./GuideDot";
 
 function SwipeButton({ label, onComplete, hidden }: { label: string; onComplete?: () => void; hidden?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -108,6 +109,7 @@ function SwipeButton({ label, onComplete, hidden }: { label: string; onComplete?
       >
         {label}
       </span>
+      <GuideDot style={{ top: "-2px", right: "-2px" }} />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { BackButton } from "../components/Icons";
+import GuideDot from "../components/GuideDot";
 
 type Props = {
   onBack: () => void;
@@ -93,7 +94,7 @@ function ScheduleCard({ item }: { item: ScheduleItem }) {
 
   return (
     <Component
-      className="flex w-full flex-col items-start gap-[10px] rounded-2xl bg-[#404040] p-4 text-left max-[360px]:p-[14px]"
+      className="relative flex w-full flex-col items-start gap-[10px] rounded-2xl bg-[#404040] p-4 text-left max-[360px]:p-[14px]"
       type={item.onClick ? "button" : undefined}
       onClick={item.onClick}
     >
@@ -122,6 +123,7 @@ function ScheduleCard({ item }: { item: ScheduleItem }) {
           {item.summary}
         </p>
       )}
+      {item.onClick && <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />}
     </Component>
   );
 }
@@ -141,16 +143,18 @@ export default function ScheduleListPage({ onBack, onOpenSchedule }: Props) {
       <main className="flex flex-col gap-12 px-[var(--gutter)] pb-10 pt-[6px]">
         <div className="flex items-center gap-[10px]">
           <button
-            className="min-h-[34px] rounded-full bg-[var(--primary-lime)] px-[14px] py-2 text-[14px] font-medium leading-[1.3] tracking-[-0.42px] text-black"
+            className="relative min-h-[34px] rounded-full bg-[var(--primary-lime)] px-[14px] py-2 text-[14px] font-medium leading-[1.3] tracking-[-0.42px] text-black"
             type="button"
           >
             예정
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
           <button
-            className="min-h-[34px] rounded-full border border-[#404538] bg-[#1f211f] px-[14px] py-2 text-[14px] font-medium leading-[1.3] tracking-[-0.42px] text-[#f6f6ed]"
+            className="relative min-h-[34px] rounded-full border border-[#404538] bg-[#1f211f] px-[14px] py-2 text-[14px] font-medium leading-[1.3] tracking-[-0.42px] text-[#f6f6ed]"
             type="button"
           >
             종료
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
         </div>
 

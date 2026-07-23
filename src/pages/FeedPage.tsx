@@ -19,6 +19,7 @@ import partyingFace from "../assets/emoji/partying-face.svg";
 import clappingHands from "../assets/emoji/clapping-hands.svg";
 import womanRunning from "../assets/emoji/woman-running.svg";
 import { useUserProfile } from "../lib/userProfile";
+import GuideDot from "../components/GuideDot";
 
 /* 아이콘은 BottomNav와 동일하게 mask 방식 - text 색으로 아이콘 색 제어 */
 const maskIconClass =
@@ -100,7 +101,7 @@ function StoryCircle({ story, onOpen, onCreateStory, hasUnreadStory = false }: {
       <div className="relative h-[78px] w-[78px]">
         <button
           type="button"
-          className="flex h-[78px] w-[78px] items-center justify-center"
+          className="relative flex h-[78px] w-[78px] items-center justify-center"
           onClick={onOpen}
           disabled={!onOpen}
           aria-label={`${story.name} 스토리 보기`}
@@ -127,6 +128,7 @@ function StoryCircle({ story, onOpen, onCreateStory, hasUnreadStory = false }: {
               )}
             </div>
           )}
+          <GuideDot style={{ top: "3px", right: "2px" }} />
         </button>
         {story.state === "me" && (
           <button
@@ -136,6 +138,7 @@ function StoryCircle({ story, onOpen, onCreateStory, hasUnreadStory = false }: {
             aria-label="스토리 올리기"
           >
             +
+            <GuideDot style={{ top: "-4px", right: "-2px" }} />
           </button>
         )}
       </div>
@@ -342,6 +345,7 @@ export function StoryViewer({ owner, onClose }: { owner: FeedStory; onClose: () 
               strokeWidth="1.35"
             />
           </svg>
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
         {!isCustomStory && !isRunnerJunStory && !isTokyoStory && !(isAhnStory && storyIndex === 1) && (
         <p className="absolute left-6 top-[calc(var(--statusbar-h)+86px)] z-[100] rounded-full bg-black/55 px-3 py-1.5 text-[14px] font-medium leading-none tracking-[-0.42px] text-white shadow-[0_2px_8px_rgba(0,0,0,0.35)] backdrop-blur-sm">
@@ -509,7 +513,7 @@ function FeedCard({
           {/* 오렌지 링 = 새 소식 표시 — 스토리를 확인한 사람은 링 제거(투명 보더로 크기 유지) */}
           <button
             type="button"
-            className={`flex h-11 w-11 items-center justify-center rounded-full border-2 p-[2px] ${
+            className={`relative flex h-11 w-11 items-center justify-center rounded-full border-2 p-[2px] ${
               !onOpenStory || storySeen ? "border-transparent" : "border-[var(--primary-orange)]"
             }`}
             onClick={onOpenStory}
@@ -528,6 +532,7 @@ function FeedCard({
                 className={`h-full w-full border border-[rgba(242,242,242,0.95)] ${avatarPlaceholderClass}`}
               />
             )}
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
           <div className="flex flex-col">
             <span className="subtitle-1 text-[var(--text-strong)]">{displayAuthor}</span>
@@ -539,10 +544,11 @@ function FeedCard({
             type="button"
             aria-label="더보기"
             aria-expanded={isMoreOpen}
-            className="title-2 leading-none text-[var(--text-soft)]"
+            className="relative title-2 leading-none text-[var(--text-soft)]"
             onClick={() => setIsMoreOpen((open) => !open)}
           >
             ···
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
           {isMoreOpen && (
             <div className="absolute right-0 top-7 z-[70] w-[168px] overflow-hidden rounded-[8px] border border-white/10 bg-[#1c1c1f] py-1.5 shadow-[0_14px_36px_rgba(0,0,0,0.5)]">
@@ -550,46 +556,50 @@ function FeedCard({
                 <>
                   <button
                     type="button"
-                    className="flex h-11 w-full items-center px-3.5 text-left text-[14px] font-normal text-white hover:bg-white/7"
+                    className="relative flex h-11 w-full items-center px-3.5 text-left text-[14px] font-normal text-white hover:bg-white/7"
                     onClick={() => {
                       setIsMoreOpen(false);
                       setIsEditOpen(true);
                     }}
                   >
                     수정하기
+                    <GuideDot style={{ top: "-2px", right: "-2px" }} />
                   </button>
                   <button
                     type="button"
-                    className="flex h-11 w-full items-center px-3.5 text-left text-[14px] font-medium text-[var(--primary-orange)] hover:bg-white/7"
+                    className="relative flex h-11 w-full items-center px-3.5 text-left text-[14px] font-medium text-[var(--primary-orange)] hover:bg-white/7"
                     onClick={() => {
                       setIsMoreOpen(false);
                       setIsDeleteOpen(true);
                     }}
                   >
                     삭제하기
+                    <GuideDot style={{ top: "-2px", right: "-2px" }} />
                   </button>
                 </>
               ) : (
                 <>
                   <button
                     type="button"
-                    className="flex h-11 w-full items-center px-3.5 text-left text-[14px] font-normal text-white hover:bg-white/7"
+                    className="relative flex h-11 w-full items-center px-3.5 text-left text-[14px] font-normal text-white hover:bg-white/7"
                     onClick={() => {
                       setIsMoreOpen(false);
                       setHidden(true);
                     }}
                   >
                     이 게시물 숨기기
+                    <GuideDot style={{ top: "10px", right: "50px" }} />
                   </button>
                   <button
                     type="button"
-                    className="flex h-11 w-full items-center px-3.5 text-left text-[14px] font-medium text-[var(--primary-orange)] hover:bg-white/7"
+                    className="relative flex h-11 w-full items-center px-3.5 text-left text-[14px] font-medium text-[var(--primary-orange)] hover:bg-white/7"
                     onClick={() => {
                       setIsMoreOpen(false);
                       setIsReportOpen(true);
                     }}
                   >
                     신고하기
+                    <GuideDot style={{ top: "10px", right: "95px" }} />
                   </button>
                 </>
               )}
@@ -689,25 +699,28 @@ function FeedCard({
               />
             )}
             <span className="subtitle-2">응원 {post.cheers + (liked ? 1 : 0)}</span>
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
           <button
             type="button"
-            className="flex items-center gap-1.5 text-white"
+            className="relative flex items-center gap-1.5 text-white"
             onClick={() => setIsCommentOpen((open) => !open)}
             aria-expanded={isCommentOpen}
             aria-label="댓글 작성"
           >
             <span className={`h-5 w-5 ${maskIconClass}`} style={{ maskImage: `url("${iconMessage}")`, WebkitMaskImage: `url("${iconMessage}")` }} />
             <span className="subtitle-2">{post.comments + localComments.length}</span>
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
           <button
             type="button"
-            className="flex items-center gap-1.5 text-white"
+            className="relative flex items-center gap-1.5 text-white"
             onClick={() => setIsShareOpen(true)}
             aria-label="공유"
           >
             <span className={`h-5 w-[18px] ${maskIconClass}`} style={{ maskImage: `url("${iconRetweet}")`, WebkitMaskImage: `url("${iconRetweet}")` }} />
             <span className="subtitle-2">{post.reposts + (shared ? 1 : 0)}</span>
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
         </div>
         {isCommentOpen && (
@@ -722,10 +735,11 @@ function FeedCard({
             />
             <button
               type="submit"
-              className="h-9 px-2 text-[14px] font-medium text-[var(--primary-lime)] disabled:text-white/25"
+              className="relative h-9 px-2 text-[14px] font-medium text-[var(--primary-lime)] disabled:text-white/25"
               disabled={!commentText.trim()}
             >
               등록
+              <GuideDot style={{ top: "4px", right: "2px" }} />
             </button>
           </form>
         )}
@@ -762,17 +776,19 @@ function FeedCard({
             <div className="mt-5 grid grid-cols-2 gap-2">
               <button
                 type="button"
-                className="h-10 rounded-[6px] bg-white/8 text-[14px] font-medium text-white"
+                className="relative h-10 rounded-[6px] bg-white/8 text-[14px] font-medium text-white"
                 onClick={() => setIsShareOpen(false)}
               >
                 취소
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
               <button
                 type="button"
-                className="h-10 rounded-[6px] bg-[var(--primary-lime)] text-[14px] font-medium text-black"
+                className="relative h-10 rounded-[6px] bg-[var(--primary-lime)] text-[14px] font-medium text-black"
                 onClick={handleShare}
               >
                 공유
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
             </div>
           </div>
@@ -791,11 +807,13 @@ function FeedCard({
               className="mt-4 w-full resize-none rounded-[6px] border border-white/15 bg-[#111113] p-3 text-[14px] font-normal leading-[1.5] text-white outline-none focus:border-[var(--primary-lime)]"
             />
             <div className="mt-4 grid grid-cols-2 gap-2">
-              <button type="button" className="h-10 rounded-[6px] bg-white/8 text-[14px] font-medium text-white" onClick={() => setIsEditOpen(false)}>
+              <button type="button" className="relative h-10 rounded-[6px] bg-white/8 text-[14px] font-medium text-white" onClick={() => setIsEditOpen(false)}>
                 취소
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
-              <button type="button" className="h-10 rounded-[6px] bg-[var(--primary-lime)] text-[14px] font-medium text-black" onClick={handleEditSave}>
+              <button type="button" className="relative h-10 rounded-[6px] bg-[var(--primary-lime)] text-[14px] font-medium text-black" onClick={handleEditSave}>
                 저장
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
             </div>
           </div>
@@ -806,11 +824,13 @@ function FeedCard({
           <div className="w-full max-w-[320px] rounded-[8px] border border-white/10 bg-[#1c1c1f] p-5" onClick={(event) => event.stopPropagation()}>
             <p className="text-center text-[17px] font-medium text-white">게시물을 삭제하시겠습니까?</p>
             <div className="mt-5 grid grid-cols-2 gap-2">
-              <button type="button" className="h-10 rounded-[6px] bg-white/8 text-[14px] font-medium text-white" onClick={() => setIsDeleteOpen(false)}>
+              <button type="button" className="relative h-10 rounded-[6px] bg-white/8 text-[14px] font-medium text-white" onClick={() => setIsDeleteOpen(false)}>
                 취소
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
-              <button type="button" className="h-10 rounded-[6px] bg-[var(--primary-orange)] text-[14px] font-medium text-white" onClick={onDeletePost}>
+              <button type="button" className="relative h-10 rounded-[6px] bg-[var(--primary-orange)] text-[14px] font-medium text-white" onClick={onDeletePost}>
                 삭제
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
             </div>
           </div>
@@ -821,11 +841,13 @@ function FeedCard({
           <div className="w-full max-w-[320px] rounded-[8px] border border-white/10 bg-[#1c1c1f] p-5" onClick={(event) => event.stopPropagation()}>
             <p className="text-center text-[17px] font-medium text-white">이 게시물을 신고하시겠습니까?</p>
             <div className="mt-5 grid grid-cols-2 gap-2">
-              <button type="button" className="h-10 rounded-[6px] bg-white/8 text-[14px] font-medium text-white" onClick={() => setIsReportOpen(false)}>
+              <button type="button" className="relative h-10 rounded-[6px] bg-white/8 text-[14px] font-medium text-white" onClick={() => setIsReportOpen(false)}>
                 취소
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
-              <button type="button" className="h-10 rounded-[6px] bg-[var(--primary-orange)] text-[14px] font-medium text-white" onClick={handleReport}>
+              <button type="button" className="relative h-10 rounded-[6px] bg-[var(--primary-orange)] text-[14px] font-medium text-white" onClick={handleReport}>
                 신고
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
             </div>
           </div>
@@ -868,8 +890,9 @@ function SuggestedCrews() {
     <section className="px-[var(--gutter)]">
       <div className="mb-2.5 flex items-center justify-between">
         <h2 className="title-2 text-[var(--text-strong)]">추천 크루</h2>
-        <button type="button" className="subtitle-2 text-[var(--text-soft)]">
+        <button type="button" className="relative subtitle-2 text-[var(--text-soft)]">
           모두 보기
+        
         </button>
       </div>
       <div className="no-scrollbar grid auto-cols-[calc((100%-12px)/2)] grid-flow-col gap-3 overflow-x-auto pb-1">
@@ -911,6 +934,7 @@ function SuggestedCrews() {
                 </span>
               )}
               {isCheered ? "응원했어요" : "응원하기"}
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </button>
           </div>
           );

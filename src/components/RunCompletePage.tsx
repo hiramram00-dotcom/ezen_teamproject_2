@@ -5,6 +5,7 @@ import { RUNNING_MAP_LOCATION } from "./RunningMapPage";
 import type { RunSummary } from "./RunningPage";
 import SharePopup from "./SharePopup";
 import shareIcon from "../assets/icons/share.svg";
+import GuideDot from "./GuideDot";
 
 const formatTime = (total: number) =>
   `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
@@ -59,11 +60,12 @@ export default function RunCompletePage({
         <BackButton onClick={onBack} color="text-[#0D0D0F]" />
         <button
           type="button"
-          className="grid size-[26px] place-items-center"
+          className="relative grid size-[26px] place-items-center"
           aria-label="공유하기"
           onClick={() => setShareOpen(true)}
         >
           <img className="size-[26px]" src={shareIcon} alt="" />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </header>
 
@@ -108,9 +110,10 @@ export default function RunCompletePage({
       <button
         type="button"
         onClick={onCreateCard}
-        className="mb-5 h-14 w-95.5 max-w-[calc(100%-48px)] shrink-0 rounded-[28px] bg-[#d6ff1e] text-[16px] font-semibold text-[#0f120c]"
+        className="relative mb-5 h-14 w-95.5 max-w-[calc(100%-48px)] shrink-0 rounded-[28px] bg-[#d6ff1e] text-[16px] font-semibold text-[#0f120c]"
       >
         기록 카드 만들기
+        <GuideDot style={{ top: "-2px", right: "-2px" }} />
       </button>
 
       <SharePopup open={shareOpen} onClose={() => setShareOpen(false)} variant="run-complete" />

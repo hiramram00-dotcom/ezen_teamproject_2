@@ -1,5 +1,6 @@
 import { heroData } from "../data";
 import route from "../assets/icons/route.svg";
+import GuideDot from "./GuideDot";
 import "./HeroSection.css";
 
 export default function HeroSection({
@@ -38,8 +39,10 @@ export default function HeroSection({
         )}
       </div>
 
-      <button className="hero__cta" type="button" onClick={onStartRecord}>
+      <button className="relative hero__cta" type="button" onClick={onStartRecord}>
         오늘 기록 시작하기
+        {/* 이 버튼만 따로 미세조정하려면 여기 top/right 숫자만 바꾸세요 (1px 단위, 다른 버튼엔 영향 없음). */}
+        <GuideDot style={{ top: "-2px", right: "-2px" }} />
       </button>
     </section>
   );

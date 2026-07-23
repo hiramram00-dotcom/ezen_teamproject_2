@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { StatusBar } from "./TopBars";
+import { GuideDotProvider } from "./GuideDot";
 
 type TrackPoint = { x: number; y: number };
 type TrackCubic = [TrackPoint, TrackPoint, TrackPoint, TrackPoint];
@@ -96,7 +97,7 @@ export default function PhoneFrame({
   statusBar?: "solid" | "clear";
   className?: string;
 }) {
-  const [guideEnabled, setGuideEnabled] = useState(false);
+  const [guideEnabled, setGuideEnabled] = useState(true);
 
   return (
     <div className="desktop-stage">
@@ -197,7 +198,9 @@ export default function PhoneFrame({
         >
           <StatusBar />
         </div>
-        <div className="phone-scroll">{children}</div>
+        <div className="phone-scroll">
+          <GuideDotProvider enabled={guideEnabled}>{children}</GuideDotProvider>
+        </div>
       </div>
     </div>
   );

@@ -6,7 +6,9 @@ import {
   type CourseExploreItem,
   type CourseExploreKind,
 } from "../data";
-import { BackButton, ChevronDown, SearchIcon } from "./Icons";import "./CourseExplorePage.css";
+import { BackButton, ChevronDown, SearchIcon } from "./Icons";
+import GuideDot from "./GuideDot";
+import "./CourseExplorePage.css";
 
 type Props = {
   onBack: () => void;
@@ -83,8 +85,9 @@ export default function CourseExplorePage({ onBack, onOpenDetail, kind }: Props)
     );
 
     return course.detail ? (
-      <button key={course.name} type="button" className="course-list__card" onClick={() => onOpenDetail(course.detail!)}>
+      <button key={course.name} type="button" className="relative course-list__card" onClick={() => onOpenDetail(course.detail!)}>
         {content}
+        <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />
       </button>
     ) : (
       <article key={course.name} className="course-list__card">
@@ -111,20 +114,22 @@ export default function CourseExplorePage({ onBack, onOpenDetail, kind }: Props)
         )}
         {searchOpen ? (
           <button
-            className="shrink-0 text-sm font-medium tracking-normal text-(--text-primary)"
+            className="relative shrink-0 text-sm font-medium tracking-normal text-(--text-primary)"
             type="button"
             onClick={closeSearch}
           >
             취소
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
         ) : (
           <button
-            className="course-explore__icon-btn"
+            className="relative course-explore__icon-btn"
             type="button"
             aria-label="검색"
             onClick={() => setSearchOpen(true)}
           >
             <SearchIcon size={24} />
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
         )}
       </header>
@@ -143,7 +148,7 @@ export default function CourseExplorePage({ onBack, onOpenDetail, kind }: Props)
             <section className="nearby-course">
               <h2 className="course-explore__section-title">{page.sectionTitle}</h2>
               {page.hero.detail ? (
-                <button className="nearby-course__card" type="button" onClick={() => onOpenDetail(page.hero.detail!)}>
+                <button className="relative nearby-course__card" type="button" onClick={() => onOpenDetail(page.hero.detail!)}>
                   <div className="nearby-course__image">
                     <img src={page.hero.image} alt="" style={page.hero.imageBox} />
                   </div>
@@ -161,6 +166,7 @@ export default function CourseExplorePage({ onBack, onOpenDetail, kind }: Props)
                     </div>
                     <p className="nearby-course__meta">{page.hero.meta}</p>
                   </div>
+                  <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />
                 </button>
               ) : (
                 <article className="nearby-course__card">
@@ -192,7 +198,7 @@ export default function CourseExplorePage({ onBack, onOpenDetail, kind }: Props)
                   <button
                     key={filter}
                     type="button"
-                    className={`course-filter${filter === activeFilter ? " course-filter--active" : ""}`}
+                    className={`relative course-filter${filter === activeFilter ? " course-filter--active" : ""}`}
                     aria-pressed={filter === activeFilter}
                     style={
                       filter === activeFilter
@@ -205,6 +211,7 @@ export default function CourseExplorePage({ onBack, onOpenDetail, kind }: Props)
                     }}
                   >
                     {filter}
+                    <GuideDot style={{ top: "-2px", right: "-2px" }} />
                   </button>
                 );
               })}
@@ -216,12 +223,13 @@ export default function CourseExplorePage({ onBack, onOpenDetail, kind }: Props)
 
             {isAllFilter && filteredCourses.length > collapsedCount && (
               <button
-                className="course-list__more"
+                className="relative course-list__more"
                 type="button"
                 onClick={() => setExpanded((prev) => !prev)}
               >
                 {expanded ? "닫기" : "더보기"}
                 <ChevronDown size={16} className={expanded ? "rotate-180" : undefined} />
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
             )}
           </>

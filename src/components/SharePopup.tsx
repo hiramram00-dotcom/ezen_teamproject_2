@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import kakaoLogo from "../assets/icons/Kakao_logo 1.svg";
 import instagramLogo from "../assets/icons/Instagram_icon 1.svg";
+import GuideDot from "./GuideDot";
 
 // public/ 자산이라 일반 import가 아닌 루트 절대경로로 참조(PWA 홈화면 아이콘과 동일 이미지).
 const werunLogo = "/app-icon.svg";
@@ -79,8 +80,9 @@ export default function SharePopup({ open, onClose, variant = "dark" }: Props) {
         aria-label="공유하기"
         aria-hidden={!open || undefined}
       >
-        <button type="button" onClick={onClose} aria-label="닫기" className="flex w-full justify-center pb-4">
+        <button type="button" onClick={onClose} aria-label="닫기" className="relative flex w-full justify-center pb-4">
           <span className={`h-1 w-10 rounded-full ${variant === "run-complete" ? "bg-black/20" : "bg-white/25"}`} />
+
         </button>
 
         <h2 className={`px-[var(--gutter)] pb-6 text-center text-[16px] font-medium leading-[1.3] tracking-[-0.48px] ${variant === "run-complete" ? "text-[#232323]" : "text-white"}`}>
@@ -92,13 +94,14 @@ export default function SharePopup({ open, onClose, variant = "dark" }: Props) {
             <button
               key={option.key}
               type="button"
-              className="flex flex-col items-center gap-2"
+              className="relative flex flex-col items-center gap-2"
               onClick={() => handleShare(option.message)}
             >
               <span className={`grid h-16 w-16 place-items-center rounded-full ${variant === "run-complete" ? "bg-black/6" : option.swatch}`}>{option.icon}</span>
               <span className={`text-[13px] font-normal leading-[1.3] tracking-[-0.39px] ${variant === "run-complete" ? "text-[#3e3e3e]" : "text-[#c8c8c8]"}`}>
                 {option.label}
               </span>
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </button>
           ))}
         </div>

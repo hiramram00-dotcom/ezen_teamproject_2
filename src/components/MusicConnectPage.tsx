@@ -1,4 +1,5 @@
 import bgPhoto from "../assets/img/music-connect-bg.webp";
+import GuideDot from "./GuideDot";
 
 const services = ["Apple Music", "Spotify", "YouTube Music"];
 
@@ -22,13 +23,14 @@ export default function MusicConnectPage({
       <div className="absolute inset-x-0 top-[var(--statusbar-h)] flex h-12 items-center justify-end px-4.5 py-3">
         <button
           type="button"
-          className="grid size-6 place-items-center"
+          className="relative grid size-6 place-items-center"
           aria-label="닫기"
           onClick={onClose}
         >
           <svg width={24} height={24} viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="M5 5l14 14M19 5L5 19" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
           </svg>
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </div>
 
@@ -41,10 +43,11 @@ export default function MusicConnectPage({
           <button
             key={s}
             type="button"
-            className="rounded-[30px] bg-white py-4.25 text-center text-[20px] font-medium leading-[1.3] tracking-[-0.6px] text-[#131408]"
+            className="relative rounded-[30px] bg-white py-4.25 text-center text-[20px] font-medium leading-[1.3] tracking-[-0.6px] text-[#131408]"
             onClick={onConnect}
           >
             {s}
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
         ))}
       </div>

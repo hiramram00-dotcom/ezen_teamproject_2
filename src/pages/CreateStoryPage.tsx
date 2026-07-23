@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { BackButton } from "../components/Icons";
+import GuideDot from "../components/GuideDot";
 import exampleHangangStory from "../assets/img/feed-story-hangang.webp";
 import exampleRecoveryStory from "../assets/img/feed-story-recovery-food.webp";
 import exampleTokyoStory from "../assets/img/feed-story-tokyo-sushi.webp";
@@ -128,11 +129,12 @@ export default function CreateStoryPage({ onBack, onPublish }: Props) {
         </h1>
         <button
           type="button"
-          className="ml-auto text-[15px] font-medium text-[var(--primary-lime)] disabled:text-white/25"
+          className="relative ml-auto text-[15px] font-medium text-[var(--primary-lime)] disabled:text-white/25"
           disabled={!image}
           onClick={handlePublish}
         >
           공유
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </header>
 
@@ -158,12 +160,13 @@ export default function CreateStoryPage({ onBack, onPublish }: Props) {
                 <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
               </svg>
               <input type="file" accept="image/*" className="hidden" onChange={handleImage} />
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </label>
           </div>
         ) : (
           <div className="flex flex-col gap-4">
           <label
-            className={`flex aspect-[9/16] w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-[8px] border border-dashed bg-[#151517] text-white/55 transition-colors ${
+            className={`relative flex aspect-[9/16] w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-[8px] border border-dashed bg-[#151517] text-white/55 transition-colors ${
               isDragOver ? "border-[var(--primary-lime)] bg-[#202315] text-[var(--primary-lime)]" : "border-white/20"
             }`}
             onDragEnter={(event) => {
@@ -183,6 +186,7 @@ export default function CreateStoryPage({ onBack, onPublish }: Props) {
             </svg>
             <span className="text-[14px] font-medium">스토리 사진 선택</span>
             <input type="file" accept="image/*" className="hidden" onChange={handleImage} />
+            <GuideDot variant="card" style={{ top: "16px", right: "16px" }} />
           </label>
           <div>
             <div className="mb-2 flex items-center justify-between">
@@ -206,6 +210,7 @@ export default function CreateStoryPage({ onBack, onPublish }: Props) {
                   <span className="absolute inset-x-0 bottom-0 bg-black/55 px-1.5 py-1 text-[11px] font-medium text-white">
                     {example.label}
                   </span>
+                  <GuideDot variant="card" style={{ top: "16px", right: "16px" }} />
                 </button>
               ))}
             </div>
@@ -231,14 +236,16 @@ export default function CreateStoryPage({ onBack, onPublish }: Props) {
               <button
                 key={color.value}
                 type="button"
-                className={`h-7 w-7 rounded-full border transition-transform ${
+                className={`relative h-7 w-7 rounded-full border transition-transform ${
                   textColor === color.value ? "scale-110 border-white" : "border-white/20"
                 }`}
                 style={{ backgroundColor: color.value }}
                 onClick={() => setTextColor(color.value)}
                 aria-label={`${color.label} 색상 선택`}
                 aria-pressed={textColor === color.value}
-              />
+              >
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
+              </button>
             ))}
           </div>
         </div>

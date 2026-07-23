@@ -7,6 +7,7 @@ import { YEOUIDO_LOOP_CENTER, YEOUIDO_LOOP_PATH } from "../data/yeouidoLoopRoute
 import { NODULSEOM_CENTER, NODULSEOM_PATH } from "../data/nodulseomRoute";
 import { BackButton } from "./Icons";
 import MapBackdrop from "./MapBackdrop";
+import GuideDot from "./GuideDot";
 import "./CourseDetailPage.css";
 
 
@@ -62,7 +63,7 @@ export default function CourseDetailPage({ onBack, onStartCourse, kind }: Props)
         {mapConfig ? (
           <button
             type="button"
-            className="course-detail__map-trigger"
+            className="relative course-detail__map-trigger"
             aria-label="지도 전체화면으로 보기"
             onClick={() => setIsMapOpen(true)}
           >
@@ -75,6 +76,7 @@ export default function CourseDetailPage({ onBack, onStartCourse, kind }: Props)
               showTraveledPath
               traveledPathProgress={1}
             />
+            <GuideDot variant="card" style={{ top: "16px", right: "16px" }} />
           </button>
         ) : (
           <img src={detail.image} alt="" />
@@ -135,12 +137,13 @@ export default function CourseDetailPage({ onBack, onStartCourse, kind }: Props)
               <button
                 key={variant.title}
                 type="button"
-                className={`course-variant${selectedVariant === index ? " course-variant--active" : ""}`}
+                className={`relative course-variant${selectedVariant === index ? " course-variant--active" : ""}`}
                 aria-pressed={selectedVariant === index}
                 onClick={() => setSelectedVariant(index)}
               >
                 <span className="course-variant__title">{variant.title}</span>
                 <span className="course-variant__level">{variant.level}</span>
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
             ))}
           </div>
@@ -170,8 +173,14 @@ export default function CourseDetailPage({ onBack, onStartCourse, kind }: Props)
       </main>
 
       <div className="course-detail__cta">
-        <button className="course-detail__route" type="button">길찾기</button>
-        <button className="course-detail__start" type="button" onClick={onStartCourse}>이 코스로 러닝 시작</button>
+        <button className="relative course-detail__route" type="button">
+          길찾기
+
+        </button>
+        <button className="relative course-detail__start" type="button" onClick={onStartCourse}>
+          이 코스로 러닝 시작
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
+        </button>
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent } from "react";
 import { BackButton } from "../components/Icons";
+import GuideDot from "../components/GuideDot";
 import LocationPickerPage from "./LocationPickerPage";
 import exampleRunSelfie from "../assets/img/feed-running-selfie.webp";
 import exampleRunShoes from "../assets/img/feed-running-shoes.webp";
@@ -118,11 +119,12 @@ export default function CreatePostPage({ onBack, onPublish }: Props) {
         </h1>
         <button
           type="button"
-          className="ml-auto text-[15px] font-medium text-[var(--primary-lime)] disabled:text-white/25"
+          className="relative ml-auto text-[15px] font-medium text-[var(--primary-lime)] disabled:text-white/25"
           disabled={images.length === 0}
           onClick={handlePublish}
         >
           공유
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </header>
 
@@ -139,6 +141,7 @@ export default function CreatePostPage({ onBack, onPublish }: Props) {
               <svg className="h-4 w-4" viewBox="0 0 18 18" fill="none" aria-hidden>
                 <path d="M4.5 4.5 13.5 13.5M13.5 4.5 4.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
               </svg>
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </button>
             {images.length > 1 && (
               <span className="absolute right-3 top-3 rounded-full bg-black/60 px-2.5 py-1 text-[12px] font-medium text-white">
@@ -149,7 +152,7 @@ export default function CreatePostPage({ onBack, onPublish }: Props) {
         ) : (
           <div className="mx-[var(--gutter)] mt-3 flex flex-col gap-4">
           <label
-            className={`flex aspect-[3/4] cursor-pointer flex-col items-center justify-center gap-3 rounded-[8px] border border-dashed bg-[#151517] text-white/55 transition-colors ${
+            className={`relative flex aspect-[3/4] cursor-pointer flex-col items-center justify-center gap-3 rounded-[8px] border border-dashed bg-[#151517] text-white/55 transition-colors ${
               isDragOver ? "border-[var(--primary-lime)] bg-[#202315] text-[var(--primary-lime)]" : "border-white/20"
             }`}
             onDragEnter={(event) => {
@@ -171,6 +174,7 @@ export default function CreatePostPage({ onBack, onPublish }: Props) {
             <span className="text-[14px] font-medium">사진 선택</span>
             <span className="text-[12px] font-normal text-white/35">최대 5장</span>
             <input type="file" accept="image/*" multiple className="hidden" onChange={handleImages} />
+            <GuideDot variant="card" style={{ top: "16px", right: "16px" }} />
           </label>
           <div>
             <div className="mb-2 flex items-center justify-between">
@@ -194,6 +198,7 @@ export default function CreatePostPage({ onBack, onPublish }: Props) {
                   <span className="absolute inset-x-0 bottom-0 bg-black/55 px-1.5 py-1 text-[11px] font-medium text-white">
                     {image.label}
                   </span>
+                  <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />
                 </button>
               ))}
             </div>
@@ -207,21 +212,23 @@ export default function CreatePostPage({ onBack, onPublish }: Props) {
               <button
                 key={image}
                 type="button"
-                className={`h-[62px] w-[62px] flex-none overflow-hidden rounded-[4px] border-2 ${
+                className={`relative h-[62px] w-[62px] flex-none overflow-hidden rounded-[4px] border-2 ${
                   index === activeImage ? "border-[var(--primary-lime)]" : "border-transparent"
                 }`}
                 onClick={() => setActiveImage(index)}
                 aria-label={`${index + 1}번째 사진 보기`}
               >
                 <img src={image} alt="" className="h-full w-full object-cover" />
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
             ))}
             {images.length < 5 && (
-            <label className="flex h-[62px] w-[62px] flex-none cursor-pointer items-center justify-center rounded-[4px] border border-white/15 text-white/55">
+            <label className="relative flex h-[62px] w-[62px] flex-none cursor-pointer items-center justify-center rounded-[4px] border border-white/15 text-white/55">
               <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
               </svg>
               <input type="file" accept="image/*" multiple className="hidden" onChange={handleImages} />
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </label>
             )}
           </div>
@@ -242,7 +249,7 @@ export default function CreatePostPage({ onBack, onPublish }: Props) {
           </label>
           <button
             type="button"
-            className="flex h-[58px] w-full items-center gap-3 border-b border-white/10 text-left"
+            className="relative flex h-[58px] w-full items-center gap-3 border-b border-white/10 text-left"
             onClick={() => setIsChoosingLocation(true)}
           >
             <svg className="h-5 w-5 flex-none text-white/65" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -255,6 +262,7 @@ export default function CreatePostPage({ onBack, onPublish }: Props) {
             <svg className="h-4 w-4 flex-none text-white/35" viewBox="0 0 18 18" fill="none" aria-hidden>
               <path d="m7 4.5 4.5 4.5L7 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
+            <GuideDot style={{ top: "10px", right: "-2px" }} />
           </button>
         </div>
       </main>

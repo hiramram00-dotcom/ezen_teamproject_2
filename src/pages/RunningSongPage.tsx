@@ -8,6 +8,7 @@ import {
 } from "../lib/musicApi";
 import { playSong, pauseSong, stopSong, warmUpPlayer } from "../lib/youtubePlayer";
 import { BackButton } from "../components/Icons";
+import GuideDot from "../components/GuideDot";
 import MusicSearchSheet from "../components/MusicSearchSheet";
 import HighlightPicker from "../components/HighlightPicker";
 import playIcon from "../assets/icons/song-play.svg";
@@ -143,9 +144,10 @@ export default function RunningSongPage({
                   type="button"
                   aria-label={playingId === song.id ? "정지" : "재생"}
                   onClick={() => togglePlay(song)}
-                  className="shrink-0"
+                  className="relative shrink-0"
                 >
                   <img src={playIcon} alt="" className="h-4 w-3.5" />
+                  <GuideDot style={{ top: "-2px", right: "-2px" }} />
                 </button>
                 <span
                   className={`body-1 min-w-0 flex-1 truncate ${
@@ -161,12 +163,20 @@ export default function RunningSongPage({
                       type="button"
                       aria-label="하이라이트 구간 설정"
                       onClick={() => setHighlightSong(song)}
+                      className="relative"
                     >
                       <img src={editIcon} alt="" className="h-[18px] w-4" />
+                      <GuideDot style={{ top: "-2px", right: "-2px" }} />
                     </button>
                   )}
-                  <button type="button" aria-label="곡 삭제" onClick={() => removeSong(song.id)}>
+                  <button
+                    type="button"
+                    aria-label="곡 삭제"
+                    onClick={() => removeSong(song.id)}
+                    className="relative"
+                  >
                     <img src={deleteIcon} alt="" className="h-[18px] w-[18px]" />
+                    <GuideDot style={{ top: "-2px", right: "-2px" }} />
                   </button>
                 </div>
               </li>
@@ -201,10 +211,11 @@ function AddButton({ onClick, className = "" }: { onClick: () => void; className
     <button
       type="button"
       onClick={onClick}
-      className={`mx-auto flex items-center gap-2 ${className}`}
+      className={`relative mx-auto flex items-center gap-2 ${className}`}
     >
       <img src={addIcon} alt="" className="h-[15px] w-[15px]" />
       <span className="btn-text text-[var(--primary-lime)]">음악 추가하기</span>
+      <GuideDot style={{ top: "-2px", right: "-8px" }} />
     </button>
   );
 }

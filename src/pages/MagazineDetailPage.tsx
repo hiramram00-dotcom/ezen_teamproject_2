@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BackButton } from "../components/Icons";
 import SectionHeader from "../components/SectionHeader";
 import SharePopup from "../components/SharePopup";
+import GuideDot from "../components/GuideDot";
 import mag1 from "../assets/img/mag1.webp";
 import mag2 from "../assets/img/mag2.webp";
 import mag3 from "../assets/img/mag3.webp";
@@ -132,12 +133,13 @@ export default function MagazineDetailPage({ onBack }: Props) {
         <BackButton onClick={onBack} />
         <h1 className="text-center text-[24px] font-semibold leading-[1.3] tracking-[-0.48px] text-white">매거진</h1>
         <button
-          className="grid h-[26px] w-[26px] place-items-center text-white"
+          className="relative grid h-[26px] w-[26px] place-items-center text-white"
           type="button"
           aria-label="공유하기"
           onClick={() => setShareOpen(true)}
         >
           <ShareIcon />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </header>
 
@@ -215,7 +217,7 @@ export default function MagazineDetailPage({ onBack }: Props) {
 
         <section className="flex flex-col gap-[15px]">
           <div className="px-[18px]">
-            <SectionHeader title="함께 보면 좋은 매거진" />
+            <SectionHeader title="함께 보면 좋은 매거진" guideDot={false} />
           </div>
           <div className="flex gap-3 overflow-x-auto px-[18px] no-scrollbar">
             {relatedArticles.map((a) => (
@@ -247,7 +249,7 @@ export default function MagazineDetailPage({ onBack }: Props) {
 
         <section className="flex flex-col gap-[15px]">
           <div className="px-[18px]">
-            <SectionHeader title="추천 러닝화" />
+            <SectionHeader title="추천 러닝화" guideDot={false} />
           </div>
           <p className="px-[16px] text-[16px] font-normal leading-[1.3] tracking-[-0.48px] text-white/70">
             이 글에서 소개한 입문용 러닝화, 바로 만나보세요
@@ -273,13 +275,14 @@ export default function MagazineDetailPage({ onBack }: Props) {
                 </div>
                 <div className="px-[14px] pb-[14px]">
                   <a
-                    className="flex h-[34px] w-full items-center justify-center gap-1 rounded-full bg-[var(--primary-lime)] text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-black"
+                    className="relative flex h-[34px] w-full items-center justify-center gap-1 rounded-full bg-[var(--primary-lime)] text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-black"
                     href={p.link}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     바로 구매
                     <ArrowUpRightIcon />
+                    <GuideDot style={{ top: "-2px", right: "-2px" }} />
                   </a>
                 </div>
               </article>

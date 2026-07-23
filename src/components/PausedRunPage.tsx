@@ -4,6 +4,7 @@ import MusicPlayerBar from "./MusicPlayerBar";
 import MapBackdrop from "./MapBackdrop";
 import { BackButton } from "./Icons";
 import type { MapPoint } from "./RunningMapPage";
+import GuideDot from "./GuideDot";
 
 const HOLD_MS = 500; // "길게 눌러 종료" 판정 시간
 const PAUSED_RUN_LOCATION = { lat: 37.5769, lng: 126.9828 }; // 경복궁과 안국역 사이
@@ -128,6 +129,7 @@ export default function PausedRunPage({
           className="pointer-events-none absolute inset-x-0 top-0 h-[170px]"
           style={MAP_TOP_GRADIENT_STYLE}
         />
+        <GuideDot variant="card" style={{ top: "16px", right: "16px" }} />
       </button>
 
       {isMapOpen && (
@@ -176,13 +178,14 @@ export default function PausedRunPage({
         onClick={onChatbot}
       >
         <img className="size-6" src={iconChatbot} alt="" />
+        <GuideDot style={{ top: "-2px", right: "-2px" }} />
       </button>
 
       <div className="absolute bottom-[161px] left-1/2 flex -translate-x-1/2 gap-16.5">
         <div className="flex flex-col items-center gap-2.5">
           <button
             type="button"
-            className="grid size-24 place-items-center rounded-full"
+            className="relative grid size-24 place-items-center rounded-full"
             aria-label="길게 눌러 종료"
             onPointerDown={startHold}
             onPointerUp={cancelHold}
@@ -194,6 +197,7 @@ export default function PausedRunPage({
             >
               <span className="size-5.75 rounded-xs bg-white" />
             </span>
+            <GuideDot style={{ top: "4px", right: "4px" }} />
           </button>
           <p className="text-[14px] leading-[1.3] tracking-[-0.42px] text-[#9a9a9a]">
             길게 눌러 종료
@@ -202,13 +206,14 @@ export default function PausedRunPage({
         <div className="flex flex-col items-center gap-2.5">
           <button
             type="button"
-            className="grid size-24 place-items-center rounded-full bg-primary-lime active:scale-[0.97]"
+            className="relative grid size-24 place-items-center rounded-full bg-primary-lime active:scale-[0.97]"
             aria-label="이어서 달리기"
             onClick={onResume}
           >
             <svg className="translate-x-[2px]" width={22} height={26} viewBox="0 0 22 26" fill="none" aria-hidden>
               <path d="M1 1v24l20-12L1 1z" fill="#000" />
             </svg>
+            <GuideDot style={{ top: "4px", right: "4px" }} />
           </button>
           <p className="text-[14px] leading-[1.3] tracking-[-0.42px] text-[#9a9a9a]">
             이어서 달리기
@@ -225,6 +230,7 @@ export default function PausedRunPage({
           onClick={onMusicConnect}
         >
           음악 연결하기
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       )}
     </div>

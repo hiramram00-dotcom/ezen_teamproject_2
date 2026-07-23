@@ -9,6 +9,7 @@ import shareIcon from "../assets/icons/share.svg";
 import { BackButton } from "./Icons";
 import type { RunSummary } from "./RunningPage";
 import SharePopup from "./SharePopup";
+import GuideDot from "./GuideDot";
 
 type Props = {
   summary?: RunSummary | null;
@@ -400,11 +401,12 @@ export default function RunRecordCardPage({ summary, onBack, onClose, onShare, o
         <BackButton onClick={onBack} color="text-white" />
         <button
           type="button"
-          className="grid size-[26px] place-items-center"
+          className="relative grid size-[26px] place-items-center"
           aria-label="공유하기"
           onClick={() => setShareOpen(true)}
         >
           <img className="size-[26px] brightness-0 invert" src={shareIcon} alt="" />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </header>
       <p className="mt-4 px-6 font-display text-[13px] tracking-[1px] text-primary-lime">
@@ -553,7 +555,7 @@ export default function RunRecordCardPage({ summary, onBack, onClose, onShare, o
       <section className="mx-6 mt-5 rounded-[12px] border border-white/10 bg-[#404040] p-4">
         <button
           type="button"
-          className="flex w-full items-center justify-between text-left"
+          className="relative flex w-full items-center justify-between text-left"
           onClick={() => setPhotoSectionOpen((open) => !open)}
           aria-expanded={photoSectionOpen}
         >
@@ -566,6 +568,7 @@ export default function RunRecordCardPage({ summary, onBack, onClose, onShare, o
           >
             <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
         {photoSectionOpen && (
           <>
@@ -589,11 +592,13 @@ export default function RunRecordCardPage({ summary, onBack, onClose, onShare, o
                   <span className="absolute inset-x-0 bottom-0 bg-black/55 px-1 py-0.5 text-[10px] text-white">
                     {option.label}
                   </span>
+                  <GuideDot style={{ top: "-2px", right: "-2px" }} />
                 </button>
               ))}
-              <label className="flex h-[62px] w-[62px] flex-none cursor-pointer items-center justify-center rounded-[6px] border border-dashed border-white/25 bg-[#1c1c1f] text-[28px] font-light leading-none text-primary-lime">
+              <label className="relative flex h-[62px] w-[62px] flex-none cursor-pointer items-center justify-center rounded-[6px] border border-dashed border-white/25 bg-[#1c1c1f] text-[28px] font-light leading-none text-primary-lime">
                 +
                 <input type="file" accept="image/*" className="hidden" onChange={chooseCustomBackground} />
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </label>
             </div>
           </>
@@ -603,7 +608,7 @@ export default function RunRecordCardPage({ summary, onBack, onClose, onShare, o
       <section className="mx-6 mt-3 rounded-[12px] border border-white/10 bg-[#404040] p-4">
         <button
           type="button"
-          className="flex w-full items-center justify-between text-left"
+          className="relative flex w-full items-center justify-between text-left"
           onClick={() => setTextSectionOpen((open) => !open)}
           aria-expanded={textSectionOpen}
         >
@@ -616,6 +621,7 @@ export default function RunRecordCardPage({ summary, onBack, onClose, onShare, o
           >
             <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
         {textSectionOpen && (
         <>
@@ -642,7 +648,7 @@ export default function RunRecordCardPage({ summary, onBack, onClose, onShare, o
       <section className="mx-6 mt-3 rounded-[12px] border border-white/10 bg-[#404040] p-4">
         <button
           type="button"
-          className="flex w-full items-center justify-between text-left"
+          className="relative flex w-full items-center justify-between text-left"
           onClick={() => setElementsSectionOpen((open) => !open)}
           aria-expanded={elementsSectionOpen}
         >
@@ -655,23 +661,26 @@ export default function RunRecordCardPage({ summary, onBack, onClose, onShare, o
           >
             <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
         {elementsSectionOpen && (
         <>
         <div className="mt-3 grid grid-cols-2 gap-2">
           <button
             type="button"
-            className={`h-10 rounded-full border text-[13px] font-medium ${showRoute ? "border-primary-lime bg-primary-lime text-black" : "border-white/15 text-white/60"}`}
+            className={`relative h-10 rounded-full border text-[13px] font-medium ${showRoute ? "border-primary-lime bg-primary-lime text-black" : "border-white/15 text-white/60"}`}
             onClick={() => setShowRoute((value) => !value)}
           >
             GPS 아트
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
           <button
             type="button"
-            className={`h-10 rounded-full border text-[13px] font-medium ${showStats ? "border-primary-lime bg-primary-lime text-black" : "border-white/15 text-white/60"}`}
+            className={`relative h-10 rounded-full border text-[13px] font-medium ${showStats ? "border-primary-lime bg-primary-lime text-black" : "border-white/15 text-white/60"}`}
             onClick={() => setShowStats((value) => !value)}
           >
             기록 정보
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
         </div>
         </>
@@ -682,17 +691,19 @@ export default function RunRecordCardPage({ summary, onBack, onClose, onShare, o
         type="button"
         onClick={shareCard}
         disabled={sharing || saving}
-        className="mx-6 mt-4 flex h-14 shrink-0 items-center justify-center rounded-full bg-primary-lime text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-[#0f120c]"
+        className="relative mx-6 mt-4 flex h-14 shrink-0 items-center justify-center rounded-full bg-primary-lime text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-[#0f120c]"
       >
         {sharing ? "공유 중..." : "피드에 공유하기"}
+        <GuideDot style={{ top: "-2px", right: "-2px" }} />
       </button>
       <button
         type="button"
         onClick={saveCard}
         disabled={sharing || saving}
-        className="mx-6 mt-2.5 flex h-14 shrink-0 items-center justify-center rounded-full bg-[#404040] text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-white"
+        className="relative mx-6 mt-2.5 flex h-14 shrink-0 items-center justify-center rounded-full bg-[#404040] text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-white"
       >
         {saving ? "저장 중..." : "기록만 저장하고 닫기"}
+        <GuideDot style={{ top: "-2px", right: "-2px" }} />
       </button>
 
       <SharePopup open={shareOpen} onClose={() => setShareOpen(false)} />

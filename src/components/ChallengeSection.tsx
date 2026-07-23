@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { challenges } from "../data";
 import { ChevronDown } from "./Icons";
+import GuideDot from "./GuideDot";
 import "./ChallengeSection.css";
 
 type Props = {
@@ -20,7 +21,7 @@ export default function ChallengeSection({ onOpenChallenge }: Props) {
         {visibleChallenges.map((c) => (
           <li key={c.name}>
             <button
-              className="challenge-item"
+              className="relative challenge-item"
               type="button"
               onClick={onOpenChallenge}
             >
@@ -40,18 +41,20 @@ export default function ChallengeSection({ onOpenChallenge }: Props) {
               <p className="challenge-item__name">{c.name}</p>
               <p className="challenge-item__meta">👥 {c.participants}</p>
             </div>
+            <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />
             </button>
           </li>
         ))}
       </ul>
       {challenges.length > collapsedCount && (
         <button
-          className="challenge__more"
+          className="relative challenge__more"
           type="button"
           onClick={() => setExpanded((prev) => !prev)}
         >
           {expanded ? "닫기" : "더보기"}
           <ChevronDown size={16} className={expanded ? "rotate-180" : undefined} />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       )}
     </section>

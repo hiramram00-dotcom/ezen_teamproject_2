@@ -30,7 +30,7 @@ export default function BottomNav({ active = "home", onNavigate }: Props) {
               <li key={t.key}>
                 <button
                   type="button"
-                  className={`flex flex-col items-center gap-[5px] w-[51px] text-xs font-medium tracking-[-0.24px] text-center whitespace-nowrap ${
+                  className={`relative flex flex-col items-center gap-[5px] w-[51px] text-xs font-medium tracking-[-0.24px] text-center whitespace-nowrap ${
                     isActive ? "text-[#d6ff1e] font-semibold" : "text-white"
                   }`}
                   onClick={() => onNavigate?.(t.key)}

@@ -5,6 +5,7 @@ import { playSong, pauseSong, stopSong, warmUpPlayer } from "../lib/youtubePlaye
 import iconNote from "../assets/icons/player-note.svg";
 import iconPlay from "../assets/icons/player-play.svg";
 import iconNext from "../assets/icons/player-next.svg";
+import GuideDot from "./GuideDot";
 
 // ── 프로필 뮤직 바 (마이페이지) — 기록하기 MusicPlayerBar 디자인 재사용 ──────
 // 인스타 프로필 뮤직처럼, 방문자가 ▶ 를 누르면 대표 러닝곡들이
@@ -84,6 +85,7 @@ export default function ProfileMusicBar({ className = "" }: { className?: string
         <button
           type="button"
           aria-label={playing ? "일시정지" : "재생"}
+          className="relative"
           onClick={() => {
             if (playing) {
               pauseSong();
@@ -101,9 +103,11 @@ export default function ProfileMusicBar({ className = "" }: { className?: string
           ) : (
             <img className="h-6 w-4" src={iconPlay} alt="" />
           )}
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
-        <button type="button" aria-label="다음 곡" onClick={nextSong}>
+        <button type="button" aria-label="다음 곡" className="relative" onClick={nextSong}>
           <img className="h-4 w-5" src={iconNext} alt="" />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </div>
 

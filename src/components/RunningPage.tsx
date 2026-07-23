@@ -11,6 +11,7 @@ import MusicConnectPage from "./MusicConnectPage";
 import MusicPlayerBar from "./MusicPlayerBar";
 import PausedRunPage from "./PausedRunPage";
 import { BackButton } from "./Icons";
+import GuideDot from "./GuideDot";
 
 const formatTime = (total: number) =>
   `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
@@ -301,16 +302,18 @@ export default function RunningPage({
             <button
               type="button"
               onClick={() => setConfirmExit(false)}
-              className="mt-6.5 h-13 w-full rounded-full bg-primary-lime text-[16px] font-semibold text-[#0f120c]"
+              className="relative mt-6.5 h-13 w-full rounded-full bg-primary-lime text-[16px] font-semibold text-[#0f120c]"
             >
               계속 달릴래요
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </button>
             <button
               type="button"
               onClick={onCancelRun}
-              className="mt-2.5 h-11 w-full text-[14px] text-white/50"
+              className="relative mt-2.5 h-11 w-full text-[14px] text-white/50"
             >
               그만할래요
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </button>
           </div>
         </div>
@@ -319,7 +322,7 @@ export default function RunningPage({
       {/* 진행 중인 코스 칩 */}
       <button
         type="button"
-        className="mt-13.25 flex h-10.25 items-center gap-3.25 rounded-card bg-[rgba(0,0,0,0.26)] px-3 py-1.5 text-[16px] font-medium leading-[1.3] tracking-[-0.6px] text-white"
+        className="relative mt-13.25 flex h-10.25 items-center gap-3.25 rounded-card bg-[rgba(0,0,0,0.26)] px-3 py-1.5 text-[16px] font-medium leading-[1.3] tracking-[-0.6px] text-white"
         onClick={() => setView("map")}
       >
         <span className="size-1.75 rounded-full bg-primary-orange" />
@@ -333,6 +336,7 @@ export default function RunningPage({
             strokeLinejoin="round"
           />
         </svg>
+        <GuideDot style={{ top: "-2px", right: "-2px" }} />
       </button>
 
       {/* 누적 거리 */}
@@ -353,17 +357,18 @@ export default function RunningPage({
       <div className="mt-auto flex flex-col items-center gap-5">
         <button
           type="button"
-          className="grid size-14 place-items-center rounded-full bg-[#232323]"
+          className="relative grid size-14 place-items-center rounded-full bg-[#232323]"
           aria-label="AI 챗봇"
           onClick={onChatbot}
         >
           <img className="size-6" src={iconChatbot} alt="" />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
 
         {/* 일시정지 — 플랫 라임 원형 버튼(글로우 제거, CTA와 톤 통일) */}
         <button
           type="button"
-          className="grid size-27.5 place-items-center rounded-full bg-primary-lime active:scale-[0.97]"
+          className="relative grid size-27.5 place-items-center rounded-full bg-primary-lime active:scale-[0.97]"
           aria-label="일시정지"
           onClick={() => setPaused(true)}
         >
@@ -371,6 +376,7 @@ export default function RunningPage({
             <rect x="0" y="0" width="7" height="26" rx="2" fill="#000" />
             <rect x="12" y="0" width="7" height="26" rx="2" fill="#000" />
           </svg>
+          <GuideDot style={{ top: "4px", right: "4px" }} />
         </button>
       </div>
 
@@ -379,10 +385,11 @@ export default function RunningPage({
       ) : (
         <button
           type="button"
-          className="mt-9.75 h-16.75 w-87.5 max-w-[calc(100%-36px)] rounded-lg bg-[#232323] text-[18px] leading-[1.3] tracking-[-0.54px] text-white"
+          className="relative mt-9.75 h-16.75 w-87.5 max-w-[calc(100%-36px)] rounded-lg bg-[#232323] text-[18px] leading-[1.3] tracking-[-0.54px] text-white"
           onClick={() => setMusicOpen(true)}
         >
           음악 연결하기
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       )}
     </div>

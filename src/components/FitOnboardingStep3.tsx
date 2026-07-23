@@ -1,5 +1,6 @@
 import { useState, type ReactElement } from "react";
 import FitOnboardingShell from "./FitOnboardingShell";
+import GuideDot from "./GuideDot";
 
 type Feature = {
   icon: ReactElement;
@@ -95,7 +96,7 @@ export default function FitOnboardingStep3({ onBack, onNext, onSkip }: { onBack?
             <button
               key={f.title}
               type="button"
-              className={`flex flex-col items-start gap-3 min-h-[138px] p-4 rounded-card border-[1px] text-left ${
+              className={`relative flex flex-col items-start gap-3 min-h-[138px] p-4 rounded-card border-[1px] text-left ${
                 active ? "bg-pill border-primary-lime" : "bg-[#404040] border-transparent"
               }`}
               onClick={() => toggle(i)}
@@ -125,6 +126,7 @@ export default function FitOnboardingStep3({ onBack, onNext, onSkip }: { onBack?
                   </span>
                 ))}
               </span>
+              <GuideDot variant="cardOutside" style={{ top: "-2px", right: "-0.5px" }} />
             </button>
           );
         })}

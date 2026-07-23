@@ -7,6 +7,7 @@ import {
   type Song,
 } from "../lib/musicApi";
 import { playSong, pauseSong, stopSong, warmUpPlayer } from "../lib/youtubePlayer";
+import GuideDot from "./GuideDot";
 
 // ── 대표곡 하이라이트 30초 설정 오버레이 (Figma 149:344) ──────────────
 // 인스타식: 형광 30초 창은 "중앙 고정·크기 고정"이고, 그 밑으로 음파 스트립을
@@ -123,15 +124,17 @@ export default function HighlightPicker({
       <div className="w-full max-w-[356px] rounded-[28px] bg-[#1a1a1c] px-5 pb-7 pt-5">
         {/* 취소 · 완료 */}
         <div className="flex items-center justify-between">
-          <button type="button" onClick={onCancel} className="btn-text text-[var(--primary-lime)]">
+          <button type="button" onClick={onCancel} className="relative btn-text text-[var(--primary-lime)]">
             취소
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
           <button
             type="button"
             onClick={() => onDone(start)}
-            className="btn-text text-[var(--primary-lime)]"
+            className="relative btn-text text-[var(--primary-lime)]"
           >
             완료
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
         </div>
 
@@ -170,7 +173,7 @@ export default function HighlightPicker({
             type="button"
             onClick={togglePlay}
             aria-label={playing ? "일시정지" : "재생"}
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white text-black"
+            className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white text-black"
           >
             {playing ? (
               <svg viewBox="0 0 14 14" className="h-3.5 w-3.5" aria-hidden>
@@ -182,6 +185,7 @@ export default function HighlightPicker({
                 <path d="M3 1.5v11l9-5.5z" fill="currentColor" />
               </svg>
             )}
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
         </div>
 

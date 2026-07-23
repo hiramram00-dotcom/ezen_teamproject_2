@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { StatusBarArea } from "./TopBars";
 import { BackButton } from "./Icons";
+import GuideDot from "./GuideDot";
 
 export default function FitOnboardingShell({
   step,
@@ -45,7 +46,11 @@ export default function FitOnboardingShell({
           </div>
         </div>
 
-        <div className="flex-1 min-h-0 overflow-y-auto scrollbar-hidden">
+        {/* pr-[8px] -mr-[8px]: overflow-y-auto를 걸면 overflow-x도 브라우저가
+            자동으로 clip 대상으로 바꿔버려서, 카드 밖으로 살짝 나가는 GuideDot(cardOutside)이
+            오른쪽 끝에서 잘려 보이는 문제가 있었음. 오른쪽에 여유 공간을 만들고(padding) 그만큼
+            바깥으로 당겨서(음수 margin) 시각적 위치는 그대로 두면서 clip 여유만 확보. */}
+        <div className="flex-1 min-h-0 overflow-y-auto scrollbar-hidden pr-[8px] -mr-[8px]">
           <h1 className="mt-7 [@media(max-height:700px)]:mt-3.5 text-[28px] font-bold leading-[1.3] tracking-[-0.6px] text-white">
             {title}
           </h1>
@@ -57,22 +62,28 @@ export default function FitOnboardingShell({
 
         <div className="shrink-0 flex flex-col items-center gap-3.5 pb-3.5 [@media(max-height:700px)]:gap-2 [@media(max-height:700px)]:pb-2">
           <button
-            className="w-full h-[58px] [@media(max-height:700px)]:h-[46px] rounded-[29px] bg-primary-lime text-black text-[17px] font-bold tracking-[-0.34px] active:scale-[0.99]"
+            className="relative w-full h-[58px] [@media(max-height:700px)]:h-[46px] rounded-[29px] bg-primary-lime text-black text-[17px] font-bold tracking-[-0.34px] active:scale-[0.99]"
             type="button"
             onClick={onNext}
           >
-            {nextLabel}
+            <span className="relative inline-block">
+              {nextLabel}
+              {/* "다음"·"위런 시작하기" 버튼 점 위치 — 이 컴포넌트가 두 라벨 다 그리므로 여기 하나만
+                  고치면 됨. top/right 숫자만 바꾸면 1px 단위로 움직이고 다른 버튼엔 영향 없음. */}
+              <GuideDot style={{ top: "-2px", right: "-6px" }} />
+            </span>
           </button>
           {/* Always reserve the skip link's space, even when hidden, so the
               button above sits at the same position on every step. */}
           <button
-            className="text-sm text-[var(--text-muted)]"
+            className="relative text-sm text-[var(--text-muted)]"
             type="button"
             onClick={onSkip}
             aria-hidden={!showSkip || undefined}
             style={showSkip ? undefined : { visibility: "hidden", pointerEvents: "none" }}
           >
             나중에 할게요
+            <GuideDot style={{ right: "-4px" }} />
           </button>
           <div className="w-[134px] h-[5px] rounded-[3px] bg-white mt-1 [@media(max-height:700px)]:mt-0.5" />
         </div>

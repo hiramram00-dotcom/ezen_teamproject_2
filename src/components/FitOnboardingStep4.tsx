@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FitOnboardingShell from "./FitOnboardingShell";
+import GuideDot from "./GuideDot";
 import runner5 from "../assets/img/runner5.webp";
 import runner6 from "../assets/img/runner6.webp";
 import runner1 from "../assets/img/runner1.webp";
@@ -80,6 +81,7 @@ export default function FitOnboardingStep4({ onBack, onFinish }: { onBack?: () =
                   </svg>
                 </span>
               )}
+              <GuideDot variant="cardOutside" style={{ top: "-2px", right: "-0.5px" }} />
             </button>
           );
         })}

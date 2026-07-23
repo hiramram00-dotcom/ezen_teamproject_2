@@ -3,6 +3,7 @@ import { useRecordMusic } from "../lib/recordMusic";
 import iconNote from "../assets/icons/player-note.svg";
 import iconPlay from "../assets/icons/player-play.svg";
 import iconNext from "../assets/icons/player-next.svg";
+import GuideDot from "./GuideDot";
 
 // 컨텍스트(재생 엔진)가 없을 때만 쓰는 목업 곡명 (기록하기 밖에서 단독 렌더될 경우)
 const FALLBACK_TITLE = "The Weeknd – Blinding Lights";
@@ -73,6 +74,7 @@ export default function MusicPlayerBar({ className = "", onMap = false }: Props)
         <button
           type="button"
           aria-label={playing ? "일시정지" : "재생"}
+          className="relative"
           onClick={() => (music ? music.toggle() : setLocalPlaying((p) => !p))}
         >
           {playing ? (
@@ -83,9 +85,11 @@ export default function MusicPlayerBar({ className = "", onMap = false }: Props)
           ) : (
             <img className="h-6.75 w-4.5" src={iconPlay} alt="" />
           )}
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
-        <button type="button" aria-label="다음 곡" onClick={() => music?.next()}>
+        <button type="button" aria-label="다음 곡" className="relative" onClick={() => music?.next()}>
           <img className="h-4 w-5" src={iconNext} alt="" />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </div>
     </div>

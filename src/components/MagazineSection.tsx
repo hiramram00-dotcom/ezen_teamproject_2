@@ -1,5 +1,6 @@
 import SectionHeader from "./SectionHeader";
 import { articles } from "../data";
+import GuideDot from "./GuideDot";
 import "./MagazineSection.css";
 
 type Props = {
@@ -33,6 +34,7 @@ export default function MagazineSection({ onOpenArticle, onSeeAll }: Props) {
                 ))}
               </p>
             </div>
+            <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />
           </button>
         ))}
       </div>
