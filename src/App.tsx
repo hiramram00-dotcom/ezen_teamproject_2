@@ -112,6 +112,10 @@ const HERO_KEY = "wrun-hero";
 const RECORD_MUSIC_KEY = "wrun-record-music-connected";
 const PERSIST_LIMIT = 10;
 
+const isStandaloneApp = () =>
+  window.matchMedia("(display-mode: standalone)").matches ||
+  (navigator as Navigator & { standalone?: boolean }).standalone === true;
+
 export default function App() {
   const [page, setPage] = useState<Page>("home");
   const [courseExploreKind, setCourseExploreKind] = useState<CourseExploreKind>("nearby");
@@ -200,6 +204,13 @@ export default function App() {
   // 튀므로, 오차가 큰 위치는 버리고 고정 위치로 폴백한다. 모바일 GPS(수십 m)만 실제 위치로 채택.
   const LOCATION_ACCURACY_LIMIT_M = 1000;
   const requestCurrentLocation = () => {
+    // 일반 웹 브라우저에서는 네이티브 권한 팝업을 띄우지 않고 기존 데모 위치로 진행한다.
+    // 홈 화면에 설치된 PWA(standalone)에서만 실제 위치 권한을 요청한다.
+    if (!isStandaloneApp()) {
+      setShowLocationPermission(false);
+      return;
+    }
+
     if (!navigator.geolocation) {
       setShowLocationPermission(false);
       return;
