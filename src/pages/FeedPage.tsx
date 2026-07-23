@@ -19,6 +19,16 @@ import partyingFace from "../assets/emoji/partying-face.svg";
 import clappingHands from "../assets/emoji/clapping-hands.svg";
 import womanRunning from "../assets/emoji/woman-running.svg";
 import { useUserProfile } from "../lib/userProfile";
+import {
+  getCheeredCrews,
+  getPostComments,
+  getViewedStories,
+  isPostLiked,
+  saveCheeredCrews,
+  savePostComments,
+  savePostLiked,
+  saveViewedStories,
+} from "../lib/feedStore";
 
 /* 아이콘은 BottomNav와 동일하게 mask 방식 - text 색으로 아이콘 색 제어 */
 const maskIconClass =
@@ -435,11 +445,12 @@ function FeedCard({
   const avatarImage = isMine ? avatarSrc : post.avatar;
   const displayAuthor = isMine ? profile.name : post.author;
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
-  const [liked, setLiked] = useState(false);
+  // 좋아요·내 댓글은 게시물 id 로 localStorage 에 저장돼 새로고침 후에도 유지된다.
+  const [liked, setLiked] = useState(() => isPostLiked(post.id));
   const [heartBurstKey, setHeartBurstKey] = useState(0);
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const [localComments, setLocalComments] = useState<string[]>([]);
+  const [localComments, setLocalComments] = useState<string[]>(() => getPostComments(post.id));
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [shared, setShared] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
@@ -461,6 +472,9 @@ function FeedCard({
   }, [isMoreOpen]);
 
   useEffect(() => setEditCaption(post.caption ?? ""), [post.caption]);
+
+  useEffect(() => savePostLiked(post.id, liked), [post.id, liked]);
+  useEffect(() => savePostComments(post.id, localComments), [post.id, localComments]);
 
   const handleMediaScroll = (event: UIEvent<HTMLDivElement>) => {
     const { clientWidth, scrollLeft } = event.currentTarget;
@@ -843,8 +857,11 @@ function FeedCard({
 /* 추천 크루 */
 
 function SuggestedCrews() {
-  const [cheeredCrews, setCheeredCrews] = useState<Set<string>>(new Set());
+  // 응원한 크루는 새로고침 후에도 "응원했어요" 상태가 유지된다.
+  const [cheeredCrews, setCheeredCrews] = useState<Set<string>>(() => new Set(getCheeredCrews()));
   const [celebratingBursts, setCelebratingBursts] = useState<Record<string, CheerBurstItem[]>>({});
+
+  useEffect(() => saveCheeredCrews(cheeredCrews), [cheeredCrews]);
 
   const handleCrewCheer = (crewName: string) => {
     setCheeredCrews((current) => {
@@ -938,11 +955,13 @@ export default function FeedPage({
   onDeletePost?: (postId: number) => void;
   onUpdatePost?: (postId: number, caption: string) => void;
 }) {
-  // 현재 보고 있는 스토리(null = 닫힘) + 이번 세션에서 확인한 스토리 이름들.
-  // 확인 기록은 새로고침 시 초기화된다(시연용 — 오렌지 링이 매번 복귀).
+  // 현재 보고 있는 스토리(null = 닫힘) + 확인한 스토리 이름들.
+  // 확인 기록은 localStorage 에 저장돼 새로고침 후에도 유지된다(오렌지 링 복귀 안 함).
   const { avatarSrc } = useUserProfile();
   const [activeStory, setActiveStory] = useState<FeedStory | null>(null);
-  const [viewedStories, setViewedStories] = useState<Set<string>>(new Set());
+  const [viewedStories, setViewedStories] = useState<Set<string>>(() => new Set(getViewedStories()));
+
+  useEffect(() => saveViewedStories(viewedStories), [viewedStories]);
   const myStory = { ...(createdStory ?? feedStories[0]), name: "내 스토리", image: avatarSrc };
   const stories = [myStory, ...feedStories.slice(1)];
 

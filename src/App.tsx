@@ -31,6 +31,7 @@ import RecordFlow from "./components/RecordFlow";
 import type { SharedRunCard } from "./components/RunRecordCardPage";
 import ChatbotPage from "./components/ChatbotPage";
 import LocationPermissionDialog from "./components/LocationPermissionDialog";
+import { downscaleDataUrl, isBlobUrl, readJSON, writeJSON } from "./lib/localStore";
 import {
   courseDetailPages,
   feedStories,
@@ -103,6 +104,14 @@ type Page =
   | "courseRecommendList"
   | "record";
 
+// 사용자 생성 콘텐츠 저장 키 + 최대 보관 개수(용량 보호 — 최근 것 위주).
+const FEED_POSTS_KEY = "wrun-feed-posts";
+const MY_RECORDS_KEY = "wrun-my-records";
+const STORY_KEY = "wrun-story";
+const HERO_KEY = "wrun-hero";
+const RECORD_MUSIC_KEY = "wrun-record-music-connected";
+const PERSIST_LIMIT = 10;
+
 export default function App() {
   const [page, setPage] = useState<Page>("home");
   const [courseExploreKind, setCourseExploreKind] = useState<CourseExploreKind>("nearby");
@@ -116,18 +125,33 @@ export default function App() {
   const [showLocationPermission, setShowLocationPermission] = useState(true);
   // "허용" 계열 클릭 시 채워짐 — 코스 미지정 자유 러닝에서만 사용(추천코스는 항상 자체 center 사용)
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null);
-  // 기록하기 음악 연결 여부 — 기록 탭을 나갔다 와도 유지, 새로고침 시에만 초기화.
-  const [recordMusicConnected, setRecordMusicConnected] = useState(false);
+  // 기록하기 음악 연결 여부 — localStorage 에 저장돼 새로고침 후에도 유지된다
+  // (곡 목록 wrun-record-songs 과 함께 복원돼 바로 곡 목록으로 진입).
+  const [recordMusicConnected, setRecordMusicConnected] = useState(
+    () => readJSON<boolean>(RECORD_MUSIC_KEY, false),
+  );
   const [feedStoryOpen, setFeedStoryOpen] = useState(false);
   // 내 일정 상세의 전체화면 지도 열림 여부 — 열리면 상태바를 투명으로 전환
   const [scheduleMapOpen, setScheduleMapOpen] = useState(false);
-  const [createdFeedPosts, setCreatedFeedPosts] = useState<FeedPost[]>([]);
-  const [createdMyRecords, setCreatedMyRecords] = useState<MyRecord[]>([]);
-  const [createdStory, setCreatedStory] = useState<FeedStory | null>(null);
-  const [sharedHeroImage, setSharedHeroImage] = useState<string>();
+  // 사용자가 만든 콘텐츠는 새로고침 후에도 남도록 localStorage 에서 초기값을 읽는다.
+  // (세션 중 페이지 이동은 상태가 유지되므로, 실제 복원이 필요한 건 새로고침·재실행뿐)
+  const [createdFeedPosts, setCreatedFeedPosts] = useState<FeedPost[]>(
+    () => readJSON<FeedPost[]>(FEED_POSTS_KEY, []),
+  );
+  const [createdMyRecords, setCreatedMyRecords] = useState<MyRecord[]>(
+    () => readJSON<MyRecord[]>(MY_RECORDS_KEY, []),
+  );
+  const [createdStory, setCreatedStory] = useState<FeedStory | null>(
+    () => readJSON<FeedStory | null>(STORY_KEY, null),
+  );
+  const [sharedHeroImage, setSharedHeroImage] = useState<string | undefined>(
+    () => readJSON<{ image?: string }>(HERO_KEY, {}).image,
+  );
   // 홈 히어로에 현재 걸려 있는 공유 카드가 어느 피드 게시물에서 왔는지 추적.
   // 그 게시물이 피드에서 삭제되면 히어로도 이전 기본 상태로 되돌린다.
-  const [sharedHeroPostId, setSharedHeroPostId] = useState<number>();
+  const [sharedHeroPostId, setSharedHeroPostId] = useState<number | undefined>(
+    () => readJSON<{ postId?: number }>(HERO_KEY, {}).postId,
+  );
 
   useEffect(() => initDragScroll(), [page]);
 
@@ -135,6 +159,38 @@ export default function App() {
     document.querySelector(".phone-scroll")?.scrollTo({ top: 0, left: 0, behavior: "auto" });
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [page]);
+
+  // ── 사용자 생성 콘텐츠 로컬 저장 ─────────────────────────────
+  // 직접 올린 사진(blob: URL)은 새로고침하면 어차피 무효화되므로 저장에서 제외하고,
+  // 예시 이미지 참조나 축소된 기록 카드처럼 복원 가능한 것만 최근 10개까지 남긴다.
+  useEffect(() => {
+    const persistable = createdFeedPosts
+      .filter((post) => !isBlobUrl(post.image) && !(post.images ?? []).some(isBlobUrl))
+      .slice(0, PERSIST_LIMIT);
+    writeJSON(FEED_POSTS_KEY, persistable);
+  }, [createdFeedPosts]);
+
+  useEffect(() => {
+    const persistable = createdMyRecords
+      .filter((record) => !isBlobUrl(record.image))
+      .slice(0, PERSIST_LIMIT);
+    writeJSON(MY_RECORDS_KEY, persistable);
+  }, [createdMyRecords]);
+
+  useEffect(() => {
+    // 스토리에 직접 올린 사진(blob)이 하나라도 있으면 복원 불가라 저장하지 않는다.
+    const storyImages = createdStory
+      ? [createdStory.storyImage, ...(createdStory.storySlides ?? []).map((slide) => slide.image)]
+      : [];
+    writeJSON(STORY_KEY, storyImages.some(isBlobUrl) ? null : createdStory);
+  }, [createdStory]);
+
+  useEffect(() => {
+    const image = isBlobUrl(sharedHeroImage) ? undefined : sharedHeroImage;
+    writeJSON(HERO_KEY, { image, postId: image ? sharedHeroPostId : undefined });
+  }, [sharedHeroImage, sharedHeroPostId]);
+
+  useEffect(() => writeJSON(RECORD_MUSIC_KEY, recordMusicConnected), [recordMusicConnected]);
 
   // "허용" 계열 클릭 시에만 실제 브라우저 geolocation을 호출한다(허용 안 함은 API 자체를 안 부름).
   // 거부/에러/미지원 시에도 currentLocation 은 null 로 남아 자유 러닝은 기존 하드코딩 위치로 폴백된다.
@@ -186,15 +242,18 @@ export default function App() {
     }
   };
 
-  const shareRunCard = (card: SharedRunCard) => {
+  const shareRunCard = async (card: SharedRunCard) => {
     const createdAt = Date.now();
+    // 로컬 저장 용량을 아끼려 표시용 이미지는 640px 로 축소한다
+    // (공유/다운로드용 원본은 카드 화면에서 별도 생성되므로 손실 없음).
+    const image = await downscaleDataUrl(card.image);
     const post: FeedPost = {
       id: createdAt,
       author: profileData.name,
       avatar: feedStories[0].image,
       meta: "방금 전 · 러닝 기록",
-      image: card.image,
-      images: [card.image],
+      image,
+      images: [image],
       caption: `${card.title} · ${card.distance}km 러닝을 완료했어요.`,
       cheers: 0,
       comments: 0,
@@ -205,7 +264,7 @@ export default function App() {
 
     const myRecord: MyRecord = {
       id: createdAt,
-      image: card.image,
+      image,
       distanceKm: card.distance,
       date: card.subtitle,
       caption: `${card.title} · ${card.distance}km 러닝을 완료했어요.`,
@@ -216,13 +275,13 @@ export default function App() {
 
     setCreatedFeedPosts((posts) => [post, ...posts]);
     setCreatedMyRecords((records) => [myRecord, ...records]);
-    setSharedHeroImage(card.image);
+    setSharedHeroImage(image);
     setSharedHeroPostId(createdAt);
     setPage("feed");
   };
 
-  const saveRunCard = (card: SharedRunCard) => {
-    setSharedHeroImage(card.image);
+  const saveRunCard = async (card: SharedRunCard) => {
+    setSharedHeroImage(await downscaleDataUrl(card.image));
     setSharedHeroPostId(undefined);
     setPage("home");
   };

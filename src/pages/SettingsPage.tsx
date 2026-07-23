@@ -1,6 +1,10 @@
-import { Fragment, useState } from "react";import { settingsGroups, defaultSettingsToggles } from "../data";
+import { Fragment, useEffect, useState } from "react";
+import { readJSON, writeJSON } from "../lib/localStore";import { settingsGroups, defaultSettingsToggles } from "../data";
 import { BackButton } from "../components/Icons";
 import chevronRight from "../assets/icons/settings-chevron-right.svg";
+
+// 알림 등 설정 토글을 새로고침 후에도 유지한다.
+const SETTINGS_TOGGLES_KEY = "wrun-settings-toggles";
 
 type Props = {
   onBack?: () => void;
@@ -9,7 +13,12 @@ type Props = {
 };
 
 export default function SettingsPage({ onBack, onOpenProfile }: Props) {
-  const [toggles, setToggles] = useState(defaultSettingsToggles);
+  // 저장된 값을 기본값 위에 덮어써 초기화 — 나중에 토글이 추가돼도 기본값이 채워진다.
+  const [toggles, setToggles] = useState<Record<string, boolean>>(
+    () => ({ ...defaultSettingsToggles, ...readJSON<Record<string, boolean>>(SETTINGS_TOGGLES_KEY, {}) }),
+  );
+
+  useEffect(() => writeJSON(SETTINGS_TOGGLES_KEY, toggles), [toggles]);
 
   return (
     <div className="flex flex-col bg-[#232323]">
