@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FitOnboardingShell from "./FitOnboardingShell";
+import GuideDot from "./GuideDot";
 import morning from "../assets/img/on5_img.png";
 import night from "../assets/img/on6_img.png";
 import together from "../assets/img/on7_img.png";
@@ -47,38 +48,44 @@ export default function FitOnboardingStep2({ onBack, onNext, onSkip }: { onBack?
         {styles.map((s, i) => {
           const active = selected.has(i);
           return (
-            <button
-              key={s.label}
-              type="button"
-              className={`relative aspect-[16/10] rounded-2xl overflow-hidden bg-elevated border-[1px] ${
-                active ? "border-primary-lime" : "border-transparent"
-              }`}
-              onClick={() => toggle(i)}
-            >
-              <img
-                className={`absolute inset-0 w-full h-full object-cover ${active ? "" : "brightness-[0.55]"}`}
-                src={s.image}
-                alt=""
-              />
-              <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/75 from-10% to-transparent pointer-events-none" />
-              <span
-                className={`absolute left-3 bottom-[10px] text-sm font-semibold tracking-[-0.3px] ${
-                  active ? "text-primary-lime" : "text-white"
+            // GuideDot을 button 바깥(형제)에 두는 이유: button 자체는 이미지를 둥글게
+            // 자르려고 overflow-hidden이 꼭 필요한데, 그 안에 dot을 두면 카드 밖으로
+            // 나가는 부분이 같이 잘려서 안 보인다. button 내부 스타일(테두리·radius)은
+            // 원래 그대로 둬야 다른 카드들과 border-radius가 어긋나 보이지 않는다.
+            <div key={s.label} className="relative">
+              <button
+                type="button"
+                className={`relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-elevated border-[1px] ${
+                  active ? "border-primary-lime" : "border-transparent"
                 }`}
+                onClick={() => toggle(i)}
               >
-                {s.label}
-              </span>
-              {active && (
+                <img
+                  className={`absolute inset-0 w-full h-full object-cover ${active ? "" : "brightness-[0.55]"}`}
+                  src={s.image}
+                  alt=""
+                />
+                <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/75 from-10% to-transparent pointer-events-none" />
                 <span
-                  className="absolute top-[10px] right-[10px] w-[22px] h-[22px] rounded-full bg-primary-lime flex items-center justify-center"
-                  aria-hidden
+                  className={`absolute left-3 bottom-[10px] text-sm font-semibold tracking-[-0.3px] ${
+                    active ? "text-primary-lime" : "text-white"
+                  }`}
                 >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 13l5 5L19 7" stroke="var(--text-on-lime)" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                  {s.label}
                 </span>
-              )}
-            </button>
+                {active && (
+                  <span
+                    className="absolute top-[10px] right-[10px] w-[22px] h-[22px] rounded-full bg-primary-lime flex items-center justify-center"
+                    aria-hidden
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path d="M5 13l5 5L19 7" stroke="var(--text-on-lime)" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                )}
+              </button>
+              <GuideDot variant="cardOutside" style={{ top: "-2px", right: "-0.5px" }} />
+            </div>
           );
         })}
       </div>

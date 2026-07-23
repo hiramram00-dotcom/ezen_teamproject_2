@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronRight, BackButton } from "../components/Icons";
 import SharePopup from "../components/SharePopup";
+import GuideDot from "../components/GuideDot";
 import MapBackdrop from "../components/MapBackdrop";
 import scheduleImage from "../assets/img/schedule-hero.webp";
 import runner1 from "../assets/img/runner1.webp";
@@ -99,12 +100,13 @@ export default function ScheduleDetailPage({ onBack, onMapOpenChange }: Props) {
           내 일정
         </h1>
         <button
-          className="grid h-[26px] w-[26px] place-items-center text-white"
+          className="relative grid h-[26px] w-[26px] place-items-center text-white"
           type="button"
           aria-label="공유하기"
           onClick={() => setShareOpen(true)}
         >
           <ShareIcon />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </header>
 
@@ -159,12 +161,13 @@ export default function ScheduleDetailPage({ onBack, onMapOpenChange }: Props) {
               <span className="text-[14px] font-light leading-[1.3] tracking-[-0.42px] text-[#8a8a8a]">장소</span>
               <strong className="truncate text-[16px] font-normal leading-[1.3] tracking-[-0.48px] text-white">뚝섬유원지 3번 출구</strong>
               <button
-                className="inline-flex items-center justify-end whitespace-nowrap text-[14px] font-light leading-[1.3] tracking-[-0.42px] text-[var(--primary-lime)]"
+                className="relative inline-flex items-center justify-end whitespace-nowrap text-[14px] font-light leading-[1.3] tracking-[-0.42px] text-[var(--primary-lime)]"
                 type="button"
                 onClick={() => setIsMapOpen(true)}
               >
                 지도 보기
                 <ChevronRight size={14} />
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
             </div>
             <div className="grid min-h-[21px] grid-cols-[42px_minmax(0,1fr)] items-baseline gap-x-[11px] max-[380px]:grid-cols-[38px_minmax(0,1fr)] max-[380px]:gap-x-2">
@@ -207,14 +210,15 @@ export default function ScheduleDetailPage({ onBack, onMapOpenChange }: Props) {
       <div className="fixed bottom-0 left-1/2 z-[100] flex h-[calc(91px+env(safe-area-inset-bottom,0px))] w-[var(--frame-width)] max-w-full -translate-x-1/2 items-start gap-[10px] bg-[#232323] px-[var(--gutter)] pb-[calc(env(safe-area-inset-bottom,0px)+24px)] pt-[14px]">
         {!attending && (
           <button
-            className="h-[53px] flex-1 rounded-full bg-[#1d1d1d] text-[16px] font-medium leading-[1.3] tracking-[-0.48px] text-[#9c9c9c]"
+            className="relative h-[53px] flex-1 rounded-full bg-[#1d1d1d] text-[16px] font-medium leading-[1.3] tracking-[-0.48px] text-[#9c9c9c]"
             type="button"
           >
             불참
+        
           </button>
         )}
         <button
-          className={`flex h-[53px] flex-1 items-center justify-center gap-0.5 rounded-full text-[16px] font-medium leading-[1.3] tracking-[-0.48px] ${
+          className={`relative flex h-[53px] flex-1 items-center justify-center gap-0.5 rounded-full text-[16px] font-medium leading-[1.3] tracking-[-0.48px] ${
             attending ? "bg-[#2a2a2a] text-white/40" : "bg-[var(--primary-lime)] text-[#0a0a0a]"
           }`}
           type="button"
@@ -223,6 +227,7 @@ export default function ScheduleDetailPage({ onBack, onMapOpenChange }: Props) {
         >
           {!attending && <CheckIcon />}
           {attending ? "참석 확정" : "참석"}
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </div>
 
@@ -245,7 +250,7 @@ export default function ScheduleDetailPage({ onBack, onMapOpenChange }: Props) {
               </p>
             </div>
             <button
-              className="h-[46px] w-full rounded-full bg-[var(--primary-lime)] text-[16px] font-medium leading-[1.3] tracking-[-0.48px] text-[#0a0a0a]"
+              className="relative h-[46px] w-full rounded-full bg-[var(--primary-lime)] text-[16px] font-medium leading-[1.3] tracking-[-0.48px] text-[#0a0a0a]"
               type="button"
               onClick={() => {
                 setAttending(true);
@@ -253,6 +258,7 @@ export default function ScheduleDetailPage({ onBack, onMapOpenChange }: Props) {
               }}
             >
               확인
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </button>
           </div>
         </div>

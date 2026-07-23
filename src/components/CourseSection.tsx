@@ -1,5 +1,6 @@
 import SectionHeader from "./SectionHeader";
 import { courses } from "../data";
+import GuideDot from "./GuideDot";
 import "./CourseSection.css";
 
 type Props = {
@@ -40,6 +41,7 @@ export default function CourseSection({ onOpenNearby, onOpenPopular, onOpenChall
                 </p>
                 <p className="course-card__detail">{c.detail}</p>
               </div>
+              <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />
             </button>
           );
         })}

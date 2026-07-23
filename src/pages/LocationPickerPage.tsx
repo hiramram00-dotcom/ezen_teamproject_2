@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import mapImage from "../assets/img/popular-course-detail-map.webp";
 import { BackButton } from "../components/Icons";
+import GuideDot from "../components/GuideDot";
 
 type LocationItem = { name: string; address: string; x: number; y: number };
 
@@ -55,6 +56,7 @@ export default function LocationPickerPage({ onBack, onSelect }: Props) {
                   <circle cx="12" cy="10" r="1.8" fill="currentColor" />
                 </svg>
               </span>
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </button>
           ))}
           <button type="button" className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/75 text-white shadow-[0_2px_8px_rgba(0,0,0,0.3)]" onClick={() => onSelect("현재 위치")} aria-label="현재 위치 선택">
@@ -62,13 +64,14 @@ export default function LocationPickerPage({ onBack, onSelect }: Props) {
               <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" />
               <path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
         </div>
 
         <section className="min-h-0 flex-1 overflow-y-auto px-[var(--gutter)]">
           <h2 className="pb-2 pt-4 text-[15px] font-medium text-white">{query ? "검색 결과" : "주변 위치"}</h2>
           {results.length > 0 ? results.map((item) => (
-            <button key={item.name} type="button" className="flex w-full items-center gap-3 border-b border-white/10 py-3.5 text-left" onClick={() => onSelect(item.name)}>
+            <button key={item.name} type="button" className="relative flex w-full items-center gap-3 border-b border-white/10 py-3.5 text-left" onClick={() => onSelect(item.name)}>
               <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white/8 text-white/70">
                 <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z" stroke="currentColor" strokeWidth="1.5" />
@@ -79,6 +82,7 @@ export default function LocationPickerPage({ onBack, onSelect }: Props) {
                 <strong className="block truncate text-[14px] font-medium text-white">{item.name}</strong>
                 <span className="mt-1 block truncate text-[12px] font-normal text-white/45">{item.address}</span>
               </span>
+              <GuideDot variant="card" style={{ top: "16px", right: "16px" }} />
             </button>
           )) : <p className="py-10 text-center text-[13px] font-normal text-white/40">검색 결과가 없습니다.</p>}
         </section>

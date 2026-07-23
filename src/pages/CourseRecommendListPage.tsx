@@ -1,4 +1,5 @@
 import { BackButton } from "../components/Icons";
+import GuideDot from "../components/GuideDot";
 import { courseExplorePages, courseLevelColors, type CourseDetailKind, type CourseExploreItem } from "../data";
 import "../components/CourseExplorePage.css";
 
@@ -35,8 +36,14 @@ export default function CourseRecommendListPage({ onBack, onOpenDetail }: Props)
     );
 
     return course.detail ? (
-      <button key={course.name} type="button" className="course-list__card" onClick={() => onOpenDetail(course.detail!)}>
+      <button
+        key={course.name}
+        type="button"
+        className="course-list__card relative"
+        onClick={() => onOpenDetail(course.detail!)}
+      >
         {content}
+        <GuideDot variant="card" style={{ top: "16px", right: "16px" }} />
       </button>
     ) : (
       <article key={course.name} className="course-list__card">

@@ -2,6 +2,7 @@
 // 목업 "챗봇 01~09" 기준. 색·간격은 index.css 토큰 사용.
 import type { MessageBlock, RaceCard } from "../lib/chatTypes";
 import runiIcon from "../assets/icons/icon-chatbot.svg";
+import GuideDot from "./GuideDot";
 
 /* 러니 아바타 (봇 말풍선 왼쪽) */
 function RuniAvatar({ size = 30 }: { size?: number }) {
@@ -57,8 +58,9 @@ function CardRow({
           key={c.title}
           type="button"
           onClick={() => onChip?.(`${c.title} 자세히 알려줘`)}
-          className="w-full overflow-hidden rounded-[18px] bg-[#232323] text-left"
+          className="relative w-full overflow-hidden rounded-[18px] bg-[#232323] text-left"
         >
+          <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />
           <div className="relative h-[88px] bg-[#2c2c30]">
             {c.image && (
               <img src={c.image} alt="" className="absolute inset-0 h-full w-full object-cover" />
@@ -169,9 +171,10 @@ function ErrorBubble({ text, onRetry }: { text: string; onRetry?: () => void }) 
         <button
           type="button"
           onClick={onRetry}
-          className="btn-text rounded-full bg-[#d4ff3f] px-4 py-2 text-[#0f120c]"
+          className="btn-text relative rounded-full bg-[#d4ff3f] px-4 py-2 text-[#0f120c]"
         >
           다시 시도
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </div>
     </div>
@@ -193,9 +196,10 @@ function ChipRow({
           key={c.label}
           type="button"
           onClick={() => onChip?.(c.prompt)}
-          className="subtitle-2 rounded-full bg-[#232323] px-3.5 py-2 text-[#d4ff3f]"
+          className="subtitle-2 relative rounded-full bg-[#232323] px-3.5 py-2 text-[#d4ff3f]"
         >
           {c.label}
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       ))}
     </div>

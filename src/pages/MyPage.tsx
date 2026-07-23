@@ -2,6 +2,7 @@ import { useState } from "react";
 import { profileData, profileStats, highlights, myRecords, type MyRecord } from "../data";
 import { useUserProfile } from "../lib/userProfile";
 import ProfileMusicBar from "../components/ProfileMusicBar";
+import GuideDot from "../components/GuideDot";
 import flameIcon from "../assets/icons/mypage-flame.svg";
 import hlStreak from "../assets/icons/mypage-hl-streak.svg";
 import hlRace from "../assets/icons/mypage-hl-race.svg";
@@ -180,7 +181,7 @@ export default function MyPage({
           <button
             type="button"
             key={h.key}
-            className="flex flex-col items-center gap-[7px] text-xs tracking-[-0.36px] text-white/70"
+            className="relative flex flex-col items-center gap-[7px] text-xs tracking-[-0.36px] text-white/70"
             onClick={() => {
               setActiveHighlight(h.key as HighlightKey);
               setHighlightOpen(true);
@@ -195,6 +196,7 @@ export default function MyPage({
               />
             </div>
             <span>{h.label}</span>
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
         ))}
       </section>
@@ -203,21 +205,24 @@ export default function MyPage({
         <nav className="flex h-[50px]" aria-label="기록 보기 방식">
           <button
             type="button"
-            className="flex-1 flex items-center justify-center border-b-2 border-primary-lime"
+            className="relative flex-1 flex items-center justify-center border-b-2 border-primary-lime"
           >
             <img className="w-[22px] h-[22px]" src={tabHash} alt="목록" />
+           
           </button>
           <button
             type="button"
-            className="flex-1 flex items-center justify-center border-b-2 border-transparent"
+            className="relative flex-1 flex items-center justify-center border-b-2 border-transparent"
           >
             <img className="w-[22px] h-[22px]" src={tabMap} alt="지도" />
+            
           </button>
           <button
             type="button"
-            className="flex-1 flex items-center justify-center border-b-2 border-transparent"
+            className="relative flex-1 flex items-center justify-center border-b-2 border-transparent"
           >
             <img className="w-[22px] h-[22px]" src={tabBookmark} alt="저장됨" />
+
           </button>
         </nav>
 
@@ -250,6 +255,7 @@ export default function MyPage({
                 <p className="absolute left-2 bottom-2 text-xs tracking-[-0.36px] text-white/70 whitespace-nowrap">
                   {r.date}
                 </p>
+                <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />
               </button>
             </li>
           ))}
@@ -272,11 +278,12 @@ export default function MyPage({
           >
             <button
               type="button"
-              className="mx-auto mb-3 flex h-8 w-20 items-start justify-center"
+              className="relative mx-auto mb-3 flex h-8 w-20 items-start justify-center"
               onClick={() => setHighlightOpen(false)}
               aria-label="하이라이트 패널 닫기"
             >
               <span className="h-1 w-10 rounded-full bg-white/20" />
+              <GuideDot style={{ top: "-2px", right: "5px" }} />
             </button>
             <header className="mb-8 flex items-center">
               <div className="flex items-center gap-3">
@@ -360,26 +367,29 @@ export default function MyPage({
                 type="button"
                 aria-label="더보기"
                 aria-expanded={isMoreOpen}
-                className="title-2 leading-none text-[var(--text-soft)]"
+                className="relative title-2 leading-none text-[var(--text-soft)]"
                 onClick={() => setIsMoreOpen((open) => !open)}
               >
                 ···
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
               {isMoreOpen && (
                 <div className="absolute right-0 top-7 w-[168px] overflow-hidden rounded-[8px] border border-white/10 bg-[#1c1c1f] py-1.5 shadow-[0_14px_36px_rgba(0,0,0,0.5)]">
                   <button
                     type="button"
-                    className="flex h-11 w-full items-center px-3.5 text-left text-[14px] font-normal text-white hover:bg-white/7"
+                    className="relative flex h-11 w-full items-center px-3.5 text-left text-[14px] font-normal text-white hover:bg-white/7"
                     onClick={startEditing}
                   >
                     수정하기
+                    <GuideDot style={{ top: "10px", right: "90px" }} />
                   </button>
                   <button
                     type="button"
-                    className="flex h-11 w-full items-center px-3.5 text-left text-[14px] font-medium text-[var(--primary-orange)] hover:bg-white/7"
+                    className="relative flex h-11 w-full items-center px-3.5 text-left text-[14px] font-medium text-[var(--primary-orange)] hover:bg-white/7"
                     onClick={deleteRecord}
                   >
                     삭제하기
+                    <GuideDot style={{ top: "10px", right: "90px" }} />
                   </button>
                 </div>
               )}
@@ -433,11 +443,13 @@ export default function MyPage({
                     />
                   </label>
                   <div className="mt-3 grid grid-cols-2 gap-2">
-                    <button type="button" className="h-10 rounded-[6px] bg-white/8 text-[14px] font-medium text-white" onClick={() => setIsEditing(false)}>
+                    <button type="button" className="relative h-10 rounded-[6px] bg-white/8 text-[14px] font-medium text-white" onClick={() => setIsEditing(false)}>
                       취소
+                      <GuideDot style={{ top: "-2px", right: "-2px" }} />
                     </button>
-                    <button type="button" className="h-10 rounded-[6px] bg-[var(--primary-lime)] text-[14px] font-medium text-black" onClick={saveRecord}>
+                    <button type="button" className="relative h-10 rounded-[6px] bg-[var(--primary-lime)] text-[14px] font-medium text-black" onClick={saveRecord}>
                       저장
+                      <GuideDot style={{ top: "-2px", right: "-2px" }} />
                     </button>
                   </div>
                 </div>

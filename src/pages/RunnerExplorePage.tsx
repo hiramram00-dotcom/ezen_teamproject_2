@@ -1,4 +1,5 @@
-import { useState, type CSSProperties, type ReactNode } from "react";import confettiBall from "../assets/emoji/confetti-ball.svg";
+import { useState, type CSSProperties, type ReactNode } from "react";
+import confettiBall from "../assets/emoji/confetti-ball.svg";
 import partyPopper from "../assets/emoji/party-popper.svg";
 import personRunning from "../assets/emoji/person-running.svg";
 import thumbsUp from "../assets/emoji/thumbs-up.svg";
@@ -7,6 +8,7 @@ import clappingHands from "../assets/emoji/clapping-hands.svg";
 import womanRunning from "../assets/emoji/woman-running.svg";
 import runner1 from "../assets/img/runner1.webp";
 import { BackButton } from "../components/Icons";
+import GuideDot from "../components/GuideDot";
 import runner2 from "../assets/img/runner2.webp";
 import runner3 from "../assets/img/runner3.webp";
 import runner4 from "../assets/img/runner4.webp";
@@ -186,8 +188,9 @@ function PageSection({
       <div className={sectionHeadClass}>
         <h2 className={sectionTitleClass}>{title}</h2>
         {action && (
-          <button className={sectionActionClass} type="button">
+          <button className={`relative ${sectionActionClass}`} type="button">
             {action}
+            <GuideDot style={{ top: "-8px", right: "-4px" }} />
           </button>
         )}
       </div>
@@ -222,7 +225,7 @@ function ProfileRow({
       </div>
       {item.action === "follow" && (
         <button
-          className={`h-[34px] w-[69px] rounded-[10px] text-[13px] font-medium tracking-[0] max-[360px]:w-16 max-[360px]:text-[12px] ${
+          className={`relative h-[34px] w-[69px] rounded-[10px] text-[13px] font-medium tracking-[0] max-[360px]:w-16 max-[360px]:text-[12px] ${
             following
               ? "bg-[#2a2a2e] text-[rgba(255,255,255,0.48)]"
               : "bg-[var(--primary-lime)] text-black"
@@ -232,12 +235,13 @@ function ProfileRow({
           onClick={onToggleFollow}
         >
           {following ? "팔로잉" : "팔로우"}
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       )}
       {item.action === "cheer" && (
         <div className="relative">
           <button
-            className={`h-8.25 w-23.5 rounded-full border text-[13px] font-medium leading-[1.3] tracking-normal max-[360px]:w-22 max-[360px]:text-[12px] ${
+            className={`relative h-8.25 w-23.5 rounded-full border text-[13px] font-medium leading-[1.3] tracking-normal max-[360px]:w-22 max-[360px]:text-[12px] ${
               cheered
                 ? "border-(--primary-lime) bg-(--primary-lime) text-black"
                 : "border-(--primary-lime) text-(--primary-lime)"
@@ -248,18 +252,20 @@ function ProfileRow({
             onClick={onCheer}
           >
             {cheered ? "응원했어요" : "응원하기"}
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
           {burst && <CheerBurst items={burst} />}
         </div>
       )}
       {item.action && (
         <button
-          className="grid h-[34px] w-[18px] place-items-center text-[rgba(255,255,255,0.62)]"
+          className="relative grid h-[34px] w-[18px] place-items-center text-[rgba(255,255,255,0.62)]"
           type="button"
           aria-label={`${item.name} 숨기기`}
           onClick={onRemove}
         >
           <CloseIcon />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       )}
     </li>
@@ -365,11 +371,16 @@ export default function RunnerExplorePage({ onBack }: Props) {
           <>
             <div className="flex gap-[27px] pb-[46px] pt-12">
               {quickLinks.map((item) => (
-                <button className="flex w-[73px] flex-col items-center gap-[9px]" type="button" key={item.label}>
+                <button
+                  className="relative flex w-[73px] flex-col items-center gap-[9px]"
+                  type="button"
+                  key={item.label}
+                >
                   <Avatar className="h-[72px] w-[72px] rounded-full object-cover" item={item} />
                   <span className="whitespace-nowrap text-[14px] font-medium leading-none tracking-normal">
                     {item.label}
                   </span>
+                  <GuideDot style={{ top: "-2px", right: "-2px" }} />
                 </button>
               ))}
             </div>

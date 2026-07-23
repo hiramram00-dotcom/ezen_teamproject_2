@@ -5,6 +5,7 @@ import iconChatbot from "../assets/icons/header-chatbot.svg";
 import iconSettings from "../assets/icons/header-settings.svg";
 import { myRecords } from "../data";
 import RunNotifications from "./RunNotifications";
+import GuideDot from "./GuideDot";
 import "./TopBars.css";
 
 /**
@@ -137,7 +138,7 @@ export function AppHeader({
 
   return (
     <header ref={headerRef} className="appheader">
-      <button type="button" className="appheader__logo" aria-label="홈으로 이동" onClick={onLogoClick}>
+      <button type="button" className="relative appheader__logo" aria-label="홈으로 이동" onClick={onLogoClick}>
         <img className="appheader__logo-w" src={logoW} alt="" />
         <span className="appheader__logo-dots" aria-hidden>
           <i />
@@ -145,15 +146,18 @@ export function AppHeader({
           <i />
         </span>
         <img className="appheader__logo-run" src={logoRun} alt="" />
+        <GuideDot style={{ top: "-2px", right: "-8px" }} />
       </button>
       {variant === "settings" ? (
-        <button type="button" aria-label="설정" onClick={onSettingsClick}>
+        <button type="button" className="relative" aria-label="설정" onClick={onSettingsClick}>
           <img className="appheader__icon" src={iconSettings} alt="" />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       ) : variant === "feed" ? (
         <div className="appheader__actions">
           <button
             type="button"
+            className="relative"
             aria-label="만들기 메뉴"
             aria-expanded={feedPanel === "create"}
             onClick={() => setFeedPanel((panel) => (panel === "create" ? null : "create"))}
@@ -161,9 +165,11 @@ export function AppHeader({
             <svg className="appheader__icon" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path d="M12 5v14M5 12h14" stroke="#f5f5f7" strokeWidth="2" strokeLinecap="round" />
             </svg>
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
           <button
             type="button"
+            className="relative"
             aria-label="내 게시물 활동"
             aria-expanded={feedPanel === "activity"}
             onClick={() => setFeedPanel((panel) => (panel === "activity" ? null : "activity"))}
@@ -176,12 +182,13 @@ export function AppHeader({
                 strokeLinejoin="round"
               />
             </svg>
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
           {feedPanel === "create" && (
             <div className="absolute right-[42px] top-[46px] z-[110] w-[176px] overflow-hidden rounded-[8px] border border-white/10 bg-[#404040] py-1.5 shadow-[0_14px_36px_rgba(0,0,0,0.5)]">
               <button
                 type="button"
-                className="flex h-11 w-full items-center gap-3 px-3.5 text-[14px] font-normal text-white hover:bg-white/7"
+                className="relative flex h-11 w-full items-center gap-3 px-3.5 text-[14px] font-normal text-white hover:bg-white/7"
                 onClick={() => {
                   setFeedPanel(null);
                   onCreatePostClick?.();
@@ -193,10 +200,11 @@ export function AppHeader({
                   <circle cx="16.5" cy="8.5" r="1.4" fill="currentColor" />
                 </svg>
                 <span>게시물 올리기</span>
+                <GuideDot style={{ top: "10px", right: "40px" }} />
               </button>
               <button
                 type="button"
-                className="flex h-11 w-full items-center gap-3 px-3.5 text-[14px] font-normal text-white hover:bg-white/7"
+                className="relative flex h-11 w-full items-center gap-3 px-3.5 text-[14px] font-normal text-white hover:bg-white/7"
                 onClick={() => {
                   setFeedPanel(null);
                   onCreateStoryClick?.();
@@ -207,6 +215,7 @@ export function AppHeader({
                   <path d="M12 8v8M8 12h8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
                 </svg>
                 <span>스토리 올리기</span>
+                <GuideDot style={{ top: "10px", right: "40px" }} />
               </button>
             </div>
           )}
@@ -237,8 +246,9 @@ export function AppHeader({
         </div>
       ) : (
         <div className="appheader__actions">
-          <button type="button" aria-label="챗봇" onClick={onChatbotClick}>
+          <button type="button" className="relative" aria-label="챗봇" onClick={onChatbotClick}>
             <img className="appheader__icon" src={iconChatbot} alt="" />
+            <GuideDot style={{ top: "-2px", right: "-6px" }} />
           </button>
           <RunNotifications iconClassName="appheader__icon" variant="dark" />
         </div>

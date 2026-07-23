@@ -3,6 +3,8 @@
 // 대신 "왜 위치가 필요한지" 우리 브랜드 톤으로 먼저 안내하고, [허용하기]를 누르면
 // 그때 실제 geolocation 요청 → OS 네이티브 프롬프트가 딱 한 번 뜬다.
 // [건너뛰기]는 실제 API를 아예 호출하지 않는다.
+import GuideDot from "./GuideDot";
+
 export default function LocationPermissionDialog({
   onAllow,
   onDeny,
@@ -37,12 +39,18 @@ export default function LocationPermissionDialog({
           <button
             type="button"
             onClick={onAllow}
-            className="btn-text mt-2 w-full rounded-[13px] bg-[var(--primary-lime)] py-3 text-[var(--bg-app)]"
+            className="btn-text relative mt-2 w-full rounded-[13px] bg-[var(--primary-lime)] py-3 text-[var(--bg-app)]"
           >
-            허용하기
+            <span className="relative inline-block">
+              허용하기
+              {/* 버튼 폭이 아니라 글씨 자체를 기준으로 위치를 잡아서, 화면 폭이 줄어들어도
+                  글씨 옆에 붙어있는다. 이 점만 따로 미세조정하려면 여기 top/right 숫자만 바꾸세요. */}
+              <GuideDot style={{ top: "-2px", right: "-8px" }} />
+            </span>
           </button>
-          <button type="button" onClick={onDeny} className="body-2 py-1 text-[#8a8a8a]">
+          <button type="button" onClick={onDeny} className="body-2 relative py-1 text-[#8a8a8a]">
             건너뛰기
+            <GuideDot style={{ top: "-2px", right: "-8px" }} />
           </button>
         </div>
       </div>

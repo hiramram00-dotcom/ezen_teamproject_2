@@ -55,7 +55,7 @@ export default function RunningGuidePage({ onBack }: { onBack?: () => void }) {
               >
                 <button
                   type="button"
-                  className="grid size-10 flex-none place-items-center rounded-full bg-surface-2"
+                  className="relative grid size-10 flex-none place-items-center rounded-full bg-surface-2"
                   aria-label={`${g.title} 재생`}
                 >
                   <img className="size-4.5" src={iconPlay} alt="" />
@@ -97,7 +97,7 @@ export default function RunningGuidePage({ onBack }: { onBack?: () => void }) {
             <div className="flex items-center justify-between">
               <button
                 type="button"
-                className="h-8.5 w-26.75 rounded-full bg-primary-lime text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-black"
+                className="relative h-8.5 w-26.75 rounded-full bg-primary-lime text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-black"
               >
                 이어서 시작
               </button>
@@ -115,7 +115,7 @@ export default function RunningGuidePage({ onBack }: { onBack?: () => void }) {
             </h2>
             <button
               type="button"
-              className="flex items-center gap-0.5 text-sm tracking-[-0.42px] text-[var(--text-muted)]"
+              className="relative flex items-center gap-0.5 text-sm tracking-[-0.42px] text-[var(--text-muted)]"
             >
               <span>전체보기</span>
               <ChevronRight size={14} />
@@ -126,7 +126,7 @@ export default function RunningGuidePage({ onBack }: { onBack?: () => void }) {
               <li key={t.id}>
                 <button
                   type="button"
-                  className="flex w-full items-center justify-between gap-3 rounded-[14px] bg-[#404040] p-4 text-left"
+                  className="relative flex w-full items-center justify-between gap-3 rounded-[14px] bg-[#404040] p-4 text-left"
                 >
                   <span className="min-w-0 flex-1 text-[14px] font-medium leading-[1.3] tracking-[-0.42px]">
                     {t.title}

@@ -5,6 +5,7 @@ import type { ChatMessage, MessageBlock } from "../lib/chatTypes";
 import runiIcon from "../assets/icons/icon-chatbot.svg";
 import { BackButton } from "./Icons";
 import { useUserProfile } from "../lib/userProfile";
+import GuideDot from "./GuideDot";
 
 
 type Suggestion = { title: string; desc: string; prompt: string; icon: ReactNode };
@@ -109,6 +110,7 @@ export default function ChatbotPage({ onBack }: { onBack?: () => void }) {
           aria-label="더보기"
         >
           <span className="text-[20px] leading-none">⋯</span>
+    
         </button>
       </header>
 
@@ -138,7 +140,7 @@ export default function ChatbotPage({ onBack }: { onBack?: () => void }) {
                   key={s.title}
                   type="button"
                   onClick={() => send(s.prompt)}
-                  className="flex items-center gap-3 rounded-[18px] bg-[#efefef] px-4 py-3.5 text-left"
+                  className="relative flex items-center gap-3 rounded-[18px] bg-[#efefef] px-4 py-3.5 text-left"
                 >
                   <span className="shrink-0 text-[#2a2a2a]">{s.icon}</span>
                   <span className="flex-1">
@@ -146,6 +148,7 @@ export default function ChatbotPage({ onBack }: { onBack?: () => void }) {
                     <span className="body-3 mt-0.5 block text-[#777]">{s.desc}</span>
                   </span>
                   <span className="text-[#919191]">›</span>
+                  <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />
                 </button>
               ))}
             </div>
@@ -191,12 +194,13 @@ export default function ChatbotPage({ onBack }: { onBack?: () => void }) {
           <button
             type="submit"
             disabled={loading || !input.trim()}
-            className="grid h-[46px] w-[46px] shrink-0 place-items-center rounded-full bg-[#d4ff3f] text-[#0f120c] disabled:opacity-40"
+            className="relative grid h-[46px] w-[46px] shrink-0 place-items-center rounded-full bg-[#d4ff3f] text-[#0f120c] disabled:opacity-40"
             aria-label="보내기"
           >
             <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
               <path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
         </form>
       </div>

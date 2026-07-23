@@ -1,4 +1,5 @@
 import BrandLogo from "./BrandLogo";
+import GuideDot from "./GuideDot";
 import bgImage from "../assets/img/on4_img.png";
 import runner1 from "../assets/img/runner1.png";
 import runner2 from "../assets/img/runner2.png";
@@ -30,11 +31,15 @@ export default function Login({ onLogin }: { onLogin?: () => void }) {
         </div>
 
         <button
-          className="w-full h-[58px] [@media(max-height:700px)]:h-[46px] rounded-[29px] bg-primary-lime text-black text-[17px] font-bold tracking-[-0.34px] active:scale-[0.99]"
+          className="relative w-full h-[58px] [@media(max-height:700px)]:h-[46px] rounded-[29px] bg-primary-lime text-black text-[17px] font-bold tracking-[-0.34px] active:scale-[0.99]"
           type="button"
           onClick={onLogin}
         >
-          로그인
+          <span className="relative inline-block">
+            로그인
+            {/* 이 버튼만 따로 미세조정하려면 여기 top/right 숫자만 바꾸세요 (1px 단위, 다른 버튼엔 영향 없음). */}
+            <GuideDot style={{ top: "-2px", right: "-6px" }} />
+          </span>
         </button>
 
         <p className="-mt-1.5 text-center text-sm font-light text-(--text-muted)">

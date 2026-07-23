@@ -3,6 +3,7 @@ import iconChatbot from "../assets/icons/header-chatbot.svg";
 import MusicPlayerBar from "./MusicPlayerBar";
 import MapBackdrop from "./MapBackdrop";
 import { BackButton } from "./Icons";
+import GuideDot from "./GuideDot";
 
 export const RUNNING_MAP_LOCATION = { lat: 37.5769, lng: 126.9828 }; // 경복궁과 안국역 사이
 export const RUNNING_MAP_DESTINATION = { lat: 37.5795, lng: 126.9872 };
@@ -122,6 +123,7 @@ export default function RunningMapPage({
           onClick={onChatbot}
         >
           <img className="size-6" src={iconChatbot} alt="" />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
         <button
           type="button"
@@ -139,6 +141,7 @@ export default function RunningMapPage({
               <rect x="12" y="0" width="7" height="26" rx="2" fill="#000" />
             </svg>
           )}
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </div>
 
@@ -151,6 +154,7 @@ export default function RunningMapPage({
           onClick={onMusicConnect}
         >
           음악 연결하기
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       )}
     </div>

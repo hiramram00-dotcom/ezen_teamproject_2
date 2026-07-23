@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BackButton } from "../components/Icons";
 import SharePopup from "../components/SharePopup";
+import GuideDot from "../components/GuideDot";
 import challengeHero from "../assets/img/challenge1.webp";
 
 type Props = {
@@ -89,12 +90,13 @@ export default function ChallengeDetailPage({ onBack, onStartChallenge }: Props)
           챌린지
         </h1>
         <button
-          className="grid h-[26px] w-[26px] place-items-center text-white"
+          className="relative grid h-[26px] w-[26px] place-items-center text-white"
           type="button"
           aria-label="공유하기"
           onClick={() => setShareOpen(true)}
         >
           <ShareIcon />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </header>
 
@@ -221,11 +223,12 @@ export default function ChallengeDetailPage({ onBack, onStartChallenge }: Props)
             <span aria-hidden>📍</span> 완주 후 지도에 남은 강아지 모양을 캡처해서 챌린지 인증으로 남겨보세요.
           </p>
           <button
-            className="h-12 w-full rounded-full bg-[var(--primary-lime)] text-center text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-black"
+            className="relative h-12 w-full rounded-full bg-[var(--primary-lime)] text-center text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] text-black"
             type="button"
             onClick={onStartChallenge}
           >
             챌린지 참여하기
+            <GuideDot style={{ top: "-2px", right: "-2px" }} />
           </button>
         </section>
       </main>

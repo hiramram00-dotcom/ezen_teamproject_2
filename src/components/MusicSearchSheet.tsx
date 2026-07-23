@@ -12,6 +12,7 @@ import {
   type ChartEntry,
 } from "../lib/musicApi";
 import { playSong, pauseSong, stopSong, warmUpPlayer } from "../lib/youtubePlayer";
+import GuideDot from "./GuideDot";
 
 // ── 음악 찾기 바텀시트 (Figma 149:220) ─────────────────────────────
 // 아래에서 스르륵 올라오는 오버레이. 상단 핸들 바(디자인 보완)를 탭하면 닫힌다.
@@ -83,7 +84,7 @@ function SongRow({
         </div>
       )}
 
-      <button type="button" onClick={onPick} className="flex min-w-0 flex-1 items-center gap-3 text-left">
+      <button type="button" onClick={onPick} className="relative flex min-w-0 flex-1 items-center gap-3 text-left">
         {/* 표지 — API 연결 시 thumbnail 표시, 없으면 회색 플레이스홀더 */}
         {song.thumbnail ? (
           <img src={song.thumbnail} alt="" className="h-[61px] w-[61px] shrink-0 rounded-[10px] object-cover" />
@@ -99,15 +100,17 @@ function SongRow({
             {song.duration ? ` · ${song.duration}` : ""}
           </span>
         </div>
+        <GuideDot variant="card" style={{ top: "16px", right: "16px" }} />
       </button>
 
       <button
         type="button"
         onClick={onToggleSave}
         aria-label={saved ? "저장 해제" : "저장"}
-        className="shrink-0 p-1 text-white"
+        className="relative shrink-0 p-1 text-white"
       >
         <BookmarkIcon filled={saved} />
+        <GuideDot style={{ top: "-2px", right: "-2px" }} />
       </button>
     </li>
   );
@@ -263,13 +266,14 @@ export default function MusicSearchSheet({
           type="button"
           onClick={onClose}
           aria-label="닫기"
-          className="flex w-full shrink-0 touch-none justify-center pb-2 pt-3"
+          className="relative flex w-full shrink-0 touch-none justify-center pb-2 pt-3"
           onPointerDown={onDragStart}
           onPointerMove={onDragMove}
           onPointerUp={onDragEnd}
           onPointerCancel={onDragEnd}
         >
           <span className="h-1 w-10 rounded-full bg-white/25" />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
 
         {/* 검색 인풋 */}
@@ -289,11 +293,12 @@ export default function MusicSearchSheet({
               key={key}
               type="button"
               onClick={() => setTab(key)}
-              className={`body-1 h-[35px] rounded-[8px] px-3 ${
+              className={`body-1 relative h-[35px] rounded-[8px] px-3 ${
                 tab === key && !searchMode ? "bg-white text-black" : "bg-[#2a3036] text-[#9a9aa1]"
               }`}
             >
               {label}
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </button>
           ))}
         </div>
@@ -325,12 +330,13 @@ export default function MusicSearchSheet({
                   type="button"
                   onClick={loadMore}
                   disabled={loadingMore}
-                  className="mt-5 flex w-full items-center justify-between py-2"
+                  className="relative mt-5 flex w-full items-center justify-between py-2"
                 >
                   <span className="body-1 text-white">{loadingMore ? "불러오는 중…" : "더 보기"}</span>
                   <svg viewBox="0 0 14 14" fill="none" className="h-3.5 w-3.5 text-[#9a9aa1]" aria-hidden>
                     <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
+                  <GuideDot style={{ top: "-2px", right: "-2px" }} />
                 </button>
               )}
             </>
@@ -389,7 +395,7 @@ export default function MusicSearchSheet({
                   }
                 }}
                 aria-label={previewPlaying ? "일시정지" : "재생"}
-                className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-black"
+                className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-black"
               >
                 {previewPlaying ? (
                   <svg viewBox="0 0 14 14" className="h-3.5 w-3.5" aria-hidden>
@@ -401,17 +407,19 @@ export default function MusicSearchSheet({
                     <path d="M3 1.5v11l9-5.5z" fill="currentColor" />
                   </svg>
                 )}
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
               {/* → 확정 — 공용 꺽쇠 아이콘, 곡 추가 + 하이라이트 설정으로 이동 */}
               <button
                 type="button"
                 onClick={() => onPick(preview)}
                 aria-label="이 곡으로 선택"
-                className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-black"
+                className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-black"
               >
                 <svg viewBox="0 0 14 14" fill="none" className="h-4 w-4" aria-hidden>
                   <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
+                <GuideDot style={{ top: "-2px", right: "-2px" }} />
               </button>
             </div>
           </div>

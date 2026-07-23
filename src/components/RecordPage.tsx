@@ -11,6 +11,7 @@ import namsanHeartImg from "../assets/img/namsan_heart.avif";
 import MapBackdrop from "./MapBackdrop";
 import BottomNav from "./BottomNav";
 import RunNotifications from "./RunNotifications";
+import GuideDot from "./GuideDot";
 
 const recommendedCourses = [
   {
@@ -141,7 +142,7 @@ export default function RecordPage({
         <div className="flex items-center">
           <button
             type="button"
-            className="flex h-[21.6px] items-center gap-[4.6px]"
+            className="relative flex h-[21.6px] items-center gap-[4.6px]"
             aria-label="홈으로 이동"
             onClick={() => onNavigate?.("home")}
           >
@@ -152,9 +153,10 @@ export default function RecordPage({
               <i className="block h-[3.64px] w-[4.42px] bg-primary-lime" />
             </span>
             <img className="h-[21.64px] w-[34.23px]" src={logoRun} alt="" />
+            <GuideDot style={{ top: "-2px", right: "-8px" }} />
           </button>
         </div>
-        <RunNotifications variant="dark" iconClassName="size-6" unreadBorderClassName="border-black" />
+        <RunNotifications variant="dark" iconClassName="size-6" />
       </header>
 
       <section className="relative z-1 mt-4 flex flex-col gap-3.75">
@@ -192,6 +194,7 @@ export default function RecordPage({
                 i === activeIdx ? (c.detailKey ? "cursor-pointer" : "") : "blur-[2px]"
               }`}
             >
+              <GuideDot variant="card" style={{ top: "16px", right: "16px" }} />
               <div className="flex items-end justify-center gap-[50px]">
                 <div className="flex w-44 flex-col items-start gap-2">
                   <div className="flex w-full flex-col items-start gap-2.5">
@@ -216,6 +219,7 @@ export default function RecordPage({
                             strokeLinejoin="round"
                           />
                         </svg>
+                       
                       </button>
                     </div>
                     <p className="text-[14px] font-medium leading-[1.3] tracking-[-0.42px] whitespace-pre-line text-white/70">
@@ -249,31 +253,35 @@ export default function RecordPage({
           다른 코스를 원하시면 저에게 알려주세요.
         </p>
 
-        <button type="button" className={`${fabClass} mb-7.5`} aria-label="AI 챗봇" onClick={onChatbot}>
+        <button type="button" className={`${fabClass} relative mb-7.5`} aria-label="AI 챗봇" onClick={onChatbot}>
           <img className="size-6" src={iconChatbot} alt="" />
+          <GuideDot style={{ top: "0px", right: "0px" }} />
         </button>
 
         <img className="absolute top-38.75 left-60 size-4" src={iconSparkle} alt="" aria-hidden />
 
         <div className="flex items-center gap-10">
-          <button type="button" className={fabClass} aria-label="러닝 가이드" onClick={onGuideOpen}>
+          <button type="button" className={`${fabClass} relative`} aria-label="러닝 가이드" onClick={onGuideOpen}>
             <img className="size-6" src={iconBulb} alt="" />
+            <GuideDot style={{ top: "0px", right: "0px" }} />
           </button>
           <button
             type="button"
-            className="size-30 rounded-full bg-primary-lime text-[24px] font-semibold tracking-[-0.48px] text-black shadow-[0_0_12px_rgba(0,0,0,0.15)]"
+            className="relative size-30 rounded-full bg-primary-lime text-[24px] font-semibold tracking-[-0.48px] text-black shadow-[0_0_12px_rgba(0,0,0,0.15)]"
             onClick={onStart}
           >
             시작
+            <GuideDot style={{ top: "4px", right: "4px" }} />
           </button>
           <button
             type="button"
-            className={fabClass}
+            className={`${fabClass} relative`}
             aria-label={musicConnected ? "음악 연결됨" : "음악"}
             aria-pressed={musicConnected}
             onClick={onMusicOpen}
           >
             <MusicIcon className={musicConnected ? "text-primary-lime" : "text-white"} />
+            <GuideDot style={{ top: "0px", right: "0px" }} />
           </button>
         </div>
       </div>

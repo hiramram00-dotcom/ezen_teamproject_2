@@ -1,5 +1,6 @@
 import { useState, type ReactElement } from "react";
 import FitOnboardingShell from "./FitOnboardingShell";
+import GuideDot from "./GuideDot";
 
 type Level = {
   icon: ReactElement;
@@ -103,6 +104,7 @@ export default function FitOnboarding({ onBack, onNext, onSkip }: { onBack?: () 
                   </svg>
                 </span>
               )}
+              <GuideDot variant="cardOutside" style={{ top: "-2px", right: "-0.5px" }} />
             </button>
           );
         })}

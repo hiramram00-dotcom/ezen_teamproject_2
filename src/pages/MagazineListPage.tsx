@@ -1,4 +1,5 @@
 import { BackButton } from "../components/Icons";
+import GuideDot from "../components/GuideDot";
 import { articles } from "../data";
 
 type Props = {
@@ -48,6 +49,7 @@ export default function MagazineListPage({ onBack, onOpenArticle }: Props) {
                   ))}
                 </p>
               </div>
+              <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />
             </button>
           ))}
         </div>

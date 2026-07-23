@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BackButton } from "../components/Icons";
 import SharePopup from "../components/SharePopup";
+import GuideDot from "../components/GuideDot";
 import raceHero from "../assets/img/race1.webp";
 
 type Props = {
@@ -93,12 +94,13 @@ export default function RaceDetailPage({ onBack }: Props) {
           대회 소식
         </h1>
         <button
-          className="grid h-[26px] w-[26px] place-items-center text-[#f6f6ed]"
+          className="relative grid h-[26px] w-[26px] place-items-center text-[#f6f6ed]"
           type="button"
           aria-label="공유하기"
           onClick={() => setShareOpen(true)}
         >
           <ShareIcon />
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </header>
 
@@ -182,7 +184,7 @@ export default function RaceDetailPage({ onBack }: Props) {
         <p className={`${bodyTextClass} px-[var(--gutter)]`}>기록칩 · 완주 메달 · 물품보관 · 현장 포토존 제공</p>
 
         <button
-          className={`mx-[var(--gutter)] h-12 w-[calc(100%-36px)] rounded-full text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] ${
+          className={`relative mx-[var(--gutter)] h-12 w-[calc(100%-36px)] rounded-full text-[16px] font-semibold leading-[1.3] tracking-[-0.48px] ${
             joined ? "bg-[#2a2a2a] text-white/40" : "bg-[var(--primary-lime)] text-black"
           }`}
           type="button"
@@ -190,6 +192,7 @@ export default function RaceDetailPage({ onBack }: Props) {
           onClick={() => setShowJoinConfirm(true)}
         >
           {joined ? "참가 신청 완료" : "참가 신청하기"}
+          <GuideDot style={{ top: "-2px", right: "-2px" }} />
         </button>
       </main>
 
@@ -212,7 +215,7 @@ export default function RaceDetailPage({ onBack }: Props) {
               </p>
             </div>
             <button
-              className="h-[46px] w-full rounded-full bg-[var(--primary-lime)] text-[16px] font-medium leading-[1.3] tracking-[-0.48px] text-black"
+              className="relative h-[46px] w-full rounded-full bg-[var(--primary-lime)] text-[16px] font-medium leading-[1.3] tracking-[-0.48px] text-black"
               type="button"
               onClick={() => {
                 setJoined(true);
@@ -220,6 +223,7 @@ export default function RaceDetailPage({ onBack }: Props) {
               }}
             >
               확인
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </button>
           </div>
         </div>

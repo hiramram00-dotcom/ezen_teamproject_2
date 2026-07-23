@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { raceFilters, races } from "../data";
 import chevronRight from "../assets/icons/chevron-right.svg";
+import GuideDot from "./GuideDot";
 import "./RaceSection.css";
 
 type Props = {
@@ -19,7 +20,7 @@ export default function RaceSection({ onOpenRace }: Props) {
             <button
               key={f}
               type="button"
-              className={`pill${f === activeFilter ? " pill--active" : ""}`}
+              className={`relative pill${f === activeFilter ? " pill--active" : ""}`}
               aria-pressed={f === activeFilter}
               onClick={() => setActiveFilter(f)}
             >
@@ -47,6 +48,7 @@ export default function RaceSection({ onOpenRace }: Props) {
                 <img className="race-card__arrow" src={chevronRight} alt="" />
               </div>
             </div>
+            <GuideDot variant="card" style={{ top: "10px", right: "10px" }} />
           </button>
         ))}
       </div>

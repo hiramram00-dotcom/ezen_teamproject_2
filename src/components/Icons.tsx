@@ -1,4 +1,6 @@
 // Inline SVG icons used across the home screen.
+import GuideDot from "./GuideDot";
+
 type P = { size?: number; className?: string };
 
 export const ChevronRight = ({ size = 14, className }: P) => (
@@ -29,14 +31,21 @@ export function BackButton({
   // className에 text-* 를 또 넣으면 Tailwind 색 유틸이 충돌하므로 여기로 넘길 것.
   color?: string;
 }) {
+  // className이 이미 absolute/fixed/sticky로 위치를 잡는 경우(오버레이 화면들)
+  // relative를 함께 주면 Tailwind 유틸 우선순위 충돌로 기존 위치가 깨질 수 있어
+  // 그런 경우엔 relative를 생략한다(자기 자신의 position 값으로 이미 containing
+  // block이 되어 GuideDot 위치엔 문제 없음).
+  const hasOwnPosition = /\b(absolute|fixed|sticky)\b/.test(className);
+
   return (
     <button
       type="button"
       onClick={onClick}
       aria-label={label}
-      className={`grid size-[26px] shrink-0 place-items-center ${color} ${className}`}
+      className={`${hasOwnPosition ? "" : "relative"} grid size-[26px] shrink-0 place-items-center ${color} ${className}`}
     >
       <ChevronLeft size={24} />
+      <GuideDot style={{ top: "-2px", right: "-2px" }} />
     </button>
   );
 }

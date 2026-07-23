@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useUserProfile, fileToAvatarDataUrl } from "../lib/userProfile";
 import { BackButton } from "../components/Icons";
+import GuideDot from "../components/GuideDot";
 
 // ── 프로필 편집 (Figma 149:71) ─────────────────────────────
 // 인스타식 즉시 저장: 값 영역(투명 인풋)을 누르면 그 자리에서 바로 수정,
@@ -41,11 +42,13 @@ function ActionRow({
   desc,
   action,
   onAction,
+  guideDot = true,
 }: {
   label: string;
   desc: string;
   action: string;
   onAction?: () => void;
+  guideDot?: boolean;
 }) {
   return (
     <div className="flex items-start justify-between">
@@ -57,12 +60,13 @@ function ActionRow({
         type="button"
         onClick={onAction}
         disabled={!onAction}
-        className="mt-0.5 flex shrink-0 items-center gap-2"
+        className="relative mt-0.5 flex shrink-0 items-center gap-2"
       >
         <span className="body-2 text-[#8a8a8a]">{action}</span>
         <svg viewBox="0 0 14 14" fill="none" className="h-3.5 w-3.5 text-white" aria-hidden>
           <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
+        {guideDot && <GuideDot style={{ top: "-2px", right: "-2px" }} />}
       </button>
     </div>
   );
@@ -107,16 +111,18 @@ export default function ProfileEditPage({
               type="button"
               onClick={() => fileRef.current?.click()}
               aria-label="프로필 사진 선택"
-              className="h-[119px] w-[119px] overflow-hidden rounded-full bg-[#d9d9d9]"
+              className="relative h-[119px] w-[119px] overflow-hidden rounded-full bg-[#d9d9d9]"
             >
               <img src={avatarSrc} alt="" className="h-full w-full object-cover" />
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </button>
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
-              className="btn-text text-[var(--primary-lime)]"
+              className="btn-text relative text-[var(--primary-lime)]"
             >
               프로필 사진 수정
+              <GuideDot style={{ top: "-2px", right: "-6px" }} />
             </button>
             <input
               ref={fileRef}
@@ -155,8 +161,8 @@ export default function ProfileEditPage({
 
           {/* 러닝 특화 행 — 수정 화면은 후속 디자인 예정(표시만) */}
           <div className="flex flex-col gap-8 px-[var(--gutter)]">
-            <ActionRow label="러닝 레벨" desc={profile.levelDesc} action="레벨 수정" />
-            <ActionRow label="목표" desc={profile.goalKeywords.join("  ")} action="키워드 수정" />
+            <ActionRow label="러닝 레벨" desc={profile.levelDesc} action="레벨 수정" guideDot={false} />
+            <ActionRow label="목표" desc={profile.goalKeywords.join("  ")} action="키워드 수정" guideDot={false} />
             <ActionRow
               label="나만의 대표 러닝 곡"
               desc={

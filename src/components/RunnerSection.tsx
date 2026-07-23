@@ -2,6 +2,7 @@ import { useState } from "react";
 import SectionHeader from "./SectionHeader";
 import { feedStories, runners, type FeedStory } from "../data";
 import { StoryViewer } from "../pages/FeedPage";
+import GuideDot from "./GuideDot";
 import "./RunnerSection.css";
 
 type Props = {
@@ -37,7 +38,7 @@ export default function RunnerSection({ onViewAll, onStoryOpenChange }: Props) {
           <div key={r.name} className="runner">
             <button
               type="button"
-              className={`runner__ring ${hasUnreadStory ? "runner__ring--story" : ""}`}
+              className={`relative runner__ring ${hasUnreadStory ? "runner__ring--story" : ""}`}
               onClick={() => story && openStory(story)}
               aria-label={story ? `${r.name} 스토리 보기` : undefined}
             >
@@ -54,6 +55,7 @@ export default function RunnerSection({ onViewAll, onStoryOpenChange }: Props) {
                   }}
                 />
               </div>
+              <GuideDot style={{ top: "-2px", right: "-2px" }} />
             </button>
             <span className="runner__name">{r.name}</span>
           </div>

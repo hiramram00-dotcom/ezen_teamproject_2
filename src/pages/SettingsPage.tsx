@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useState } from "react";
-import { readJSON, writeJSON } from "../lib/localStore";import { settingsGroups, defaultSettingsToggles } from "../data";
+import { readJSON, writeJSON } from "../lib/localStore";
+import { settingsGroups, defaultSettingsToggles } from "../data";
 import { BackButton } from "../components/Icons";
+import GuideDot from "../components/GuideDot";
 import chevronRight from "../assets/icons/settings-chevron-right.svg";
 
 // 알림 등 설정 토글을 새로고침 후에도 유지한다.
@@ -41,10 +43,11 @@ export default function SettingsPage({ onBack, onOpenProfile }: Props) {
                   {i > 0 && <div className="h-px bg-[#262626]" />}
                   <div
                     className={`flex items-center justify-between px-4 py-[17px] ${
-                      row.label === "프로필 편집" ? "cursor-pointer" : ""
+                      row.label === "프로필 편집" ? "relative cursor-pointer" : ""
                     }`}
                     onClick={row.label === "프로필 편집" ? onOpenProfile : undefined}
                   >
+                    {row.label === "프로필 편집" && <GuideDot style={{ top: "10px", right: "10px" }} />}
                     <span className="text-base tracking-[-0.48px] text-white">{row.label}</span>
                     {row.kind === "toggle" ? (
                       <button
@@ -65,6 +68,7 @@ export default function SettingsPage({ onBack, onOpenProfile }: Props) {
                               : "bg-[#999999]"
                           }`}
                         />
+                        <GuideDot style={{ top: "-2px", right: "-2px" }} />
                       </button>
                     ) : (
                       <span className="flex items-center gap-2">
